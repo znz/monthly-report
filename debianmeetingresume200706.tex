@@ -1,6 +1,6 @@
 %; whizzy chapter
 % -initex iniptex -latex platex -format platex -bibtex jbibtex -fmt fmt
-% °Ê¾å whizzytex ¤ò»ÈÍÑ¤¹¤ë¾ì¹ç¤ÎÀßÄê¡£
+% $B0J>e(B whizzytex $B$r;HMQ$9$k>l9g$N@_Dj!#(B
 
 %     Tokyo Debian Meeting resources
 %     Copyright (C) 2007 Junichi Uekawa
@@ -20,38 +20,38 @@
 %     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 %  preview (shell-command (concat "xpdf " (replace-regexp-in-string "tex$" "pdf"(buffer-file-name)) "&"))
-% ²èÁü¥Õ¥¡¥¤¥ë¤ò½èÍý¤¹¤ë¤¿¤á¤Ë¤Ïebb¤òÍøÍÑ¤·¤Æboundingbox¤òºîÀ®¡£
+% $B2hA|%U%!%$%k$r=hM}$9$k$?$a$K$O(Bebb$B$rMxMQ$7$F(Bboundingbox$B$r:n@.!#(B
 %(shell-command "cd image200701; ebb *.png")
 
-% Emacs ¤ÇÉáÃÊ¡¢euc-jp¤ò»È¤Ã¤Æ¤¤¤ë¿Í¤¬¡¢ËÜÊÙ¶¯²ñ¤Î»ñÎÁ(iso-2022-jp¥¨¥ó¥³¡¼¥É)¤òÊÑ¹¹
-% ¤Ë¤¹¤ë¤Ë¤Ï¡¢c-x [ret] f ¤Ç¡¢iso-2022-jp ¤ò»ØÄê¤·¡¢½èÍý¤»¤è¡£
+% Emacs $B$GIaCJ!"(Beuc-jp$B$r;H$C$F$$$k?M$,!"K\JY6/2q$N;qNA(B(iso-2022-jp$B%(%s%3!<%I(B)$B$rJQ99(B
+% $B$9$k$K$O!"(Bc-x [ret] f $B$G!"(Biso-2022-jp $B$r;XDj$7!"=hM}$;$h!#(B
 
-%%¤³¤³¤«¤é¥Ø¥Ã¥À³«»Ï¡£
+%%$B$3$3$+$i%X%C%@3+;O!#(B
 
 \documentclass[mingoth,a4paper]{jsarticle}
 \usepackage[dvipdfm]{graphicx}
 \usepackage{fancybox}
 \usepackage{longtable}
-\usepackage{ascmac}	% °Ï¤ß (screen,itembox)
-\usepackage{fancyvrb}   % °Ï¤ß Verbatim ¤Î¤¿¤á¤ËÉ¬Í×
+\usepackage{ascmac}	% $B0O$_(B (screen,itembox)
+\usepackage{fancyvrb}   % $B0O$_(B Verbatim $B$N$?$a$KI,MW(B
 \usepackage[dvipdfm]{hyperref}
 \usepackage{url}
 \usepackage[dvipdfm]{color}
 \usepackage{nextpage}
 
-% ÆüÉÕ¤òÄêµÁ¤¹¤ë¡¢Ëè·îÊÑ¤ï¤ê¤Þ¤¹¡£
+% $BF|IU$rDj5A$9$k!"Kh7nJQ$o$j$^$9!#(B
 \newcommand{\debmtgyear}{2007}
 \newcommand{\debmtgdate}{16}
 \newcommand{\debmtgmonth}{6}
 \newcommand{\debmtgnumber}{29}
 
 %http://www.naney.org/diki/dk/hyperref.html
-%ÆüËÜ¸ìEUC·Ï´Ä¶­¤Î»þ
+%$BF|K\8l(BEUC$B7O4D6-$N;~(B
 \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
-%¥·¥Õ¥ÈJIS·Ï´Ä¶­¤Î»þ
+%$B%7%U%H(BJIS$B7O4D6-$N;~(B
 %\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
 
-%% spacing ¤ÎÀßÄê¤ò¤¹¤ë¡£³°ÏÈ¤ò¸º¤é¤¹¡£
+%% spacing $B$N@_Dj$r$9$k!#30OH$r8:$i$9!#(B
 \setlength\headheight{0mm}
 \setlength\topmargin{-20mm}
 \setlength\headsep{0mm}
@@ -64,13 +64,13 @@
 \setlength\oddsidemargin{-5mm}
 \setlength\evensidemargin{-5mm}
 
-% commandline´Ä¶­¤òÄêµÁ¡£²èÌÌÆþ½ÐÎÏ¤Ë¤Ä¤¤¤Æ¤Ïcommandline´Ä¶­
-% ¤ÇÉ½µ­¤¹¤ë
+% commandline$B4D6-$rDj5A!#2hLLF~=PNO$K$D$$$F$O(Bcommandline$B4D6-(B
+% $B$GI=5-$9$k(B
 \newenvironment{commandline}%
 {\VerbatimEnvironment
   \begin{Sbox}\begin{minipage}{15cm}\begin{fontsize}{7.3}{7.3} \begin{BVerbatim}}%
 {\end{BVerbatim}\end{fontsize}\end{minipage}\end{Sbox}
-  \setlength{\fboxsep}{8pt}\begin{itembox}[c]{½ÐÎÏ}{\TheSbox}\end{itembox}}
+  \setlength{\fboxsep}{8pt}\begin{itembox}[c]{$B=PNO(B}{\TheSbox}\end{itembox}}
 
 %%% start of santaku
 \makeatletter
@@ -83,11 +83,11 @@
 
 \addtocontents{jqz}{\arabic{santakucounter}. #5\\}
 \begin{minipage}{1\hsize}
-ÌäÂê\arabic{santakucounter}. 
+$BLdBj(B\arabic{santakucounter}. 
 #1\\
-¢¢ A #2\\
-¢¢ B #3\\
-¢¢ C #4
+$B""(B A #2\\
+$B""(B B #3\\
+$B""(B C #4
 \end{minipage}
 \hspace{1cm}
 \\
@@ -101,18 +101,18 @@
 \vspace{1zw}{\bf #1}\\}
 
 
-% section¤ò¥»¥ó¥¿¥ê¥ó¥°¤¹¤ë
+% section$B$r%;%s%?%j%s%0$9$k(B
 \makeatletter
   \renewcommand{\section}{\@startsection{section}{1}{\z@}%
-    {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% Á°¥¢¥­
-    {.5\Cvs \@plus.3\Cdp}% ¸å¥¢¥­
+    {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% $BA0%"%-(B
+    {.5\Cvs \@plus.3\Cdp}% $B8e%"%-(B
     {\normalfont\gt\fontsize{26}{26}\headfont\raggedright}} % style
 \makeatother
 
-% section ¤ÎÂå¤ï¤ê¤Î´Ä¶­
+% section $B$NBe$o$j$N4D6-(B
 \newcommand{\dancersection}[2]{%
 \newpage
-Âè\debmtgnumber{}²ó Åìµþ¥¨¥ê¥¢DebianÊÙ¶¯²ñ \debmtgyear{}Ç¯\debmtgmonth{}·î
+$BBh(B\debmtgnumber{}$B2s(B $BEl5~%(%j%"(BDebian$BJY6/2q(B \debmtgyear{}$BG/(B\debmtgmonth{}$B7n(B
 \hrule
 \vspace{0.5mm}
 \hrule
@@ -136,12 +136,12 @@
 \vspace{-1cm}
 }
 
-% BTS¤ÎÈÖ¹æ¤ò¸«¤ë¤¿¤á¤Î¥³¥Þ¥ó¥É
+% BTS$B$NHV9f$r8+$k$?$a$N%3%^%s%I(B
 \newcommand{\debianbug}[1]{Bug\##1\footnote{\url{http://bugs.debian.org/#1}}}
 
 % for dancerj
-\newcommand{\fgref}[1]{¿Þ\ref{#1}}
-\newcommand{\tbref}[1]{É½\ref{#1}}
+\newcommand{\fgref}[1]{$B?^(B\ref{#1}}
+\newcommand{\tbref}[1]{$BI=(B\ref{#1}}
 
 
 
@@ -150,10 +150,10 @@
 
 \begin{titlepage}
 
-% Ëè·îÊÑ¹¹¤¹¤ëÉôÊ¬, ËÜÊ¸¤ÎËöÈø¤â½¤Àµ¤¹¤ë¤³¤È¤ò¤ï¤¹¤ì¤º¤Ë
+% $BKh7nJQ99$9$kItJ,(B, $BK\J8$NKvHx$b=$@5$9$k$3$H$r$o$9$l$:$K(B
 
 
- Âè\debmtgnumber{}²ó Åìµþ¥¨¥ê¥¢ Debian ÊÙ¶¯²ñ»ñÎÁ
+ $BBh(B\debmtgnumber{}$B2s(B $BEl5~%(%j%"(B Debian $BJY6/2q;qNA(B
 
 \vspace{2cm}
 
@@ -161,9 +161,9 @@
 \vspace{-2cm}
 {\fontsize{60}{60}
 {\gt
-Åìµþ¥¨¥ê¥¢ \\
-¥Ç¥Ó¥¢¥ó \\
-ÊÙ¶¯²ñ
+$BEl5~%(%j%"(B \\
+$B%G%S%"%s(B \\
+$BJY6/2q(B
 }}
 \end{minipage}
 \begin{minipage}[b]{0.4\hsize}
@@ -171,39 +171,39 @@
 \end{minipage}
 
 \vspace{3cm}
-\hfill{}DebianÊÙ¶¯²ñ´´»ö ¾åÀî½ã°ì\\
-\hfill{}\debmtgyear{}Ç¯\debmtgmonth{}·î\debmtgdate{}Æü
+\hfill{}Debian$BJY6/2q44;v(B $B>e@n=c0l(B\\
+\hfill{}\debmtgyear{}$BG/(B\debmtgmonth{}$B7n(B\debmtgdate{}$BF|(B
 
 \thispagestyle{empty}
 \end{titlepage}
 
-\dancersection{Introduction}{¾åÀî½ã°ì}
+\dancersection{Introduction}{$B>e@n=c0l(B}
  
- º£·î¤ÎDebianÊÙ¶¯²ñ¤Ø¤è¤¦¤³¤½¡£
- ¤³¤ì¤«¤éDebian¤Î¤¢¤ä¤·¤¤À¤³¦¤ËÆþ¤ë¤È¤¤¤¦Êý¤â¡¢¤¹¤Ç¤Ë¤É¤Ã¤×¤ê¤È¤Ä¤«¤Ã¤Æ¤¤
- ¤ë¤È¤¤¤¦Êý¤â¡¢·î¤Ë°ì²óDebian¤Ë¤Ä¤¤¤Æ¸ì¤ê¤Þ¤»¤ó¤«¡©
+ $B:#7n$N(BDebian$BJY6/2q$X$h$&$3$=!#(B
+ $B$3$l$+$i(BDebian$B$N$"$d$7$$@$3&$KF~$k$H$$$&J}$b!"$9$G$K$I$C$W$j$H$D$+$C$F$$(B
+ $B$k$H$$$&J}$b!"7n$K0l2s(BDebian$B$K$D$$$F8l$j$^$;$s$+!)(B
 
- ÌÜÅª¤È¤·¤Æ¼¡¤ÎÆó¤Ä¤ò¹Í¤¨¤Æ¤¤¤Þ¤¹¡£
+ $BL\E*$H$7$F<!$NFs$D$r9M$($F$$$^$9!#(B
 
  \begin{itemize}
- \item ¥á¡¼¥ë¤Ç¤Ï¤è¤ß¤È¤ì¤Ê¤¤¡¢¤â¤·¤¯¤Ï¤è¤ß¤È¤Ã¤Æ¤é¤ì¤Ê¤¤¤è¤¦¤Ê¾ðÊó¤Ë¤Ä
-       ¤¤¤Æ¾ðÊó¶¦Í­¤¹¤ë¾ì¤ò¤Ä¤¯¤ë
- \item Debian¤òÍøÍÑ¤¹¤ëºÝ¤Î¾ðÊó¤ò¤Þ¤È¤á¤Æ¡¢¤¢¤ëÄøÅÙ¤Î²ô¤È¤·¤ÆÀ°Íý¤¹¤ë¤¿
-       ¤á¤Î¾ì¤ò¤Ä¤¯¤ë
+ \item $B%a!<%k$G$O$h$_$H$l$J$$!"$b$7$/$O$h$_$H$C$F$i$l$J$$$h$&$J>pJs$K$D(B
+       $B$$$F>pJs6&M-$9$k>l$r$D$/$k(B
+ \item Debian$B$rMxMQ$9$k:]$N>pJs$r$^$H$a$F!"$"$kDxEY$N2t$H$7$F@0M}$9$k$?(B
+       $B$a$N>l$r$D$/$k(B
  \end{itemize}
 
- Debian¤ÎÊÙ¶¯²ñ¤È¤¤¤¦¤³¤È¤Çµæ¶ËÅª¤Ë¤Ï»²²Ã¼ÔÁ´°÷¤¬Debian Package¤ò¤¬¤ê¤¬¤ê
- ¤Èºî¤ë¥¹¡¼¥Ñ¡¼¥Ï¥Ã¥«¡¼¤Ë¤Ê¤Ã¤¿»Ñ¤òÌÑÁÛ¤·¤Æ¤¤¤Þ¤¹¡£
+ Debian$B$NJY6/2q$H$$$&$3$H$G5f6KE*$K$O;22C<TA40w$,(BDebian Package$B$r$,$j$,$j(B
+ $B$H:n$k%9!<%Q!<%O%C%+!<$K$J$C$?;Q$rLQA[$7$F$$$^$9!#(B
 
- Debian¤ò¤³¤ì¤«¤é¤É¤¦¤¹¤ë¤È¤¤¤¦Ç½Æ°Åª¤ÊÅ¸³«¤Ø¤ÎÅÚÂæ¤È¤·¤Æ¤Î¶õ´Ö¤òÄó¶¡¤·¡¢
- ¾ðÊó¤Î¶¦Í­¤ò¤·¤¿¤¤¡¢¤È¤¤¤¦¤Î¤¬ÌÜÅª¤Ç¤¹¡£
+ Debian$B$r$3$l$+$i$I$&$9$k$H$$$&G=F0E*$JE83+$X$NEZBf$H$7$F$N6u4V$rDs6!$7!"(B
+ $B>pJs$N6&M-$r$7$?$$!"$H$$$&$N$,L\E*$G$9!#(B
 
 
 \newpage
 
 \begin{minipage}[b]{0.2\hsize}
  \definecolor{titleback}{gray}{0.9}
- \colorbox{titleback}{\rotatebox{90}{\fontsize{80}{80} {\gt ¥Ç¥Ó¥¢¥óÊÙ¶¯²ñ} }}
+ \colorbox{titleback}{\rotatebox{90}{\fontsize{80}{80} {\gt $B%G%S%"%sJY6/2q(B} }}
 \end{minipage}
 \begin{minipage}[b]{0.8\hsize}
 \hrule
@@ -214,324 +214,324 @@
 \hrule
 \end{minipage}
 
-\dancersection{ºÇ¶á¤ÎDebian´ØÏ¢¤Î¥ß¡¼¥Æ¥£¥ó¥°Êó¹ð}{¾åÀî½ã°ì}
+\dancersection{$B:G6a$N(BDebian$B4XO"$N%_!<%F%#%s%0Js9p(B}{$B>e@n=c0l(B}
 
-\subsection{Åìµþ¥¨¥ê¥¢DebianÊÙ¶¯²ñ28²óÌÜÊó¹ð}
+\subsection{$BEl5~%(%j%"(BDebian$BJY6/2q(B28$B2sL\Js9p(B}
 % (query-replace-regexp "<.*?>" "")
 % (query-replace-regexp "^[ 	]*" "")
 
-Åìµþ¥¨¥ê¥¢DebianÊÙ¶¯²ñ»²²ÃÊó¹ð¡£
-5·î¤ÎÂè28²óÅìµþ¥¨¥ê¥¢DebianÊÙ¶¯²ñ¤ò¼Â»Ü¤·¤Þ¤·¤¿¡£
+$BEl5~%(%j%"(BDebian$BJY6/2q;22CJs9p!#(B
+5$B7n$NBh(B28$B2sEl5~%(%j%"(BDebian$BJY6/2q$r<B;\$7$^$7$?!#(B
 
-º£²ó¤Î»²²Ã¼Ô¤Ï
-Á°ÅÄ¤µ¤ó¡¢¤ä¤Þ¤Í¤µ¤ó¡¢½Ð°æ¤µ¤ó¡¢kinneko¤µ¤ó¡¢
-hamano¤µ¤ó¡¢¾®¼¼¤µ¤ó¡¢ÎëÌÚ¤µ¤ó¡¢ÉðÆ£¤µ¤ó¡¢
-»³²¼¤µ¤ó¡¢¤¢¤±¤É¤µ¤ó¡¢´ä¾¾¤µ¤ó¡¢
-noriaki sato¤µ¤ó¡¢»³ËÜ¹ÀÇ·¤µ¤ó¡¢
-»³ÊÕµÁ¹§¤µ¤ó¡¢ËÜ¾±¤µ¤ó¡¢¥­¥¿¥Ï¥é¤µ¤ó¡¢
-ÎëÌÚË®ÃË¤µ¤ó¡¢¤¨¤È¡¼¤µ¤ó¡¢¹ÓÌÚ¤µ¤ó¡¢David Smith ¤µ¤ó¡¢
-Charles Plessy ¤µ¤ó¡¢¸åÆ£¤µ¤ó¡¢¾åÀî¤Î23 ¿Í¤Ç¤·¤¿¡£
+$B:#2s$N;22C<T$O(B
+$BA0ED$5$s!"$d$^$M$5$s!"=P0f$5$s!"(Bkinneko$B$5$s!"(B
+hamano$B$5$s!">.<<$5$s!"NkLZ$5$s!"IpF#$5$s!"(B
+$B;32<$5$s!"$"$1$I$5$s!"4d>>$5$s!"(B
+noriaki sato$B$5$s!";3K\9@G7$5$s!"(B
+$B;3JU5A9'$5$s!"K\>1$5$s!"%-%?%O%i$5$s!"(B
+$BNkLZK.CK$5$s!"$($H!<$5$s!"9SLZ$5$s!"(BDavid Smith $B$5$s!"(B
+Charles Plessy $B$5$s!"8eF#$5$s!">e@n$N(B23 $B?M$G$7$?!#(B
 
-ºÇ¶á¤Î¥¤¥Ù¥ó¥È¤Î¾Ò²ð¤È¤·¤Æ¡¢ºÇ½é¤ËÁ°²ó¤ÎÊó¹ð¤ò¹Ô¤¤¤Þ¤·¤¿¡£
-Á°²ó¤Ï¼çÍ×¤ÊÊ¬»¶¥Ð¡¼¥¸¥ç¥ó´ÉÍý¥Ä¡¼¥ë¤Ë¤Ä¤¤¤Æ¤ÎÆÃ½¸¤Ç¤·¤¿¡£
+$B:G6a$N%$%Y%s%H$N>R2p$H$7$F!":G=i$KA02s$NJs9p$r9T$$$^$7$?!#(B
+$BA02s$O<gMW$JJ,;6%P!<%8%g%s4IM}%D!<%k$K$D$$$F$NFC=8$G$7$?!#(B
 
-DWN¥¯¥¤¥º¤òº£²ó¤â¼Â»Ü¤·¤Þ¤·¤¿¡£
-Á´°÷¤Ëµ¯Î©¤·¤Æ¤â¤é¤¤¡¢¥°¡¼¡¦¥Á¥ç¥­¡¦¥Ñ¡¼¤ÇÁªÂò¤·¤Æ¤â¤é¤¤¤Þ¤·¤¿¡£
-1ÌäÌÜ¤Ï°ì¿Í¤·¤«Àµ²ò¤·¤Þ¤»¤ó¤Ç¤·¤¿¡£
-alioth ¤Ë¤Æ¡¢ git ¤ÏÀÎ¤«¤é¥µ¥Ý¡¼¥È¤µ¤ì¤Æ¤¤¤Æ¤ª¤ê¡¢º£²ó¥µ¥Ý¡¼¥È¤¬ÄÉ²Ã¤µ¤ì¤¿¤Î¤ÏMercurial¤Ç¤¹¡£
-¤·¤«¤¿¤Ê¤¤¤Î¤Ç¡¢2ÌäÌÜ¤«¤é¤·¤­¤ê¤Ê¤ª¤·¡¢ºÇ¸å¤Þ¤Ç4¿Í¤Û¤É¤Î¤³¤ê¤Þ¤·¤¿¡£
-¾¡¼Ô¤Ë¤Ï¾åÀî¤«¤é¤³¤³¤Ë¤Ï½ñ¤±¤Ê¤¤¤è¤¦¤Ê¹ë²Ú·ÊÉÊ¤òÂ£Äè¤·¤Þ¤·¤¿¡£¤ª¤á¤Ç¤È¤¦¤´¤¶¤¤¤Þ¤¹¡£
-
-
-¼¡¤Ë¡¢Debian Conference¤Ë¸þ¤±¤Æ¼Â»Ü¤·¤Æ¤¤¤ë½àÈ÷¤Î¾Ò²ð¤ò¹Ô¤¤¤Þ¤·¤¿¡£
-pbuilder ¤È superh ¤Ë¤Ä¤¤¤Æ¤Î¥×¥ì¥¼¥ó¥Æ¡¼¥·¥ç¥ó¤ò¹Ô¤¦¤³¤È¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤Î
-¤Ç¤¹¤¬¡¢¥ê¥Ï¡¼¥µ¥ë¤È¤·¤Æ¡¢DebianÊÙ¶¯²ñ¤Ë¤Æº£²óÆâÍÆ¤òÀâÌÀ¤·¤Þ¤·¤¿¡£
-
-ºÇ½é¤Ëpbuilder ¤Ë¤Ä¤¤¤Æ¾åÀî¤¬¾Ò²ð¤·¤Þ¤·¤¿¡£
-Debian ¥½¡¼¥¹¥Ñ¥Ã¥±¡¼¥¸¤ò½èÍý¤·¤Æ¥Ð¥¤¥Ê¥ê¤ò¤Ä¤¯¤ëºÝ¤Ë¡¢
-¥¯¥ê¡¼¥ó¥ë¡¼¥à´Ä¶­¤òÍøÍÑ¤¹¤ë¡¢¤½¤Î¼ê½ç¤ò¤Þ¤È¤á¤¿¥Ä¡¼¥ë¤Ç¤¹¡¢¤È¤¤¤¦¤³¤È¤ò¾Ò²ð¤·¤Þ¤·¤¿¡£
+DWN$B%/%$%:$r:#2s$b<B;\$7$^$7$?!#(B
+$BA40w$K5/N)$7$F$b$i$$!"%0!<!&%A%g%-!&%Q!<$GA*Br$7$F$b$i$$$^$7$?!#(B
+1$BLdL\$O0l?M$7$+@52r$7$^$;$s$G$7$?!#(B
+alioth $B$K$F!"(B git $B$O@N$+$i%5%]!<%H$5$l$F$$$F$*$j!":#2s%5%]!<%H$,DI2C$5$l$?$N$O(BMercurial$B$G$9!#(B
+$B$7$+$?$J$$$N$G!"(B2$BLdL\$+$i$7$-$j$J$*$7!":G8e$^$G(B4$B?M$[$I$N$3$j$^$7$?!#(B
+$B>!<T$K$O>e@n$+$i$3$3$K$O=q$1$J$$$h$&$J9k2Z7JIJ$rB#Dh$7$^$7$?!#$*$a$G$H$&$4$6$$$^$9!#(B
 
 
-¼¡¤Ë´ä¾¾¤µ¤ó¤¬ Debian ¤Î superh ¤Î°Ü¿¢ÈÇ¤Î¾Ò²ð¤ò¤·¤Æ¤¤¤Þ¤·¤¿¡£
-²áµî¤ÎÎò»Ë¤Ë¤Ä¤¤¤ÆÎÏ¤ò¤¤¤ì¤Æ¾Ò²ð¤·¤Æ¤¤¤Þ¤·¤¿¡£
+$B<!$K!"(BDebian Conference$B$K8~$1$F<B;\$7$F$$$k=`Hw$N>R2p$r9T$$$^$7$?!#(B
+pbuilder $B$H(B superh $B$K$D$$$F$N%W%l%<%s%F!<%7%g%s$r9T$&$3$H$K$J$C$F$$$k$N(B
+$B$G$9$,!"%j%O!<%5%k$H$7$F!"(BDebian$BJY6/2q$K$F:#2sFbMF$r@bL@$7$^$7$?!#(B
 
-kinneko ¤µ¤ó¤¬SH2AÈÇ¤Î¥Ý¡¼¥È¤ò¤ä¤Ã¤Æ¤¤¤ë¿Í¤â¤¤¤ë¤Î¤Ç¾Ò²ð¤¹¤ë¤Î¤¬¤è¤¤¤À¤í¤¦¤È¤¤¤¦»ØÅ¦¤ò¤·¤Þ¤·¤¿¡£
-
-¾åÀî¤Î´¶ÁÛ¤Ç¤¹¤¬¡¢Debconf¤Ç¾Ò²ð¤¹¤ëÌÜÅª¤È¤·¤Æ¡¢¿·¤·¤¤³«È¯
-¼Ô¤òÊç½¸¤¹¤ë¤Î¤¬ÌÜÅª¤Ê¤Î¤Ç¤¢¤ì¤Ð¡¢Îò»Ë¤Ë¤Ä¤¤¤Æ¤Ï´ÊÃ±¤Ë¤Þ¤È
-¤á¤Æ¤·¤Þ¤Ã¤Æ¡¢SuperH¤Î³«È¯¤Ë»È¤¨¤ëµ¡¼ï¤Î¾ðÊó¤ä²¿¤¬ÌÌÇò¤¤¤Î
-¤«¡¢¸½¾õ¤Î¥Ý¡¼¥È¤Î¥¹¥Æ¡¼¥¿¥¹¡¢Ï¢ÍíÀè¤ä¥ì¥Ý¥¸¥È¥ê¤ä¥¦¥§¥Ö¥µ
-¥¤¥È¤Î¾ðÊó¡¢¤É¤¦¤¤¤¦²ÝÂê¤¬¤¢¤ë¤Î¤«¤ËÎÏ¤ò¤¤¤ì¤Æ¾Ò²ð¤¹¤ë¤Î¤¬
-¤è¤¤¤Î¤Ç¤Ï¤Ê¤¤¤«¤È¤¤¤¦°õ¾Ý¤ò¤¦¤±¤Þ¤·¤¿¡£
-
-¾®¼¼¤µ¤ó¤¬¤½¤Î¸å¤Ë¡Ö¥µ¡¼¥Ð¤ò¥¨¥Ã¥Á¤Ë¤·¤Æ¤ß¤Þ¤·¤¿¡×¤È¤¤¤¦Âê
-¤Ç¥Í¥¿¤òÈäÏª¤·¤Þ¤·¤¿¡£¤¤¤í¤¤¤í¤È¥È¥é¥Ö¥ë¤¬¤¢¤ê¤½¤ì¤ò²ò·è¤·
-¤Þ¤·¤¿¡¢¤È¤¤¤¦¤³¤È¤À¤Ã¤¿¤Î¤Ç¤¹¤¬¡¢¡Ö¥¨¥Ã¥Á¤Ë¥¢¥Ã¥×¥°¥ì¡¼¥É
-¤¹¤ë¤Î¤Ï´ÊÃ±¤À¤È¤¤¤¦¤³¤È¤¬¤ï¤«¤ê¤Þ¤·¤¿¡×¤È¤¤¤¦¤Î¤ÇÏÃ¤ò¤·¤á
-¤¿¤Î¤Ç°ìÆ±Çú¾Ð¤·¤Þ¤·¤¿¡£
+$B:G=i$K(Bpbuilder $B$K$D$$$F>e@n$,>R2p$7$^$7$?!#(B
+Debian $B%=!<%9%Q%C%1!<%8$r=hM}$7$F%P%$%J%j$r$D$/$k:]$K!"(B
+$B%/%j!<%s%k!<%`4D6-$rMxMQ$9$k!"$=$N<j=g$r$^$H$a$?%D!<%k$G$9!"$H$$$&$3$H$r>R2p$7$^$7$?!#(B
 
 
-¤¤¤Ä¤â¤È¥¿¥¤¥ß¥ó¥°¤òÊÑ¤¨¤Æ¤ß¤Æ¡¢¤½¤Î¸å¤Ë»öÁ°²ÝÂê¤Î¾Ò²ð¤ò¹Ô
-¤¤¤Þ¤·¤¿¡£ÆâÍÆ¤Ï¡Ö¥¨¥Ã¥Á¤Ë¤Ê¤Ã¤Æº¤¤Ã¤¿»ö¡×¤Ë¤·¤Æ¤ß¤Þ¤·¤¿¡£
-¤ß¤ó¤Ê¤¤¤í¤¤¤í¤È»×¤¦¤È¤³¤í¤¬¤¢¤ë¤è¤¦¤ÇµÄÏÀ¤¬Ê¨Æ­¤·¤Þ¤·¤¿¡£
-webmin¤¬¤Ê¤¯¤Ê¤Ã¤¿¤³¤È¡¢xlock ¤¬¤Ê¤¤¤³¤È¡¢xorg ¤Ë¤Ê¤Ã¤Æ¤·
-¤Þ¤¤ÀßÄê¤¬Âç¤­¤¯ÊÑ¤ï¤Ã¤Æ¤¤¤ë¤³¤È¡¢udev ¤Î»È¤¤¤«¤¿¤¬¤è¤¯¤ï
-¤«¤é¤Ê¤¤¤³¤È¡¢¥«¡¼¥Í¥ë¤¬¥¢¥Ã¥×¥°¥ì¡¼¥É¤¹¤ë¤Î¤Ç¥«¡¼¥Í¥ë´ØÏ¢
-¤ÎÌäÂê¡ÊACPI¤Ê¤É¡Ë¤Ë¤Ö¤Ä¤«¤ë²ÄÇ½À­¤¬¤¢¤ë¤³¤È¡¢¤Ê¤É¤¬ÏÃÂê¤Ë
-¤Ç¤Þ¤·¤¿¡£/var/lock/apache2/ ¤Î¸¢¸Â¤¬ www-data ¤Ç¤Ï¤Ê¤¯ 
-root ¤Ë¤Ê¤Ã¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¤Î¤Ç webdav ¤Ç½ñ¤­¹þ¤á¤Ê¤¤¤³¤È¤Ê
-¤É¤¬¾Ò²ð¤µ¤ì¤Æ¤¤¤Þ¤·¤¿(\debianbug{420101})¡£
-apt-setup ¤¬ºï½ü¤µ¤ì¤Æ¤¤¤ë¤Î¤â»ÅÍÍ¤Ç¤¹¤Í¡£CUI¤Ç sources.list ¤òÊÔ½¸¤¹¤ë¥Ä¡¼¥ë¤¬¤¢¤ë¤Î¤«¡©¤È¤¤¤¦ÏÃÂê¤¬½Ð¤Þ¤·¤¿¤¬¡¢ vi ¤ò¤Ä¤«¤¨¡¢¤È¡£
+$B<!$K4d>>$5$s$,(B Debian $B$N(B superh $B$N0\?"HG$N>R2p$r$7$F$$$^$7$?!#(B
+$B2a5n$NNr;K$K$D$$$FNO$r$$$l$F>R2p$7$F$$$^$7$?!#(B
 
-¥¨¥Ã¥Á¤Ë¥¢¥Ã¥×¥°¥ì¡¼¥É¤¹¤ëºÝ¤Ë¡¢¤É¤¦¤ä¤Ã¤Æ¤ß¤ó¤Ê¤Ï¾ðÊó¤ò¤¨
-¤Æ¤¤¤Æ¡¢¤É¤¦¤¤¤¦¤Õ¤¦¤Ë¾ðÊó¤òÄó¶¡¤·¤Æ¤¤¤ë¤Î¤À¤í¤¦¡¢¤È¤¤¤¦ÏÃ
-¤ò¤·¤Þ¤·¤¿¡£¥ê¥ê¡¼¥¹¥Î¡¼¥È¤òÆÉ¤à¤À¤È¤«¡¢¥Ð¥°¥ì¥Ý¡¼¥È¤òÃµ¤¹
-¤À¤È¤«¡¢ML¤ËÅê¹Æ¤¹¤ë¤À¤È¤«¡¢·úÁ°¤Ï¤ª¤¤¤Æ¤ª¤¤¤Æ¡¢¸½¼Â¤Î¥Õ¥í¡¼
-¤¬¤É¤¦¤Ê¤Ã¤Æ¤¤¤ë¤Î¤«¤ò¸ì¤Ã¤Æ¤ß¤Þ¤·¤¿¡£¤É¤¦¤ä¤é¡¢ÌäÂê¤¬¤¢¤ì
-¤ÐIRC¤Ç¤Þ¤º¼ÁÌä¤·¤Æ¤ß¤Æ¡¢google ¤Ç¸¡º÷¤·¤Æ¤ß¤Æ¡¢¤¤¤í¤¤¤í¤È
-¤¿¤á¤·¤¿·ë²Ì¤ò blog ¤Ë½ñ¤¤¤Æ¤¤¤ë¡¢¤È¤¤¤¦¤Î¤¬¸½¼ÂÅª¤Ê¤è¤¦¤Ç
-¤¹¡£¤½¤·¤Æ¡¢2ch ¤Ê¤É¤ÇÆ±ÍÍ¤Î¼ÁÌä¤¬¤µ¤ì¤¿¤é¡¢ blog¤Ç½ñ¤«¤ì
-¤Æ¤¤¤ëÆâÍÆ¤ò¤Þ¤È¤á¤Ê¤ª¤·¤Æ¥¹¥ì¥Ã¥É¥Æ¥ó¥×¥ì¤Ë¤Þ¤È¤á¤Ê¤ª¤µ¤ì
-¤ë¤È¤¤¤¦Î®¤ì¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤è¤¦¤Ç¤¹¡£¸À¸ì¤¬±Ñ¸ì¤Ç¤¢¤ëÅÀ¤Ê¤É¤«
-¤éBTS¤ÏÉßµï¤Î¹â¤¯´¶¤¸¤Æ¤¤¤ë¿Í¤¬Â¿¤¤¤è¤¦¤Ç¡¢¤Þ¤¿Ê£¹çÅª¤ÊÌä
-Âê¤Ï¥Ñ¥Ã¥±¡¼¥¸Ã±°Ì¤Ç¤·¤«ÅÐÏ¿¤Ç¤­¤Ê¤¤BTS¤Ë¤Ï¤½¤°¤ï¤Ê¤¤¤¿¤á¡¢
-¤½¤¦¤¤¤¦¾ðÊó¤ÎÎ®¤ì¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤è¤¦¤Ç¤¹¡£¸½¼Â¤ò¸«¿ø¤¨¤Æº£¸å
-¤É¤¦¤·¤Æ¤¤¤¯¤Ù¤­¤«¡¢Çº¤Þ¤·¤¤¤È¤³¤í¤Ç¤¹¡£
+kinneko $B$5$s$,(BSH2A$BHG$N%]!<%H$r$d$C$F$$$k?M$b$$$k$N$G>R2p$9$k$N$,$h$$$@$m$&$H$$$&;XE&$r$7$^$7$?!#(B
 
-º£²ó¤Ï±ã²ñ¤Ï
-»þ¤Îµï¼ò²°  ¹ï¡¡²®·¦Å¹
-¤Ë¤Æ³«ºÅ¤·¤Þ¤·¤¿¡£
-ÎÁÍý¤¬¤ª¤¤¤·¤«¤Ã¤¿¤Ç¤¹¡£
+$B>e@n$N46A[$G$9$,!"(BDebconf$B$G>R2p$9$kL\E*$H$7$F!"?7$7$$3+H/(B
+$B<T$rJg=8$9$k$N$,L\E*$J$N$G$"$l$P!"Nr;K$K$D$$$F$O4JC1$K$^$H(B
+$B$a$F$7$^$C$F!"(BSuperH$B$N3+H/$K;H$($k5!<o$N>pJs$d2?$,LLGr$$$N(B
+$B$+!"8=>u$N%]!<%H$N%9%F!<%?%9!"O"Mm@h$d%l%]%8%H%j$d%&%'%V%5(B
+$B%$%H$N>pJs!"$I$&$$$&2]Bj$,$"$k$N$+$KNO$r$$$l$F>R2p$9$k$N$,(B
+$B$h$$$N$G$O$J$$$+$H$$$&0u>]$r$&$1$^$7$?!#(B
+
+$B>.<<$5$s$,$=$N8e$K!V%5!<%P$r%(%C%A$K$7$F$_$^$7$?!W$H$$$&Bj(B
+$B$G%M%?$rHdO*$7$^$7$?!#$$$m$$$m$H%H%i%V%k$,$"$j$=$l$r2r7h$7(B
+$B$^$7$?!"$H$$$&$3$H$@$C$?$N$G$9$,!"!V%(%C%A$K%"%C%W%0%l!<%I(B
+$B$9$k$N$O4JC1$@$H$$$&$3$H$,$o$+$j$^$7$?!W$H$$$&$N$GOC$r$7$a(B
+$B$?$N$G0lF1Gz>P$7$^$7$?!#(B
+
+
+$B$$$D$b$H%?%$%_%s%0$rJQ$($F$_$F!"$=$N8e$K;vA02]Bj$N>R2p$r9T(B
+$B$$$^$7$?!#FbMF$O!V%(%C%A$K$J$C$F:$$C$?;v!W$K$7$F$_$^$7$?!#(B
+$B$_$s$J$$$m$$$m$H;W$&$H$3$m$,$"$k$h$&$G5DO@$,J(F-$7$^$7$?!#(B
+webmin$B$,$J$/$J$C$?$3$H!"(Bxlock $B$,$J$$$3$H!"(Bxorg $B$K$J$C$F$7(B
+$B$^$$@_Dj$,Bg$-$/JQ$o$C$F$$$k$3$H!"(Budev $B$N;H$$$+$?$,$h$/$o(B
+$B$+$i$J$$$3$H!"%+!<%M%k$,%"%C%W%0%l!<%I$9$k$N$G%+!<%M%k4XO"(B
+$B$NLdBj!J(BACPI$B$J$I!K$K$V$D$+$k2DG=@-$,$"$k$3$H!"$J$I$,OCBj$K(B
+$B$G$^$7$?!#(B/var/lock/apache2/ $B$N8"8B$,(B www-data $B$G$O$J$/(B 
+root $B$K$J$C$F$7$^$C$F$$$k$N$G(B webdav $B$G=q$-9~$a$J$$$3$H$J(B
+$B$I$,>R2p$5$l$F$$$^$7$?(B(\debianbug{420101})$B!#(B
+apt-setup $B$,:o=|$5$l$F$$$k$N$b;EMM$G$9$M!#(BCUI$B$G(B sources.list $B$rJT=8$9$k%D!<%k$,$"$k$N$+!)$H$$$&OCBj$,=P$^$7$?$,!"(B vi $B$r$D$+$(!"$H!#(B
+
+$B%(%C%A$K%"%C%W%0%l!<%I$9$k:]$K!"$I$&$d$C$F$_$s$J$O>pJs$r$((B
+$B$F$$$F!"$I$&$$$&$U$&$K>pJs$rDs6!$7$F$$$k$N$@$m$&!"$H$$$&OC(B
+$B$r$7$^$7$?!#%j%j!<%9%N!<%H$rFI$`$@$H$+!"%P%0%l%]!<%H$rC5$9(B
+$B$@$H$+!"(BML$B$KEj9F$9$k$@$H$+!"7zA0$O$*$$$F$*$$$F!"8=<B$N%U%m!<(B
+$B$,$I$&$J$C$F$$$k$N$+$r8l$C$F$_$^$7$?!#$I$&$d$i!"LdBj$,$"$l(B
+$B$P(BIRC$B$G$^$:<ALd$7$F$_$F!"(Bgoogle $B$G8!:w$7$F$_$F!"$$$m$$$m$H(B
+$B$?$a$7$?7k2L$r(B blog $B$K=q$$$F$$$k!"$H$$$&$N$,8=<BE*$J$h$&$G(B
+$B$9!#$=$7$F!"(B2ch $B$J$I$GF1MM$N<ALd$,$5$l$?$i!"(B blog$B$G=q$+$l(B
+$B$F$$$kFbMF$r$^$H$a$J$*$7$F%9%l%C%I%F%s%W%l$K$^$H$a$J$*$5$l(B
+$B$k$H$$$&N.$l$K$J$C$F$$$k$h$&$G$9!#8@8l$,1Q8l$G$"$kE@$J$I$+(B
+$B$i(BBTS$B$OI_5o$N9b$/46$8$F$$$k?M$,B?$$$h$&$G!"$^$?J#9gE*$JLd(B
+$BBj$O%Q%C%1!<%8C10L$G$7$+EPO?$G$-$J$$(BBTS$B$K$O$=$0$o$J$$$?$a!"(B
+$B$=$&$$$&>pJs$NN.$l$K$J$C$F$$$k$h$&$G$9!#8=<B$r8+?x$($F:#8e(B
+$B$I$&$7$F$$$/$Y$-$+!"G:$^$7$$$H$3$m$G$9!#(B
+
+$B:#2s$O1c2q$O(B
+$B;~$N5o<r20(B  $B9o!!2.7&E9(B
+$B$K$F3+:E$7$^$7$?!#(B
+$BNAM}$,$*$$$7$+$C$?$G$9!#(B
 
 
 \dancersection{Debconf 2007}{}
-\subsection{6·î16Æü}
+\subsection{6$B7n(B16$BF|(B}
 \subsubsection{simple-CDD}
 
-CDD ¤ò´ÊÃ±¤Ë½àÈ÷¤Ç¤­¤ë»ÅÁÈ¤ß¡£reprepro ¤ò»È¤Ã¤Æ¥ß¥é¡¼¤òºîÀ®¤·¤Æ¤¤¤ë¡£
-debpartial ¤Ê¤É¤Ï¤¦¤Þ¤¯¤¦¤´¤«¤Ê¤¤¤³¤È¤¬Â¿¤«¤Ã¤¿¤é¤·¤¤¡£²ñ¾ì¤«¤é¤Ï¤Ê¤¼
-aptitude ¤È¤«¤òÍøÍÑ¤·¤Ê¤¤¤Î¤«¤È¤¤¤¦¼ÁÌä¤Ï½Ð¤¿¤¬¡¢¤½¤³¤Þ¤Ç¸¡Æ¤¤·¤Æ¤¤¤Ê¤¤¡¢
-¤È¤Î¤³¤È¡£
+CDD $B$r4JC1$K=`Hw$G$-$k;EAH$_!#(Breprepro $B$r;H$C$F%_%i!<$r:n@.$7$F$$$k!#(B
+debpartial $B$J$I$O$&$^$/$&$4$+$J$$$3$H$,B?$+$C$?$i$7$$!#2q>l$+$i$O$J$<(B
+aptitude $B$H$+$rMxMQ$7$J$$$N$+$H$$$&<ALd$O=P$?$,!"$=$3$^$G8!F$$7$F$$$J$$!"(B
+$B$H$N$3$H!#(B
 
---qemu ¥ª¥×¥·¥ç¥ó¤ò»ØÄê¤·¤¿¤é
-¥¤¥á¡¼¥¸¤òºîÀ®¤·¤Æ qemu ¤Ç¥Æ¥¹¥È¤¹¤ë¤È¤³¤í¤Þ¤Ç¤·¤Æ¤¯¤ì¤ë¤½¤¦¤Ê¡£
+--qemu $B%*%W%7%g%s$r;XDj$7$?$i(B
+$B%$%a!<%8$r:n@.$7$F(B qemu $B$G%F%9%H$9$k$H$3$m$^$G$7$F$/$l$k$=$&$J!#(B
 
-build-simple-cdd ¥³¥Þ¥ó¥É¤ò»È¤¨¤Ð¤è¤¤¡£
+build-simple-cdd $B%3%^%s%I$r;H$($P$h$$!#(B
 
 % yabuki wrote
 \subsubsection{64studio}
-Debian ¥Ù¡¼¥¹¤Î²»³Ú´Ø·¸¤Î¥½¥Õ¥È¥¦¥§¥¢¤ò¼ýÏ¿¤·¤¿CDD(Common Debian
-Distribution)¤Ç¤¹¡£³Æ²»¸»¤òÁÈ¤ß¹ç¤ï¤»¤Æ¡¢²»¤òÁÈ¤ß¾å¤²¤Æ¤¤¤¯Jack¤È¤¤¤¦¥×
-¥í¥°¥é¥à¤ÎÀâÌÀ¤Ê¤É¤ò¤·¤Æ¤¤¤¿¡£½ÐÎÏÆÃÀ­¤Ï¥Õ¥ê¡¼¥Ï¥ó¥É¤ÇÊÑ¤¨¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
-¤Þ¤¿¡¢PC¤Î¥­¡¼¥Ü¡¼¥É¤ò¤Ä¤«¤Ã¤Æ¡¢(¸°È×¤Î)¥­¡¼¥Ü¡¼¥É¤ò»È¤Ã¤Æ±éÁÕ¤¹¤ë
-¤³¤È¤â¤Ç¤­¤ë¡£
+Debian $B%Y!<%9$N2;3Z4X78$N%=%U%H%&%'%"$r<}O?$7$?(BCDD(Common Debian
+Distribution)$B$G$9!#3F2;8;$rAH$_9g$o$;$F!"2;$rAH$_>e$2$F$$$/(BJack$B$H$$$&%W(B
+$B%m%0%i%`$N@bL@$J$I$r$7$F$$$?!#=PNOFC@-$O%U%j!<%O%s%I$GJQ$($k$3$H$,$G$-$k!#(B
+$B$^$?!"(BPC$B$N%-!<%\!<%I$r$D$+$C$F!"(B($B80HW$N(B)$B%-!<%\!<%I$r;H$C$F1iAU$9$k(B
+$B$3$H$b$G$-$k!#(B
 
 
-\subsection{6·î17Æü}
+\subsection{6$B7n(B17$BF|(B}
 \subsubsection{Welcome talk}
-³«²ñ¤Î°§»¢¡£¥¹¥Ý¥ó¥µ¡¼¤È³«ºÅ¤Ë¤«¤«¤ï¤Ã¤Æ¤¯¤ì¤¿¿Í¤¿¤Á¤Ø¤Î´¶¼Õ¤Î¥³¥á¥ó¥È¤ò
-¹Ô¤Ã¤¿¡£Èó¾ï¤Ë¥·¥ó¥×¥ë¤Ë½ª¤ï¤Ã¤¿³«²ñ¼°¤À¤Ã¤¿¡£
+$B3+2q$N0';"!#%9%]%s%5!<$H3+:E$K$+$+$o$C$F$/$l$??M$?$A$X$N46<U$N%3%a%s%H$r(B
+$B9T$C$?!#Hs>o$K%7%s%W%k$K=*$o$C$?3+2q<0$@$C$?!#(B
 	
 \subsubsection{About porting SuperH for Debian}
-Renesas ¼ÒÀ½ CPU SuperH ¤Î Debian ¤Ø¤Î¥Ý¡¼¥Æ¥£¥ó¥°¤ÎÏÃ¡£
-SuperH ¤ò Debian ¤Ë¥Ý¡¼¥Æ¥£¥ó¥°¤·¤Æ¤¤¤ëÅÓÃæ·Ð²á¤È¸½ºßÈ¯À¸¤·¤Æ¤¤¤ëÌäÂê¡¢
-º£¸å¤Î²ÝÂê¤Ë¤Ä¤¤¤ÆÏÃ¤·¹ç¤Ã¤¿¡£ÁÈ¹þ¤ß´Ø·¸¤Î¿Í¤¬¤­¤Æ¤¯¤ì¤Æ¤¤¤¿¤¬¡¢¤ß¤Ê ARM ¤Ë¤«¤«¤ï¤Ã¤Æ¤¤¤ë¤Î¤Ç
-½õ¤±¤Æ¤¯¤ì¤Ê¤µ¤½¤¦¡£
+Renesas $B<R@=(B CPU SuperH $B$N(B Debian $B$X$N%]!<%F%#%s%0$NOC!#(B
+SuperH $B$r(B Debian $B$K%]!<%F%#%s%0$7$F$$$kESCf7P2a$H8=:_H/@8$7$F$$$kLdBj!"(B
+$B:#8e$N2]Bj$K$D$$$FOC$79g$C$?!#AH9~$_4X78$N?M$,$-$F$/$l$F$$$?$,!"$_$J(B ARM $B$K$+$+$o$C$F$$$k$N$G(B
+$B=u$1$F$/$l$J$5$=$&!#(B
 
 
-\subsection{6·î18Æü}
+\subsection{6$B7n(B18$BF|(B}
 
 \subsubsection{bugs.debian.org and debbugs}
 
 
 
 \subsubsection{Embedded Debian}
-Debian ¤ÎÁÈ¹þ¤ß¸þ¤±¥×¥í¥¸¥§¥¯¥È Emdebain ¤ÎÏÃ¡£
-º£¤Þ¤Ç¹Ô¤Ã¤Æ¤­¤¿ÊýË¡¤ÎÀâÌÀ¤È·ë²Ì¤òÊó¹ð¤·¡¢º£¸å¤ÎÊý¸þÀ­¤Ë¤Ä¤¤¤ÆÏÃ¤·¤¿¡£
-¸½ºß¤Î ftp-master Ã£¤Ë¤Ï¥¯¥í¥¹¥Ó¥ë¥É¤Ï¼õ¤±ÉÕ¤±¤Æ¤¯¤ì¤Ê¤¤¡£¤³¤ì¤ÎÌäÂê
-¤ò²ò·è¤¹¤ë¤¿¤á¤Ë¥Ñ¥Ã¥±¡¼¥¸¤Ë¥¿¥°¤òÉÕ¤±¤¿¤ê¤·¤ÆÂÐºö¤¹¤ëÍ½Äê¤È¤Î¤³¤È¡£
-Embedded ÍÑ¤Î¥Ä¡¼¥ë¤âÍÑ°Õ¤·¤Æ¤ª¤ê¡¢¤³¤ì¤é¤ò»È¤Ã¤Æ¥¯¥í¥¹¥Ó¥ë¥É¤Ç¤­¤ë¤è¤¦¤Ë¤Ê¤Ã¤¿¡£
-¤·¤«¤·¡¢Á´¤Æ¤Î¥Ñ¥Ã¥±¡¼¥¸¤Ï¥Á¥§¥Ã¥¯¤·¤Æ¤ª¤é¤º¡¢
+Debian $B$NAH9~$_8~$1%W%m%8%'%/%H(B Emdebain $B$NOC!#(B
+$B:#$^$G9T$C$F$-$?J}K!$N@bL@$H7k2L$rJs9p$7!":#8e$NJ}8~@-$K$D$$$FOC$7$?!#(B
+$B8=:_$N(B ftp-master $BC#$K$O%/%m%9%S%k%I$O<u$1IU$1$F$/$l$J$$!#$3$l$NLdBj(B
+$B$r2r7h$9$k$?$a$K%Q%C%1!<%8$K%?%0$rIU$1$?$j$7$FBP:v$9$kM=Dj$H$N$3$H!#(B
+Embedded $BMQ$N%D!<%k$bMQ0U$7$F$*$j!"$3$l$i$r;H$C$F%/%m%9%S%k%I$G$-$k$h$&$K$J$C$?!#(B
+$B$7$+$7!"A4$F$N%Q%C%1!<%8$O%A%'%C%/$7$F$*$i$:!"(B
 make check\\
-¤ä
+$B$d(B
 make nodocs , make nocheck\\ 
-¤ò»È¤¦¤è¤¦¤Ë½¤Àµ¤¹¤ëÉ¬Í×¤¬¤¢¤ë¤³¤È¤òÄó°Æ¤·¤¿¡£ 
-¤½¤ÎÂ¾¤ÎÌäÂê¤Ï¸åÆü¹Ô¤ï¤ì¤¿ BOF ¤ÇµÄÏÀ¤µ¤ì¤¿¡£
+$B$r;H$&$h$&$K=$@5$9$kI,MW$,$"$k$3$H$rDs0F$7$?!#(B 
+$B$=$NB>$NLdBj$O8eF|9T$o$l$?(B BOF $B$G5DO@$5$l$?!#(B
 
 \subsubsection{Debian Live}
- Debian¤Î¥µ¥Ö¥×¥í¥¸¥§¥¯¥È¤È¤·¤Æ³èÆ°¤·¤Æ¤¤¤ë¡£¥Ä¡¼¥ë¤òUbuntu¤Îcasper¤«¤é
- fork¤·¤ÆºîÀ®¡£¹ñºÝ²½¤â¹ñ¥³¡¼¥É¤ä¥­¡¼¥Ü¡¼¥É¤òÆþ¤ì¤ë¤è¤¦¤Ë¤¹¤ë¤ß¤¿¤¤¡£¼«
- Ê¬¤Ç²ñ¼Ò¤ò¶½¤·¤Æ¡¢¥­¥è¥¹¥¯¥·¥¹¥Æ¥à¤Î¤¿¤á¤Ë³«È¯¤ò¤·¤¿¤È¤Î¤³¤È¡£¤Þ¤¿¡¢usb
- ¥Ö¡¼¥È¤Ê¤É¤â¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤ë¤Î¤Ç¡¢¥³¥ó¥Ô¥å¡¼¥¿ËÜÂÎ¤Ë¾ðÊó¤¬»Ä¤é¤Ê¤¤¤Î¤Ç¡¢
- ¶ä¹Ô¤Ê¤É¤«¤é¤â°ú¹ç¤¬¤¢¤ë¤ÈÏÃ¤·¤Æ¤¤¤¿¡£¤³¤Á¤é¤«¤éi18n¤Î¼ÁÌä¤ò¤·¤¿¤é¡¢Æü
- ËÜ¤ËÂÐ¤¹¤ë»Ô¾ì¤Ë¶½Ì£¤¬¤¢¤ë¤è¤¦¤Ç¡¢¤¢¤È¤Ç¡¢¤¹¤Ç¤Ëºî¤Ã¤Æ¤¢¤Ã¤¿ÆüËÜÍÑ¤ÎCD
- ¥¤¥á¡¼¥¸¤ò¸«¤»¤Æ¤¯¤ì¤¿¡£
+ Debian$B$N%5%V%W%m%8%'%/%H$H$7$F3hF0$7$F$$$k!#%D!<%k$r(BUbuntu$B$N(Bcasper$B$+$i(B
+ fork$B$7$F:n@.!#9q:]2=$b9q%3!<%I$d%-!<%\!<%I$rF~$l$k$h$&$K$9$k$_$?$$!#<+(B
+ $BJ,$G2q<R$r6=$7$F!"%-%h%9%/%7%9%F%`$N$?$a$K3+H/$r$7$?$H$N$3$H!#$^$?!"(Busb
+ $B%V!<%H$J$I$b%5%]!<%H$7$F$$$k$N$G!"%3%s%T%e!<%?K\BN$K>pJs$,;D$i$J$$$N$G!"(B
+ $B6d9T$J$I$+$i$b0z9g$,$"$k$HOC$7$F$$$?!#$3$A$i$+$i(Bi18n$B$N<ALd$r$7$?$i!"F|(B
+ $BK\$KBP$9$k;T>l$K6=L#$,$"$k$h$&$G!"$"$H$G!"$9$G$K:n$C$F$"$C$?F|K\MQ$N(BCD
+ $B%$%a!<%8$r8+$;$F$/$l$?!#(B
 
- http://download.webconverger.com/i18n/jp/webc-2.21.jp.iso ¤«¤é¥À¥¦¥ó¥í¡¼
- ¥É¤Ç¤­¤ë¡£
+ http://download.webconverger.com/i18n/jp/webc-2.21.jp.iso $B$+$i%@%&%s%m!<(B
+ $B%I$G$-$k!#(B
 
 
 \subsubsection{Debian Armel Port}
-Armel ¤Î Debian ¤Ø¤Î¥Ý¡¼¥Æ¥£¥ó¥°¤ÎÏÃ¡£
+Armel $B$N(B Debian $B$X$N%]!<%F%#%s%0$NOC!#(B
 
 \subsubsection{OpenStreetMap}
-Free¤ÊÃÏ¿Þ¤ò¤Ä¤¯¤ë¤¿¤á¤Î¥×¥í¥¸¥§¥¯¥È¤ÎÏÃ¡£
-Google Map ¤¬¤¢¤ë¤¬¡¢¤¢¤ì¤Ï Free ¤Ç¤Ï¤Ê¤¤¡£GPS Åù¤ò»È¤Ã¤Æ¡¢¼«Í³¤Ë°·¤¨¤ëÃÏ¿Þ¤ò¤Ä¤¯¤ë
-¤È¤¤¤¦ÌÜÅª¡£¥é¥¤¥»¥ó¥¹¤Ï Creative Common.
+Free$B$JCO?^$r$D$/$k$?$a$N%W%m%8%'%/%H$NOC!#(B
+Google Map $B$,$"$k$,!"$"$l$O(B Free $B$G$O$J$$!#(BGPS $BEy$r;H$C$F!"<+M3$K07$($kCO?^$r$D$/$k(B
+$B$H$$$&L\E*!#%i%$%;%s%9$O(B Creative Common.
 
 \subsubsection{Wacky Ideas II}
-  Wacky Ideas ¤È¤¤¤¦¤Î¤Ï¡¢¤³¤ó¤ÊÀ¨¤¤¤³¤È¹Í¤¨ÉÕ¤¤¤Á¤ã¤Ã¤¿¤¼¤È¤¤¤¦¤Î¤ò¡¢¥Ç¥£
-  ¥¹¥«¥Ã¥·¥ç¥ó¤·¤Æ¤Þ¤È¤â¤Ê¤â¤Î¤Ë¤·¤Æ¤¤¤¯¡¢¥Ö¥ì¡¼¥ó¥¹¥È¡¼¥ß¥ó¥°·Ï¤Î¥»¥Ã¥·¥ç
-  ¥ó¤Ç¤¢¤ë¡£
+  Wacky Ideas $B$H$$$&$N$O!"$3$s$J@($$$3$H9M$(IU$$$A$c$C$?$<$H$$$&$N$r!"%G%#(B
+  $B%9%+%C%7%g%s$7$F$^$H$b$J$b$N$K$7$F$$$/!"%V%l!<%s%9%H!<%_%s%07O$N%;%C%7%g(B
+  $B%s$G$"$k!#(B
 
-  ¸ý²Ð¤È¤·¤Æ¡¢ian jackson ¤Ë¤è¤ë upstream, ¥Ç¥£¥¹¥È¥ê¥Ó¥å¡¼¥·¥ç¥ó, ÇÉÀ¸
-  ¥Ç¥£¥¹¥È¥ê¥Ó¥å¡¼¥·¥ç¥ó¤ÇÌµÂÌ¤Ê¤³¤È¤·¤Æ¤Ê¤¤¤«? ¤³¤ì¤é¤òÊñ³ç¤¹¤ë¤è¤¦¤Ê
-  VCS(Version Control System)¤Ã¤Æºî¤ì¤Ê¤¤¤«? ¤Ã¤ÆÏÃ¡£
+  $B8}2P$H$7$F!"(Bian jackson $B$K$h$k(B upstream, $B%G%#%9%H%j%S%e!<%7%g%s(B, $BGI@8(B
+  $B%G%#%9%H%j%S%e!<%7%g%s$GL5BL$J$3$H$7$F$J$$$+(B? $B$3$l$i$rJq3g$9$k$h$&$J(B
+  VCS(Version Control System)$B$C$F:n$l$J$$$+(B? $B$C$FOC!#(B
 
-  ¼¡¤Ï¡¢Ubuntu ¤Î¸À¸ì¥Ñ¥Ã¥¯¤Î¤è¤¦¤Ë¡¢ËÝÌõ deb¤òºî¤ë¤Ù¤­¤«¤È¸À¤¦ÏÃÂê¤Ï¡¢
-  ËÝÌõ¤ÎÉôÊ¬¤¬¾®¤µ¤¤¤Î¤Ç¤¢¤ì¤Ð¥ª¡¼¥Ð¥Ø¥Ã¥É¤¬Âç¤­¤¹¤®¤ë¡£¤½¤Î¤¿¤á¥Ñ¥Ã¥±¡¼
-  ¥¸¤ò¤Þ¤È¤á¤Æ°·¤¦¤³¤È¤Ë¤Ê¤ë¡£¶ËÃ¼¤Ê¤ä¤êÊý¤È¤·¤Æ Ubuntu ¤Ï¡¢(1¤Ä¤Ç)100MB
-  ¤Î¥Ñ¥Ã¥±¡¼¥¸¤È¤·¤ÆÂÐ½è¤·¤Æ¤¤¤ë¡£
+  $B<!$O!"(BUbuntu $B$N8@8l%Q%C%/$N$h$&$K!"K]Lu(B deb$B$r:n$k$Y$-$+$H8@$&OCBj$O!"(B
+  $BK]Lu$NItJ,$,>.$5$$$N$G$"$l$P%*!<%P%X%C%I$,Bg$-$9$.$k!#$=$N$?$a%Q%C%1!<(B
+  $B%8$r$^$H$a$F07$&$3$H$K$J$k!#6KC<$J$d$jJ}$H$7$F(B Ubuntu $B$O!"(B(1$B$D$G(B)100MB
+  $B$N%Q%C%1!<%8$H$7$FBP=h$7$F$$$k!#(B
 
-\subsection{6·î19Æü}
+\subsection{6$B7n(B19$BF|(B}
 \subsubsection{Debian virtualization support}
-Debian ¤Ç¤Î²¾ÁÛ²½¥Ä¡¼¥ë¥µ¥Ý¡¼¥È¤ÎÏÃ¡£¤¢¤é¤æ¤ë²¾ÁÛ²½¤Î¥·¥¹¥Æ¥à¤ò¥µ¥Ý¡¼¥È¤·¡¢
-¤½¤ì¤é¤ò¥µ¥Ý¡¼¥È¤¹¤ë¤¿¤á¤ÎÆÈ¼«¤Î¥Ä¡¼¥ë¤ò³«È¯¤·¤Æ¤¤¤ë¤³¤È¤ò¾Ò²ð¤·¤¿¡£
-¤Þ¤¿¡¢²¾ÁÛ²½¥Ä¡¼¥ë¤ò»È¤Ã¤¿¡¢Debian ¥Ñ¥Ã¥±¡¼¥¸¤Î¥á¥ó¥Æ¥Ê¥ó¥¹¤ÎÏÃ¤ò¤·¡¢
-¥æ¡¼¥¶¡¼Â¦¤À¤±¤Ç¤Ê¤¯¡¢³«È¯¼ÔÂ¦¤«¤é»È¤¤°×¤¯¤¹¤ë¤¿¤á¤Ë¹Ô¤Ã¤Æ¤¤¤ë³èÆ°¤ò¥¢¥Ô¡¼¥ë
-¤·¤Æ¤¤¤¿¡£
+Debian $B$G$N2>A[2=%D!<%k%5%]!<%H$NOC!#$"$i$f$k2>A[2=$N%7%9%F%`$r%5%]!<%H$7!"(B
+$B$=$l$i$r%5%]!<%H$9$k$?$a$NFH<+$N%D!<%k$r3+H/$7$F$$$k$3$H$r>R2p$7$?!#(B
+$B$^$?!"2>A[2=%D!<%k$r;H$C$?!"(BDebian $B%Q%C%1!<%8$N%a%s%F%J%s%9$NOC$r$7!"(B
+$B%f!<%6!<B&$@$1$G$J$/!"3+H/<TB&$+$i;H$$0W$/$9$k$?$a$K9T$C$F$$$k3hF0$r%"%T!<%k(B
+$B$7$F$$$?!#(B
 
 
 \subsubsection{From Concept to Concrete}
-¥Ï¡¼¥É¥¦¥§¥¢¤Î´ë²è¡¢Äó°Æ¡¢¤½¤·¤Æ¤Ç¤­¤ë¤Þ¤Ç¤ò¡¢ Daniel Silverstone¤È Vincent Sanders
-¥³¥ó¥ÈÉ÷¤Ç¹Ô¤Ã¤Æ¤¤¤Þ¤·¤¿¡£¼«Ê¬¤¿¤Á¤Î¥Ï¡¼¥É¥¦¥§¥¢Àß·×²ñ¼Ò¤Î¾Ò²ð¤ò¤·¤¿¤«¤Ã¤¿¤À¤±¤Ê¤Î¤«¤â¤·¤ì¤Ê¤¤¡£
+$B%O!<%I%&%'%"$N4k2h!"Ds0F!"$=$7$F$G$-$k$^$G$r!"(B Daniel Silverstone$B$H(B Vincent Sanders
+$B%3%s%HIw$G9T$C$F$$$^$7$?!#<+J,$?$A$N%O!<%I%&%'%"@_7W2q<R$N>R2p$r$7$?$+$C$?$@$1$J$N$+$b$7$l$J$$!#(B
 
 \subsubsection{PC Install and Backup Management}
-  È¯É½¼Ô¤¬Íè¤ì¤Ê¤«¤Ã¤¿¤Î¤Ç¡¢½¸¤Þ¤Ã¤¿¤ß¤ó¤Ê¤Ç¥Ç¥£¥¹¥«¥Ã¥·¥ç¥ó¤·¤Æ¿Ê¤á¤ë¤³
-  ¤È¤Ë¤Ê¤Ã¤¿¡£¤Þ¤º¡¢¤ß¤ó¤Ê¤É¤ó¤Ê¥Ä¡¼¥ë¤ò»È¤Ã¤Æ¤¤¤ë¤«¤È¸À¤¦ÏÃÂê¤Ë¤Ê¤ë¡£
+  $BH/I=<T$,Mh$l$J$+$C$?$N$G!"=8$^$C$?$_$s$J$G%G%#%9%+%C%7%g%s$7$F?J$a$k$3(B
+  $B$H$K$J$C$?!#$^$:!"$_$s$J$I$s$J%D!<%k$r;H$C$F$$$k$+$H8@$&OCBj$K$J$k!#(B
 
-unstable¤Ë¡¢boxbackup¤È¤¤¤¦¥½¥Õ¥È¥¦¥§¥¢¤¬¤¢¤ë¤«¤é»È¤Ã¤Æ¤¤¤ë¤¤¤¦¿Í¤«¤é¡¢
-mondo, rsync, cpio, tar ¤Ê¤É¤ò»È¤Ã¤Æ¤¤¤ë¿Í¤â¤¤¤¿¡£¤Þ¤¿¡¢¥µ¡¼¥Ð¾å¤Ç¥·¥¹¥Æ
-¥à¤ò¥Ð¥Ã¥¯¥¢¥Ã¥×¤¹¤ë¤¿¤á¤Ë lvm-snapshot ¤ò»È¤ï¤Ê¤¤¤È¤¤¤±¤Ê¤¤¤ó¤À¤È¤¤¤¦¿Í
-¤Ï¡¢Mysql¤Î¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÎÆ±´üµ¡Ç½¤òÍøÍÑ¤·¤Æ¤¤¤¿¡£
+unstable$B$K!"(Bboxbackup$B$H$$$&%=%U%H%&%'%"$,$"$k$+$i;H$C$F$$$k$$$&?M$+$i!"(B
+mondo, rsync, cpio, tar $B$J$I$r;H$C$F$$$k?M$b$$$?!#$^$?!"%5!<%P>e$G%7%9%F(B
+$B%`$r%P%C%/%"%C%W$9$k$?$a$K(B lvm-snapshot $B$r;H$o$J$$$H$$$1$J$$$s$@$H$$$&?M(B
+$B$O!"(BMysql$B$N%G!<%?%Y!<%9$NF14|5!G=$rMxMQ$7$F$$$?!#(B
 
-¤Ä¤®¤ËÏÃÂê¤Ï¡¢d-i (Debian Installer) ¤ò»È¤Ã¤Æ¡¢ÂçÎÌ¤Ë¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ëÏÃ
-Âê¤Ë¤Ê¤Ã¤¿¡£preedit¤ò»È¤Ã¤ÆÆ±¤¸¤è¤¦¤Ë¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë¼êË¡¤ä¡¢FAI¤ò»È¤¦Êý
-Ë¡¤Ê¤É¤¬¤Ç¤Æ¤­¤¿¡£
+$B$D$.$KOCBj$O!"(Bd-i (Debian Installer) $B$r;H$C$F!"BgNL$K%$%s%9%H!<%k$9$kOC(B
+$BBj$K$J$C$?!#(Bpreedit$B$r;H$C$FF1$8$h$&$K%$%s%9%H!<%k$9$k<jK!$d!"(BFAI$B$r;H$&J}(B
+$BK!$J$I$,$G$F$-$?!#(B
 
 
 \subsubsection{Debconf 9 Presentations}
-Debconf 9 ¤Î¥×¥ì¥¼¥ó¥Æ¡¼¥·¥ç¥ó¡£Debconf 8 ¤Ï ¥¢¥ë¥¼¥ó¥Á¥ó¤Ë·è¤¤¤ë¤¬¡¢
-Debconf 9 ¤Ï¤Þ¤ÀÌ¤Äê¤Ç¤¢¤ë¡£¤³¤Î¥»¥Ã¥·¥ç¥ó¤Ç¤Ï¡¢Debconf 9 ¤ÎÎ©¸õÊä¼Ô¤Ë¤è¤ë¥×¥ì¥¼¥ó¥Æ¡¼¥·¥ç¥ó¤ò¹Ô¤Ã¤¿¡£
-Debconf 9 ¤ÏÎ©¸õÊä¤¬¥¹¥Ú¥¤¥ó¤Î Extremadura ¤Î¤ß¡£»ÜÀß¤â´°È÷¤µ¤ì¤Æ¤ª¤ê¡¢¥×¡¼¥ë¤â¤¢¤ë¤È¤Î¤³¤È¡£
-¤³¤ÎÎ®¤ì¤À¤È Debconf9 ¤Ï Extremadura ¤Ë·è¤Þ¤ê¤½¤¦¡£
-¾ÜºÙ¤Ï \url{http://wiki.debconf.org/wiki/Extremadura} ¤«¤é¤ß¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
+Debconf 9 $B$N%W%l%<%s%F!<%7%g%s!#(BDebconf 8 $B$O(B $B%"%k%<%s%A%s$K7h$$$k$,!"(B
+Debconf 9 $B$O$^$@L$Dj$G$"$k!#$3$N%;%C%7%g%s$G$O!"(BDebconf 9 $B$NN)8uJd<T$K$h$k%W%l%<%s%F!<%7%g%s$r9T$C$?!#(B
+Debconf 9 $B$ON)8uJd$,%9%Z%$%s$N(B Extremadura $B$N$_!#;\@_$b40Hw$5$l$F$*$j!"%W!<%k$b$"$k$H$N$3$H!#(B
+$B$3$NN.$l$@$H(B Debconf9 $B$O(B Extremadura $B$K7h$^$j$=$&!#(B
+$B>\:Y$O(B \url{http://wiki.debconf.org/wiki/Extremadura} $B$+$i$_$k$3$H$,$G$-$k!#(B
 
 \subsubsection{Emdebian BOF}
-Debian ¤ÎÁÈ¹þ¸þ¤±¥×¥í¥¸¥§¥¯¥È¤Ç¤¢¤ë Emdebian¤ÎBOF.
-uClibc ¤Î¥µ¥Ý¡¼¥È¤ª¤è¤Ó¡¢busybox¤ò¥Ù¡¼¥¹¤Ë¤·¤¿¥æ¡¼¥¶¡¼¥é¥ó¥É¤Î¥µ¥Ý¡¼¥È¤Ë¤Ä¤¤¤ÆµÄÏÀ¤·¤¿¡£
-´û¤Ë¥µ¥Ý¡¼¥È¤ÎÂÎÀ©¤òÀ°¤¨¤ë¤è¤¦¤Ë¤·¤Æ¤¤¤ë¤¬¡¢uClibc ¤ò¥µ¥Ý¡¼¥È¤·¤Æ¤·¤Þ¤¦¤È¡¢uClibc ÍÑ¤Î¥Ð¥¤¥Ê
-¥ê¤òºîÀ®¤¹¤ëÉ¬Í×¤¬¤¢¤ë¤Î¤Ç¡¢¥Ð¥¤¥Ê¥ê¤Î¿ô¤¬ÇÜ¤Ë¤Ê¤Ã¤Æ¤·¤Þ¤¦¡£¤³¤ÎÌäÂê¤ò¤É¤Î¤è¤¦¤Ë²ò·è¤·¤Æ¤¤¤¯¤«¡¢
-º£¸åµÄÏÀ¤ò½Å¤Í¤Æ¤¤¤¯¤È¤Î¤³¤È¡£\\
+Debian $B$NAH9~8~$1%W%m%8%'%/%H$G$"$k(B Emdebian$B$N(BBOF.
+uClibc $B$N%5%]!<%H$*$h$S!"(Bbusybox$B$r%Y!<%9$K$7$?%f!<%6!<%i%s%I$N%5%]!<%H$K$D$$$F5DO@$7$?!#(B
+$B4{$K%5%]!<%H$NBN@)$r@0$($k$h$&$K$7$F$$$k$,!"(BuClibc $B$r%5%]!<%H$7$F$7$^$&$H!"(BuClibc $BMQ$N%P%$%J(B
+$B%j$r:n@.$9$kI,MW$,$"$k$N$G!"%P%$%J%j$N?t$,G\$K$J$C$F$7$^$&!#$3$NLdBj$r$I$N$h$&$K2r7h$7$F$$$/$+!"(B
+$B:#8e5DO@$r=E$M$F$$$/$H$N$3$H!#(B\\
 \\
-Busybox ¤ÎÏÃ¤Ï¡¢busybox ¤ò¥Ù¡¼¥¹¤Ë¤·¤¿¾ì¹ç¡¢Æ°¤¯¥×¥í¥°¥é¥à¤ÈÆ°¤«¤Ê¤¤¥×¥í¥°¥é¥à¤¬È¯À¸¤·¤Æ¤·¤Þ¤¦¤Î¤Ç¡¢
-busybox ¤Î base system ¤ò¹Í¤¨¤ëÉ¬Í×¤¬¤¢¤ë¤È¤Î¤³¤È¡£Ä´ºº¤Ï¹Ô¤Ã¤Æ¤ª¤ê¡¢¾ðÊó¤Ïwiki ¤Ë¤Þ¤È¤á¤é¤ì¤Æ¤¤¤ë¡£
+Busybox $B$NOC$O!"(Bbusybox $B$r%Y!<%9$K$7$?>l9g!"F0$/%W%m%0%i%`$HF0$+$J$$%W%m%0%i%`$,H/@8$7$F$7$^$&$N$G!"(B
+busybox $B$N(B base system $B$r9M$($kI,MW$,$"$k$H$N$3$H!#D4::$O9T$C$F$*$j!">pJs$O(Bwiki $B$K$^$H$a$i$l$F$$$k!#(B
 \url{http://wiki.debian.org/EmdebianRootfs}
 
 \subsubsection{Keysigning Party}
 
-º£Ç¯¤Ï¡¢¥­¡¼¥µ¥¤¥ó¤Ë½¸¤Þ¤Ã¤¿¿ÍÃ£¤ò4¤Ä¤Î¥°¥ë¡¼¥×¤ËÊ¬¤±¤Æ¡¢³Æ¥°¥ë¡¼¥×¤òÂç
-¤­¤á¤ÎÉô²°¤ÇÊ¬³ä¤·¤Æ¥­¡¼¥µ¥¤¥ó¤ò¹Ô¤Ã¤¿¡£Á´°÷¤¬¥­¡¼¥µ¥¤¥ó¤ò¤¹¤ë¤Ë¤ÏµðÂç¤Ê
-¾ì½ê¤¬É¬Í×¤À¤Ã¤¿¤Î¤ÇÊ¬³ä¤·¤¿¤Î¤Ç¤¢¤í¤¦¡£
+$B:#G/$O!"%-!<%5%$%s$K=8$^$C$??MC#$r(B4$B$D$N%0%k!<%W$KJ,$1$F!"3F%0%k!<%W$rBg(B
+$B$-$a$NIt20$GJ,3d$7$F%-!<%5%$%s$r9T$C$?!#A40w$,%-!<%5%$%s$r$9$k$K$O5pBg$J(B
+$B>l=j$,I,MW$@$C$?$N$GJ,3d$7$?$N$G$"$m$&!#(B
 
-¥­¡¼¥µ¥¤¥ó¤ËÉ¬Í×¤Ê¡¢finterprints¤ò°õºþ¤·¤¿»æ¡£¤½¤³¤Ë·×»»¤·¤¿sha1¤Î·ë²Ì
-(sha1sum½ÐÎÏ)¤¬ÆÉ¤ß¾å¤²¤é¤ì¡¢Æ±¤¸·ë²Ì¤Î¿Í¤À¤±¥µ¥¤¥ó¤Ç¤­¤ë¡£¹ñ¤ÎÈ¯¹Ô¤¹¤ë
-¾ÚÌÀ½ñ(»ä¤Î¾ì¹ç¤Ï¥Ñ¥¹¥Ý¡¼¥È)¤ò¸«¤»¡¢fingerprint, sha1¤Î·×»»·ë²Ì¤Ë¤Ä¤¤¤Æ³ÎÇ§¤·¤Æ¤¤¤¯¡£
+$B%-!<%5%$%s$KI,MW$J!"(Bfinterprints$B$r0u:~$7$?;f!#$=$3$K7W;;$7$?(Bsha1$B$N7k2L(B
+(sha1sum$B=PNO(B)$B$,FI$_>e$2$i$l!"F1$87k2L$N?M$@$1%5%$%s$G$-$k!#9q$NH/9T$9$k(B
+$B>ZL@=q(B($B;d$N>l9g$O%Q%9%]!<%H(B)$B$r8+$;!"(Bfingerprint, sha1$B$N7W;;7k2L$K$D$$$F3NG'$7$F$$$/!#(B
 
-\subsection{6·î20Æü}
+\subsection{6$B7n(B20$BF|(B}
 \subsubsection{Daytrip}
-Debconf ¤Ç¤Ï°ìÆü¡¢»²²Ã¼Ô¤ÇÎ¹¹Ô¤ò¤¹¤ë¤È¤¤¤¦¥¤¥Ù¥ó¥È¤¬¤¢¤ë¡£
-º£²ó¤ÎDebconf¤Ç¤Ï Rotheway ¤Ç¤Þ¤Ã¤¿¤ê¤È¥Ô¥¯¥Ë¥Ã¥¯¤ò¤·¤Þ¤·¤¿¡£
-Totheway ¤Ø¤Î°ÜÆ°¤Ï¡¢Edinburgh ¤«¤é Glasgow ¤ØÅÅ¼Ö¤Ç°ÜÆ°¤·¡¢Glasgow ¤«¤é¤µ¤é¤Ë
-ÅÅ¼Ö¤Ç Wemyss Bay ¤Ø°ÜÆ°¤·¤Þ¤¹¡£Wemyss Bay ¤Ï Rotheway ¹Ô¤­ÀìÍÑ¤Î±Ø¤Ç¡¢Á¥¤Ë¾è¤Ã¤Æ 
-Rotheway ¤Ë°ÜÆ°¤·¤¿¡£
+Debconf $B$G$O0lF|!";22C<T$GN99T$r$9$k$H$$$&%$%Y%s%H$,$"$k!#(B
+$B:#2s$N(BDebconf$B$G$O(B Rotheway $B$G$^$C$?$j$H%T%/%K%C%/$r$7$^$7$?!#(B
+Totheway $B$X$N0\F0$O!"(BEdinburgh $B$+$i(B Glasgow $B$XEE<V$G0\F0$7!"(BGlasgow $B$+$i$5$i$K(B
+$BEE<V$G(B Wemyss Bay $B$X0\F0$7$^$9!#(BWemyss Bay $B$O(B Rotheway $B9T$-@lMQ$N1X$G!"A%$K>h$C$F(B 
+Rotheway $B$K0\F0$7$?!#(B
 
-Rotheway ¤ÏÅç¤Ë¤Ê¤Ã¤Æ¤ª¤ê¡¢ÆÃ¤Ë¤Ê¤Ë¤â¤Ê¤¤¤Ø¤ó¤Ô¤Ê¤È¤³¤í¤Ç¤¹¡£¤Û¤È¤ó¤É¤Î·úÊª¤ÏÇä½ÐÃæ¤Ç¡¢
-ºÛÈ½½ê¤Î·úÊª¤âÇä¤ê¤Ë½Ð¤Æ¤¤¤¿¡£ºâÀ¯¤¬¤ä¤Ð¤½¤¦¤Ê´¶¤¸¡£
-·úÂ¤Êª¤È¤·¤Æ¤Ï¡¢¶µ²ñ¤ä¥Ð¥¤¥­¥ó¥°¤ÈÀï¤Ã¤¿¾ë¤¬¤¢¤Ã¤¿¤¬¡¢½¤ÉüÃæ¤Ç¤·¤«¤â¹©»ö¤Ï»ß¤Þ¤Ã¤Æ¤¤¤Þ¤·¤¿¡£
-»³¤Î±ü¤Ø£±»þ´Ö¤Û¤ÉÊâ¤¯¤È¡¢¸Ð¤¬¤¢¤ê¡¢ÂçÄñ¤Î»²²Ã¼Ô¤Ï¤½¤Î¸Ð¤Ç¥Ô¥¯¥Ë¥Ã¥¯¤ò¤·¤¿¤ê¡¢¥Ü¡¼¥É
-¤Ë¾è¤Ã¤ÆÍ·¤ó¤Ç¤¤¤¿¤è¤¦¤À¡£
+Rotheway $B$OEg$K$J$C$F$*$j!"FC$K$J$K$b$J$$$X$s$T$J$H$3$m$G$9!#$[$H$s$I$N7zJ*$OGd=PCf$G!"(B
+$B:[H==j$N7zJ*$bGd$j$K=P$F$$$?!#:b@/$,$d$P$=$&$J46$8!#(B
+$B7zB$J*$H$7$F$O!"652q$d%P%$%-%s%0$H@o$C$?>k$,$"$C$?$,!"=$I|Cf$G$7$+$b9);v$O;_$^$C$F$$$^$7$?!#(B
+$B;3$N1|$X#1;~4V$[$IJb$/$H!"8P$,$"$j!"BgDq$N;22C<T$O$=$N8P$G%T%/%K%C%/$r$7$?$j!"%\!<%I(B
+$B$K>h$C$FM7$s$G$$$?$h$&$@!#(B
 
-\subsection{6·î21Æü}
+\subsection{6$B7n(B21$BF|(B}
 \subsubsection{Forking Debian every day}
 \subsubsection{Quality assurance activities for localization}
-¾®ÎÓ¤µ¤ó¤Î¥»¥Ã¥·¥ç¥ó¡£¤·¤«¤·ËÜ¿Í¤ÏÍè¤º¡£¾åÀî¤µ¤ó¤¬Â¨¶½¤ÇBOF¤ò¹Ô¤¦¤³¤È¤Ë¡£
+$B>.NS$5$s$N%;%C%7%g%s!#$7$+$7K\?M$OMh$:!#>e@n$5$s$,B(6=$G(BBOF$B$r9T$&$3$H$K!#(B
 
-% Ìð¿á wrote
-  ¾®ÎÓ¤µ¤ó¤¬±þÊç¤·¤¿¤¬Debconf 7¤³¤ì¤Ê¤«¤Ã¤¿¤Î¤Ç¡¢µÞ¤­¤ç IRC ¤Ç¸½ÃÏ¤ÈÆüËÜ
-  ¤ò·ë¤ó¤Ç¾åÀî¤¯¤ó¤¬¥»¥Ã¥·¥ç¥ó¤ò³«»Ï¤·¤¿¡£¥Õ¥é¥ó¥¹¡¢¥Ö¥é¥¸¥ë¤Ê¤É¤ÎËÝÌõ¤Î
-  ¿Ê¤áÊý¤ä¥Ä¡¼¥ë¤Î»È¤¤Êý¤Ë¤Ä¤¤¤Æ¥Ç¥£¥¹¥«¥Ã¥·¥ç¥ó¡£robot¤È¤¤¤¦¥Ä¡¼¥ë¤¬¤¢
-  ¤ê¡¢ÆüËÜËÝÌõ¥Á¡¼¥à¸þ¤±¤Ë»È¤¨¤ë¤«Ä´ºº¤·¤Æ¤â¤é¤¨¤ë¤È¤Î¤³¤È¡£
+% $BLp?a(B wrote
+  $B>.NS$5$s$,1~Jg$7$?$,(BDebconf 7$B$3$l$J$+$C$?$N$G!"5^$-$g(B IRC $B$G8=CO$HF|K\(B
+  $B$r7k$s$G>e@n$/$s$,%;%C%7%g%s$r3+;O$7$?!#%U%i%s%9!"%V%i%8%k$J$I$NK]Lu$N(B
+  $B?J$aJ}$d%D!<%k$N;H$$J}$K$D$$$F%G%#%9%+%C%7%g%s!#(Brobot$B$H$$$&%D!<%k$,$"(B
+  $B$j!"F|K\K]Lu%A!<%`8~$1$K;H$($k$+D4::$7$F$b$i$($k$H$N$3$H!#(B
 
 
 \subsubsection{Debian ceilidh/Sun Drinks Reception}
-Sun Microsystems ¤È Google ¤Î¥¹¥Ý¥ó¥µ¤Ë¤è¤ë¥Ñ¡¼¥Æ¥£¡£
-Sun ¤¬°û¤ßÊª¡¢Goolge ¤¬¥Ô¥¶¤òÄó¶¡¤·¤Æ¤¯¤ì¤¿¡£
-¤Þ¤¿¡¢¥¹¥³¥Ã¥È¥é¥ó¥É¤ÎÌ±ÍØ¤ò±éÁÕ²È¤ò¸Æ¤Ó¡¢¥Ñ¡¼¥Æ¥£»²²Ã¼Ô¤Ç¥¹¥³¥Ã¥È¥é¥ó¥É¤Î
-¥À¥ó¥¹¤òÍÙ¤ê¶¸¤Ã¤¿¡£
+Sun Microsystems $B$H(B Google $B$N%9%]%s%5$K$h$k%Q!<%F%#!#(B
+Sun $B$,0{$_J*!"(BGoolge $B$,%T%6$rDs6!$7$F$/$l$?!#(B
+$B$^$?!"%9%3%C%H%i%s%I$NL1MX$r1iAU2H$r8F$S!"%Q!<%F%#;22C<T$G%9%3%C%H%i%s%I$N(B
+$B%@%s%9$rMY$j68$C$?!#(B
 
 
-\subsection{6·î22Æü}
+\subsection{6$B7n(B22$BF|(B}
 
-% Ìð¿á wrote
-\subsubsection{Derivatives Round Tables --- Debian¤è¤êÇÉÀ¸¤·¤¿¥Ç¥£¥¹¥È¥ê¥Ó¥å¡¼¥·¥ç¥ó}
-  Mako»á¤¬»Ê²ñ¤òÌ³¤á¤ë¡¢Debian ¤è¤êÇÉÀ¸¤·¤¿¥Ç¥£¥¹¥È¥ê¥Ó¥å¡¼¥·¥ç¥ó¤Î´Ø·¸¼Ô
-¤¬½¸¤Þ¤Ã¤Æ¤Î¥Ñ¥Í¥ë¥»¥Ã¥·¥ç¥ó¤Ç¤¢¤Ã¤¿¡£¥Ù¥Í¥¼¡¼¥é¤Ç³«È¯¤µ¤ì¤Æ¤¤¤ë¹ñ¤Î»Ù±ç
-¤ò¼õ¤±¤¿¥Ç¥£¥¹¥È¥ê(Ì¾Á°¤ÏÊ¹¤­¼è¤ì¤Ê¤«¤Ã¤¿)¡¢¥¹¥Ú¥¤¥ó¤Î extremadura¡¢
-Debian Edu, Ubuntu¤Ê¤É¤¬»²²Ã¤·¤Æ¤­¤Æ¤¤¤¿¡£Í½ÁÛ¤É¤ª¤êÇòÇ®¤·¤¿¡£¤¿¤À¡¢¥Ñ¥Í
-¥ë¥»¥Ã¥·¥ç¥ó¤Ê¤Î¤Ç¡¢listening ¤¬ÄÉ¤¤ÉÕ¤«¤º¡¢¤¢¤È¤Ç DVD ¤ò¸«Ä¾¤µ¤Ê¤¤¤ÈºÙ¤«
-¤¤ÉôÊ¬¤¬¤ï¤«¤é¤Ê¤¤¡£¥Õ¥£¡¼¥É¥Ð¥Ã¥¯¤ÎÉôÊ¬¤¬ÌäÂê¤Ë¤Ê¤Ã¤Æ¤¤¤¿¡£BTS¤Î¶¦Í­¤Ê
-¤É¤â¥È¥Ô¥Ã¥¯¤Ë¤Ê¤Ã¤Æ¤¤¤¿¡£
+% $BLp?a(B wrote
+\subsubsection{Derivatives Round Tables --- Debian$B$h$jGI@8$7$?%G%#%9%H%j%S%e!<%7%g%s(B}
+  Mako$B;a$,;J2q$rL3$a$k!"(BDebian $B$h$jGI@8$7$?%G%#%9%H%j%S%e!<%7%g%s$N4X78<T(B
+$B$,=8$^$C$F$N%Q%M%k%;%C%7%g%s$G$"$C$?!#%Y%M%<!<%i$G3+H/$5$l$F$$$k9q$N;Y1g(B
+$B$r<u$1$?%G%#%9%H%j(B($BL>A0$OJ9$-<h$l$J$+$C$?(B)$B!"%9%Z%$%s$N(B extremadura$B!"(B
+Debian Edu, Ubuntu$B$J$I$,;22C$7$F$-$F$$$?!#M=A[$I$*$jGrG.$7$?!#$?$@!"%Q%M(B
+$B%k%;%C%7%g%s$J$N$G!"(Blistening $B$,DI$$IU$+$:!"$"$H$G(B DVD $B$r8+D>$5$J$$$H:Y$+(B
+$B$$ItJ,$,$o$+$i$J$$!#%U%#!<%I%P%C%/$NItJ,$,LdBj$K$J$C$F$$$?!#(BBTS$B$N6&M-$J(B
+$B$I$b%H%T%C%/$K$J$C$F$$$?!#(B
 
-% Ìð¿á wrote
+% $BLp?a(B wrote
 \subsubsection{Proactive Bug Discovery}
-  DPL¤Ç¤¢¤ë¡¢Sam Hocevar ¤Î¥»¥Ã¥·¥ç¥ó¡£¤³¤³¥»¥Ã¥·¥ç¥ó¤Î±Ñ¸ì¤Ï¤ï¤«¤ê¤ä¤¹
-  ¤«¤Ã¤¿¡£¥½¡¼¥¹¤òÁ´Éô¥Á¥§¥Ã¥¯¤¹¤ë¤Î¤ÏÈó¾ï¤Ë¥³¥¹¥È¤¬¹â¤¤¤Î¤Ç¡¢¥¯¥ê¥Æ¥£¥«
-  ¥ë¤ÊÉôÊ¬¤À¤±Á´ÉôººÆÉ¤¹¤ë¤¬¡¢¤Û¤É¤ó¤É¤ÎÉôÊ¬¤Ï¡¢¥Ä¡¼¥ë¤ò»È¤Ã¤Æµ¡³£Åª¤Ë
-  ¥Á¥§¥Ã¥¯¤¹¤ë¤À¤±¤â¤«¤Ê¤ê¤Î¤³¤È¤¬¤ï¤«¤ë¡£
+  DPL$B$G$"$k!"(BSam Hocevar $B$N%;%C%7%g%s!#$3$3%;%C%7%g%s$N1Q8l$O$o$+$j$d$9(B
+  $B$+$C$?!#%=!<%9$rA4It%A%'%C%/$9$k$N$OHs>o$K%3%9%H$,9b$$$N$G!"%/%j%F%#%+(B
+  $B%k$JItJ,$@$1A4It::FI$9$k$,!"$[$I$s$I$NItJ,$O!"%D!<%k$r;H$C$F5!3#E*$K(B
+  $B%A%'%C%/$9$k$@$1$b$+$J$j$N$3$H$,$o$+$k!#(B
 
-  ¤È¤¤¤¦¤³¤È¤Ç¡¢¥½¡¼¥¹¤òÀµµ¬É½¸½¤Ç¥¹¥­¥ã¥ó¤·¤¿¤ê¡¢google ¤Î¥³¡¼¥É¥µ¡¼¥Á
-  ¥¨¥ó¥¸¥ó¤Ç¥Á¥§¥Ã¥¯¤·¤¿¤ê¡¢¥³¥ó¥Ñ¥¤¥é¡¼¤Ë¥Á¥§¥Ã¥¯¤µ¤»¤¿¤ê¤È¤¤¤¦ÉôÊ¬¤Ë¤Ä
-  ¤¤¤Æ¸ì¤Ã¤Æ¤â¤é¤Ã¤¿¡£
+  $B$H$$$&$3$H$G!"%=!<%9$r@55,I=8=$G%9%-%c%s$7$?$j!"(Bgoogle $B$N%3!<%I%5!<%A(B
+  $B%(%s%8%s$G%A%'%C%/$7$?$j!"%3%s%Q%$%i!<$K%A%'%C%/$5$;$?$j$H$$$&ItJ,$K$D(B
+  $B$$$F8l$C$F$b$i$C$?!#(B
 
-\subsection{6·î23Æü}
+\subsection{6$B7n(B23$BF|(B}
 
 % yabuki wrote
 \subsubsection{debian-community.org}
 
-  Debian¥³¥ß¥å¥Ë¥Æ¥£¤ËÂÐ¤¹¤ëÌäÂê°Õ¼±¤«¤é¡¢debian-community.org ¤ÎÄó°Æ¥»¥Ã
-  ¥·¥ç¥ó¤¬¹Ô¤ï¤ì¤¿¡£Ubuntu¥³¥ß¥å¥Ë¥Æ¥£¤Î»öÎã¤«¤é Debian³«È¯¼Ô¤Ë¤Ê¤ê³èÌö
-  ¤¹¤ë¤Þ¤Ç¤Î»þ´Ö¤¬¤«¤«¤ë¡£¤½¤ÎÌäÂê¤ò²ò·è¤¹¤ë¤Ù¤¯¡¢debian-community.org¤È
-  ¤¤¤¦¥µ¥¤¥È¤òºî¤ê¡¢Debian¥³¥ß¥å¥Ë¥Æ¥£³èÆ°¤¹¤ë¤ÈÀë¸À¤·¡¢³èÆ°¤·¤Æ¤¤¤ë´Ö¤Ï
-  ¥á¡¼¥ë¤ÎÅ¾Á÷¤Ê¤É¤Î¥µ¡¼¥Ó¥¹¤òÄó¶¡¤¹¤ë¡£³èÆ°¤¬°ìÄê´ü´Ö»ß¤Þ¤Ã¤¿¤é¡¢¤³¤Î³è
-  Æ°¥ê¥¹¥È¤è¤ê³°¤µ¤ì¤ë¡£Â¾¤Ë¤âplanet¤ä¡¢wiki¤Ê¤É¤ÎÄó¶¡¤ò¹Ô¤¦Í½Äê¤¬¤¢¤ë¡£
+  Debian$B%3%_%e%K%F%#$KBP$9$kLdBj0U<1$+$i!"(Bdebian-community.org $B$NDs0F%;%C(B
+  $B%7%g%s$,9T$o$l$?!#(BUbuntu$B%3%_%e%K%F%#$N;vNc$+$i(B Debian$B3+H/<T$K$J$j3hLv(B
+  $B$9$k$^$G$N;~4V$,$+$+$k!#$=$NLdBj$r2r7h$9$k$Y$/!"(Bdebian-community.org$B$H(B
+  $B$$$&%5%$%H$r:n$j!"(BDebian$B%3%_%e%K%F%#3hF0$9$k$H@k8@$7!"3hF0$7$F$$$k4V$O(B
+  $B%a!<%k$NE>Aw$J$I$N%5!<%S%9$rDs6!$9$k!#3hF0$,0lDj4|4V;_$^$C$?$i!"$3$N3h(B
+  $BF0%j%9%H$h$j30$5$l$k!#B>$K$b(Bplanet$B$d!"(Bwiki$B$J$I$NDs6!$r9T$&M=Dj$,$"$k!#(B
 
-  ÌäÂêÅÀ¤È¤·¤Æ¤Ï¡¢¤³¤ì¤Þ¤Ç¤Î¥í¡¼¥«¥ë¥³¥ß¥å¥Ë¥Æ¥£¤È¤ÎÀ°¹çÀ­¡¢debian.orgËÜ
-  ÂÎ¤â¥³¥ß¥å¥Ë¥Æ¥£¤Ç¤¢¤ë¤³¤È¡¢¿·¤·¤¤¥³¥ß¥å¥Ë¥Æ¥£¤òºî¤Ã¤Æ¥É¥é¥¤¥Ö¤·¤Æ¤¤¤¯
-  ¤À¤±¤ÎÌ¥ÎÏ¤¬¤½¤³¤Ë¤¢¤ë¤«¤Ê¤É¤¬ÏÃ¤·¹ç¤ï¤ì¤¿¡£
+  $BLdBjE@$H$7$F$O!"$3$l$^$G$N%m!<%+%k%3%_%e%K%F%#$H$N@09g@-!"(Bdebian.org$BK\(B
+  $BBN$b%3%_%e%K%F%#$G$"$k$3$H!"?7$7$$%3%_%e%K%F%#$r:n$C$F%I%i%$%V$7$F$$$/(B
+  $B$@$1$NL%NO$,$=$3$K$"$k$+$J$I$,OC$79g$o$l$?!#(B
 
-\dancersection{¼¡²ó}{}
+\dancersection{$B<!2s(B}{}
 
-Ì¤Äê¤Ç¤¹¡£
-ÆâÍÆ¤ÏËÜÆü·èÄêÍ½Äê¤Ç¤¹¡£
+$BL$Dj$G$9!#(B
+$BFbMF$OK\F|7hDjM=Dj$G$9!#(B
 
-»²²Ã¼ÔÊç½¸¤Ï¤Þ¤¿¸åÄø¡£
+$B;22C<TJg=8$O$^$?8eDx!#(B
 
 \cleartooddpage
 
 \begin{minipage}[b]{0.2\hsize}
  \definecolor{titleback}{gray}{0.9}
- \colorbox{titleback}{\rotatebox{90}{\fontsize{80}{80} {\gt ¥Ç¥Ó¥¢¥óÊÙ¶¯²ñ} }}
+ \colorbox{titleback}{\rotatebox{90}{\fontsize{80}{80} {\gt $B%G%S%"%sJY6/2q(B} }}
 \end{minipage}
 \begin{minipage}[b]{0.8\hsize}
 
@@ -539,9 +539,9 @@ Debian Edu, Ubuntu¤Ê¤É¤¬»²²Ã¤·¤Æ¤­¤Æ¤¤¤¿¡£Í½ÁÛ¤É¤ª¤êÇòÇ®¤·¤¿¡£¤¿¤À¡¢¥Ñ¥Í
 \hrule
 \vspace{2mm}
 \includegraphics[width=2cm]{image200502/openlogo-nd.eps}
-\noindent \Large \bf Debian ÊÙ¶¯²ñ»ñÎÁ\\ \\
-\noindent \normalfont \debmtgyear{}Ç¯\debmtgmonth{}·î\debmtgdate{}Æü \hspace{5mm}  ½éÈÇÂè1ºþÈ¯¹Ô\\
-\noindent \normalfont Åìµþ¥¨¥ê¥¢ Debian ÊÙ¶¯²ñ ¡ÊÊÔ½¸¡¦°õºþ¡¦È¯¹Ô¡Ë\\
+\noindent \Large \bf Debian $BJY6/2q;qNA(B\\ \\
+\noindent \normalfont \debmtgyear{}$BG/(B\debmtgmonth{}$B7n(B\debmtgdate{}$BF|(B \hspace{5mm}  $B=iHGBh(B1$B:~H/9T(B\\
+\noindent \normalfont $BEl5~%(%j%"(B Debian $BJY6/2q(B $B!JJT=8!&0u:~!&H/9T!K(B\\
 \hrule
 \end{minipage}
 
