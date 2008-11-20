@@ -38,10 +38,7 @@ deb:
 	debian/rules local-make-orig
 	debuild -us -uc -i'.*pdf$$|.git'
 
-listtopic:
-	lgrep dancersection *-{natsu,fuyu}.tex | sed -n 's/\\dancersection{\([^}]*\)}.*/\1/p'
-
-.PHONY: clean all publish listtopic
+.PHONY: clean all publish
 
 check-syntax:
 	$(CC) -c -O2 -Wall $(CHK_SOURCES) -o/dev/null $(shell pkg-config --cflags gtk+-2.0)
