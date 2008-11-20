@@ -1,0 +1,1828 @@
+%; whizzy chapter
+% -initex iniptex -latex platex -format platex -bibtex jbibtex -fmt fmt
+% 以上 whizzytex を使用する場合の設定。
+
+
+%     Tokyo Debian Meeting resources
+%     Copyright (C) 2006 Junichi Uekawa
+
+%     This program is free software; you can redistribute it and/or modify
+%     it under the terms of the GNU General Public License as published by
+%     the Free Software Foundation; either version 2 of the License, or
+%     (at your option) any later version.
+
+%     This program is distributed in the hope that it will be useful,
+%     but WITHOUT ANY WARRANTY; without even the implied warranty of
+%     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%     GNU General Public License for more details.
+
+%     You should have received a copy of the GNU General Public License
+%     along with this program; if not, write to the Free Software
+%     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+%   Pdf作成手順
+% dvipdfmx debianmeetingresume200610.dvi
+%  preview (shell-command (concat "xpdf " (replace-regexp-in-string "tex$" "pdf"(buffer-file-name)) "&"))
+% 画像ファイルを処理するためにはebbを利用してboundingboxを作成。
+%(shell-command "cd image200610; ebb *.png")
+
+%%ここからヘッダ開始。
+
+\documentclass[mingoth,a4paper]{jsarticle}
+\usepackage[dvipdfm]{graphicx}
+\usepackage{fancybox}
+\usepackage{longtable}
+\usepackage{ascmac}	% 囲み (screen,itembox)
+\usepackage{fancyvrb}   % 囲み Verbatim のために必要
+\usepackage[dvipdfm]{hyperref}
+\usepackage{url}
+\usepackage[dvipdfm]{color}
+\usepackage{wrapfig} % 図のまわりこみ
+
+%http://www.naney.org/diki/dk/hyperref.html
+%日本語EUC系環境の時
+\AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+%シフトJIS系環境の時
+%\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+
+%% spacing の設定をする。外枠を減らす。
+\setlength\headheight{0mm}
+\setlength\topmargin{-20mm}
+\setlength\headsep{0mm}
+\setlength\topskip{3mm}
+\setlength\maxdepth{4pt}
+\setlength\columnsep{6mm}
+\setlength\textheight{252mm}
+\setlength\topmargin{-5mm}
+\setlength\textwidth{170mm}
+\setlength\oddsidemargin{-5mm}
+\setlength\evensidemargin{-5mm}
+
+% commandline環境を定義。画面入出力についてはcommandline環境
+% で表記する
+\newenvironment{commandline}%
+{\VerbatimEnvironment
+  \begin{Sbox}\begin{minipage}{15cm}\begin{fontsize}{7.3}{7.3} \begin{BVerbatim}}%
+{\end{BVerbatim}\end{fontsize}\end{minipage}\end{Sbox}
+  \setlength{\fboxsep}{8pt}\fbox{\TheSbox}}
+
+%%% start of santaku
+\makeatletter
+\newwrite\tf@jqz
+\immediate\openout\tf@jqz\jobname.jqz\relax
+\makeatother
+\newcounter{santakucounter}
+\newcommand{\santaku}[5]{%
+\addtocounter{santakucounter}{1}
+
+\addtocontents{jqz}{\arabic{santakucounter}. #5\\}
+\begin{minipage}{1\hsize}
+問題\arabic{santakucounter}. 
+#1\\
+□ A #2\\
+□ B #3\\
+□ C #4
+\end{minipage}
+\hspace{1cm}
+\\
+
+}
+%%% end of santaku
+
+\newcommand{\emptyspace}{(\underline{\hspace{1cm}})}
+
+\newcommand{\subsubsubsection}[1]{%
+\vspace{1zw}{\bf #1}\\}
+
+
+% sectionをセンタリングする
+\makeatletter
+  \renewcommand{\section}{\@startsection{section}{1}{\z@}%
+    {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+    {.5\Cvs \@plus.3\Cdp}% 後アキ
+    {\normalfont\Huge\headfont\raggedright\centering}} % style
+\makeatother
+
+% section の代わりの環境
+\newcommand{\dancersection}[2]{%
+\newpage
+東京エリアDebian勉強会 2006
+\hrule
+\vspace{0.5mm}
+\hrule
+%\hfill{}\includegraphics[width=3cm]{../base-image/openlogo-nd.eps}\\
+\hfill{}\includegraphics[width=16cm]{image2006-natsu/guruguru-sand-light.png}\\
+\vspace{-5cm}
+\begin{center}
+\section{#1}
+\end{center}
+\hfill{}\colorbox{white}{#2}\hspace{3cm}\space\\
+\vspace{1cm}
+\hrule
+\vspace{0.5mm}
+\hrule
+\vspace{1cm}
+}
+
+% BTSの番号を見るためのコマンド
+\newcommand{\debianbug}[1]{#1\footnote{\url{http://bugs.debian.org/#1}}}
+
+% for dancerj
+\newcommand{\fgref}[1]{図\ref{#1}}
+\newcommand{\tbref}[1]{表\ref{#1}}
+
+
+\begin{document}
+
+\begin{titlepage}
+
+% 毎月変更する部分, 本文の末尾も修正することをわすれずに
+\title{
+ 第21回 東京エリア Debian 勉強会\\事前資料}
+\date{2006年10月21日}
+\author{Debian勉強会会場係 上川 純一\thanks{Debian Project Official Developer}} 
+\maketitle
+\thispagestyle{empty}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\dancersection{Introduction To Debian 勉強会}{上川 純一}
+
+今月のDebian勉強会へようこそ。
+これからDebianのあやしい世界に入るという方も、すでにどっぷりとつかってい
+るという方も、月に一回Debianについて語りませんか？
+
+目的として下記の二つを考えています。
+
+\begin{itemize}
+ \item メールではよみとれない、もしくはよみとってられないような情報を情
+       報共有する場をつくる
+ \item まとまっていないDebianを利用する際の情報をまとめて、ある程度の塊と
+       して出してみる
+\end{itemize}
+
+また、東京にはLinuxの勉強会はたくさんありますので、Debianに限定した勉強
+会にします。Linuxの基本的な利用方法などが知りたい方は、他でがんばってくださ
+い。
+Debianの勉強会ということで究極的には参加者全員がDebian Packageを
+がりがりと作りながらスーパーハッカーになれるような姿を妄想しています。
+
+Debianをこれからどうするという能動的な展開への土台としての空間を提供し、
+情報の共有をしたい、というのが目的です。
+次回は違うこと言ってるかもしれませんが、御容赦を。
+
+\subsection{講師紹介}
+
+\begin{itemize}
+ \item{武藤さん} i18n meeting に参加してきた報告をします。
+ \item{松山さん} flash　について今日は語ります。
+ \item{岩松 信洋} 普段は SuperHっこなのですが、今日は RPM について説明し
+      ます。
+ \item{上川 純一} 宴会の幹事です。
+\end{itemize}
+
+\subsection{事前課題紹介}
+
+今回の事前課題は
+「あなたの /etc/networking/interfaces をさらしてください」もしくは「Debian のネットワーク設定について思うこと」
+というタイトルで文章を書いてください。
+というものでした。
+その課題に対して下記の内容を提出いただきました。
+
+\subsubsection{柏木さん}
+
+
+インターネットサービスの開発の仕事をしております。
+Debianを使い始めて数年になり、すっかり手放せなくなりました。
+自作のソフトウェアはdeb化してますが、よくわかってません。
+
+これまで使ってばかりなので、いつか恩返しというか貢献したいと
+思っていましたが、Debianっていうくらいでなかなか敷居が高く、
+コミュニティに入って修行したいと思っていたところ、
+この勉強会のことを知りました。
+初めてですが参加させて頂きたく思います。よろしくお願いします。
+
+
+今回の課題ですが、
+まずは周囲のマシンの /etc/network/interfaces をいくつかさらします。
+幸か不幸か mapping とかを駆使するまでは至っていません。
+
+(1) Ethernet 4ポートある小型PCで、ブリッジとして使っています。
+
+bridge-utilsパッケージにより /etc/network/if-pre-up.d/bridge
+が作られ、ifupdownパッケージ自身に手をいれなくても
+このように新しい構文が使えるようになるというのは便利ですね。
+（そういえば、/etc/network/interfaces はてっきり
+ifupdown パッケージのconffileかと思ってましたが違うのですね）
+
+\begin{commandline}
+
+ auto lo
+ iface lo inet loopback
+
+ auto eth0
+
+ auto eth1
+
+ auto eth2
+
+ auto eth3
+
+ auto br0
+ iface br0 inet manual
+        bridge_ports all
+        bridge_stp off
+        bridge_maxwait 10
+        bridge_fd 3
+
+\end{commandline}
+
+(2) もうひとつ、IPv6ルータになっているサーバ機の例です。
+eth0 が上流、eth1-4 が内側です。NATやDHCP等を提供しています。
+
+\begin{commandline}
+ 
+ auto lo
+ iface lo inet loopback
+
+ auto eth0
+ iface eth0 inet static
+        address 210.xxx.xxx.154
+        netmask 255.255.255.240
+        broadcast 210.xxx.xxx.159
+        gateway 210.xxx.xxx.145
+
+ iface eth0 inet6 static
+        address 2001:db8:1234:5678::154
+        netmask 64
+        up route -6 add default gw fe80::10 dev eth0
+
+ auto eth1
+ iface eth1 inet static
+        address 172.20.0.1
+        netmask 255.255.255.0
+        broadcast 172.20.0.255
+ iface eth1 inet6 static
+        address 2001:db8:1234:1020::1
+        netmask 64
+
+ auto eth2
+ iface eth2 inet static
+        address 172.20.1.1
+        netmask 255.255.255.0
+        broadcast 172.20.1.255
+ iface eth2 inet6 static
+        address 2001:db8:1234:1021::1
+        netmask 64
+
+ auto eth3
+ iface eth3 inet static
+        address 172.20.2.1
+        netmask 255.255.255.0
+        broadcast 172.20.2.255
+ iface eth3 inet6 static
+        address 2001:db8:1234:1022::1
+        netmask 64
+
+ auto eth4
+ iface eth4 inet static
+        address 172.20.3.1
+        netmask 255.255.255.0
+        broadcast 172.20.3.255
+ iface eth4 inet6 static
+        address 2001:db8:1234:1023::1
+        netmask 64
+\end{commandline}
+
+
+さて、Debian のネットワーク設定について結構文句はあるので、
+いくつか愚痴らせていただきます。
+全体的にRedHat系に負けているような気がします。
+
+\begin{itemize}
+ 
+ \item   前述と矛盾するかもしれませんが、設定できるパラメータ一覧がないのは
+  わかりにくいです。/etc/network/if-*.d/ スクリプトには
+  設定可能パラメータを表示するオプションをつけることを義務化して
+  （イメージとしては init.d script の status 引数みたいなもの） 
+ 　ifup --list-options とかで全部表示できたらいいなと思います。
+
+ \item  iface ethX inet staticの中で、
+  今時、netmaskとbroadcastを両方指定しなければならないのは面倒。
+  ifconfig(8)がそうなのだから仕方ないが、
+  デフォルトで勝手に補ってくれてもよいのでは。
+
+ \item  IPv6まわりの設定方法がかなりいまいち。
+
+\begin{itemize}
+ \item  autoconf関係を制御できない。
+    inet6 staticと書いてもautoconfでアドレスが付いてしまう。
+    止めるには、/etc/sysctl.conf に 
+    net/ipv6/conf/default/autoconf=0 としなければならない。
+    ここで net/ipv6/conf/{all,eth0,...}/autoconf=0 のように書いても
+    動作しない。(/etc/init.d/procps.shでsysctlを行うタイミングがかなり
+    早く、インターフェースが作られる前だから？）
+ 　　inet6 autoconf なんてのがあるといいなあ。
+    （ちなみにRedhatでは変数で制御可能です）
+
+ \item    inet dhcp があるんだから inet6 dhcpもほしい。
+    DHCPv6で、IPv6のDNSサーバアドレスを配りたい。
+
+ \item    netmask 64 って当たり前だから省略させてほしい。
+    というかこれは用語が間違っていて、
+    netmask じゃなくて prefixlen なのですが。
+
+ \item  inet6 loopbackって意味あるのでしょうか。
+    マニュアルには書いてありますが、書かなくても勝手に ::1 が付きます。
+\end{itemize}
+
+ \item   ifupdownのエラーがわかりにくい。また、エラーがあったばあいに
+  /etc/network/run/ifstateがおかしくなり、--forceを連発することになる。
+  (そういえばifstateはなぜ /var にないのでしょう?)
+\end{itemize}
+
+長くなってしまいましたが以上です。
+
+\subsubsection{前田 耕平さん}
+
+\begin{commandline}
+ interfaces -> interfaces.static
+
+ interfaces.dhcp
+ ----------------------------
+ auto lo
+ iface lo inet loopback
+ auto eth0
+ iface eth0 inet dhcp
+
+ interfaces.static
+ ----------------------------
+ auto lo
+ iface lo inet loopback
+ auto eth0
+ iface eth0 inet static
+        address 192.168.222.xxx
+        netmask 255.255.255.0
+        network 192.168.222.0
+        gateway 192.168.222.1
+        broadcast 192.168.222.255
+
+ interfaces.union
+ ----------------------------
+ auto lo
+ iface lo inet loopback
+ auto eth0
+ iface eth0 inet static
+        address 192.168.77.xxx
+        netmask 255.255.255.0
+        network 192.168.77.0
+        gateway 192.168.77.254
+        broadcast 192.168.77.255
+\end{commandline}
+
+自宅サーバのは全て固定です。
+普段利用しているクライアント（ノートPC）は、下記のように設定ファイルをいくつか用意して、
+シンボリックリンクを張り直して使っています。
+もっとうまいやり方があればご教授ください。（とはいえ別に今でも困ってはいませんが）
+
+
+\subsubsection{須藤さん}
+
+\begin{commandline}
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+
+# The loopback interface
+auto lo
+iface lo inet loopback
+
+# The first network card - this entry was created during the Debian installation
+auto eth0
+iface eth0 inet dhcp
+    post-up wget -O /dev/null http://XXX:YYY@ZZZ.ZZZ.ZZZ.ZZZ/AAA.BBB.CCC.DDD/
+    post-up wget -O /dev/null http://XXX:YYY@ZZZ.ZZZ.ZZZ.ZZZ/AAA.BBB.CCC.DDD/
+
+auto eth1
+iface eth1 inet static
+    address 192.168.0.1
+    netmask 255.255.255.0
+    broadcast 192.168.0.255
+    network 192.168.0.0
+    pre-up /sbin/iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j MASQUERADE
+    post-down /sbin/iptables -t nat -D POSTROUTING -s 192.168.0.0/24 -j MASQUERADE
+
+#iface eth1 inet6 static
+#  address 2001:2f8:c2:201::fff3
+#  netmask 64
+#  gateway 2001:2f8:c2:201::1
+
+allow-hotplug wlan0
+iface wlan0 inet static
+    address 192.168.1.1
+    netmask 255.255.255.0
+    network 192.168.1.0
+    broadcast 192.168.1.255
+    wireless_essid ZZZ
+    wireless_mode master
+    wireless_key 0000-1111-2222-3333-4444-5555-66
+    pre-up /sbin/iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE
+    pre-up /etc/init.d/dhcp stop
+    pre-up /etc/init.d/bind stop
+    post-up iwpriv wlan0 set_mac_mode 1
+    post-up /etc/init.d/dhcp start
+    post-up /etc/init.d/bind start
+    post-down /sbin/iptables -t nat -D POSTROUTING -s 192.168.1.0/24 -j MASQUERADE
+\end{commandline}
+
+\subsubsection{武藤 健志さん}
+
+
+常用のinterfacesファイルはnoauto eth0; iface eth0 inet dhcpという感じで
+たいして面白いものではない。んで、Debian(およびLinux)のネットワーク設定
+については不満だらけである。まず今のinterfaces+ifupdownのフォーマットが
+すでに考古学博物館収録に値する代物(有史以前遺産のnetbaseよりはマシだが)
+であり、CUI/GUI問わず未だにまともなセットアップツールを提供できていない。
+インストーラのセットアップのほうがまだ気合いが入ってるぞ。エディタでこう
+記述しろなんて言われて喜んでるのは設定オタだけで十分である。特に無線周り
+は、Windows辺りと比べてしまうと、そのヘタレっぷりにDebian CDを真っ二つに
+して窓から捨てたくなったとしても止めることはできないだろう。だいたい歴史
+的負の遺産な/etc/resolv.confなんてファイルも気味が悪い。こんなのはカーネ
+ル内部に持たせてやればDHCPのときにいちいち実ファイルを書き換える必要もな
+いじゃないか。追加NICだってネットワーク接続するために付けたのであろうか
+ら、いちいちエディタでinterfacesに追記する必要なく、新しいNICデバイスを
+発見した段階でとりあえずDHCPでつなぎに行っても罰は当たらなそうなもんだ。
+まぁこういったことはデスクトップ開発者には100も承知なことなわけで、GNOME
+やKDEではネットワークマネージャソフトの開発が進んでる。Debianはどうする。
+
+\subsubsection{野首さん}
+
+\begin{commandline}
+ auto lo
+ iface lo inet loopback
+ auto eth0
+ mapping eth0
+        script /usr/local/sbin/netenv
+        map vmware vmware
+        map native native
+ iface native inet static
+        address 10.0.22.147
+        netmask 255.255.252.0
+        network 10.0.20.0
+        broadcast 10.0.23.255
+        up route add -net 10.0.0.0 netmask 255.0.0.0 gw 10.0.20.1
+        up pon
+ iface vmware inet static
+        address 192.168.157.45
+        netmask 255.255.255.0
+        gateway 192.168.157.2
+\end{commandline}
+
+  netenvの中身はこんな感じです。
+
+\begin{commandline}
+ #!/bin/sh
+ lspci | grep -i vmware > /dev/null
+ if [ $? -eq 0 ]
+ then
+        echo vmware
+ else
+        echo native
+ fi
+ exit 0
+\end{commandline}
+
+  物理ディスクにインストールしたDebianを、native/vmwareのどちらでも起
+動できるようにしています。
+  ponしているのは、外部に出るためのVPNを張るためです。
+
+\subsubsection{鍋太郎さん}
+
+普段持ち歩いている Thinkpad の /etc/network/interfaces です。
+
+\begin{commandline}
+ 
+ # The loopback network interface
+ auto lo
+ iface lo inet loopback
+
+ # The primary network interface		職場の設定(有線)
+ noauto eth0
+ iface eth0 inet static
+	address 172.x.x.x		# 職場のIPアドレス
+	netmask 255.255.255.0		# 職場のネットマスク
+	network 172.x.x.0		# 職場のネットワークアドレス
+	gateway 172.x.x.x		# 職場のゲートウェイ
+ #	# dns-* options are implemented by the resolvconf package, if installed
+	dns-nameservers 172.x.x.x	# 職場のdnsサーバ
+
+ # The wireless network interface	自宅の設定(無線)
+ noauto eth1
+ iface eth1 inet dhcp
+	wireless_essid any
+
+ # 使ってないpppoeの設定
+ iface dsl-provider inet ppp
+ provider dsl-provider
+\end{commandline}
+
+
+この他に Air-EDGE を使ってるので、
+pppconfig で作った設定が /etc/ppp 以下にあります。
+
+また、見ての通り resolvconf パッケージで、
+/etc/resolv.conf を管理しようとしていますが、中途半端ですね。
+問題としては、Air-EDGE の ppp と 無線 LAN を切り替えると、
+通信に失敗するアプリケーションがあって、不便に思いながらも放置中。
+
+放置しっぱなしと言うのもアレなので、今後の予定を挙げておきます。
+
+\begin{enumerate}
+ 
+ \item まず、どのレイヤで通信ができていないのかを確認。
+  切り替え後にも通信できるプログラム (firefox等) があるので、
+  ルーティングがうまくいっていないわけではなさそう。
+  パケットキャプチャあたりで捕まえてみる必要あり。
+  おそらく、参照する DNS サーバが違っていて、名前解決に失敗してるのではないか?
+ \item ppp の on/off と ifup/ifdown で設定を切り替えなければならないが、
+  その方法の調査。
+\end{enumerate}
+
+……でも、sylpheed を立ち上げ直すだけで解消してるんで、
+優先順位が限りなく低くなってたりします……
+
+
+\subsubsection{キタハラさん}
+
+　　しれっと、下記の様に回答すると「もしかして罠にはめられている？！」
+と考えてしまうのは、少々被害妄想気味でしょうか？（実は本当に罠？）
+
+\begin{commandline}
+ k3@TPX22:~$ cat /etc/networking/interfaces
+ cat: /etc/networking/interfaces: No such file or directory
+ k3@TPX22:~$
+\end{commandline}
+
+　　Debianのメインマシンは、有線Only接続でこんな感じ。
+
+\begin{commandline}
+ k3@TPX22:~$ cat /etc/network/interfaces
+ # This file describes the network interfaces available on your system
+ # and how to activate them. For more information, see interfaces(5).
+
+ # The loopback network interface
+ auto lo
+ iface lo inet loopback
+
+ # The primary network interface
+ auto eth0
+ iface eth0 inet dhcp
+
+ k3@TPX22:~$
+\end{commandline}
+
+　　某所で設定中の colinux はこんな感じ。
+
+\begin{commandline}
+ colinux:~# cat /etc/network/interfaces
+ # Used by ifup(8) and ifdown(8). See the interfaces(5) manpage or
+ # /usr/share/doc/ifupdown/examples for more information.
+
+ auto lo eth0
+
+ iface eth0 inet static
+     address 192.168.0.2
+     gateway 192.168.0.1
+     netmask 255.255.255.0
+
+ iface lo inet loopback
+
+ colinux:~#
+\end{commandline}
+
+
+　　共に、まったく面白みが無いのですが、こんなのでよいのかな？
+
+
+\subsubsection{mhattaさん}
+
+
+「あなたの /etc/networking/interfaces をさらしてください」ということで、
+そもそも/etc/{\em networking}/interfacesというファイルは存在しないような気
+もしますが、私の/etc/network/interfacesは以下の通りです。
+
+\begin{commandline}
+ # This file describes the network interfaces available on your system
+ # and how to activate them. For more information, see interfaces(5).
+
+ # The loopback network interface
+ auto lo
+ iface lo inet loopback
+
+ # This is a list of hotpluggable network interfaces.
+ # They will be activated automatically by the hotplug subsystem.
+ mapping eth0
+        script grep
+        map eth0
+
+ # The primary network interface
+ allow-hotplug eth0
+
+ iface eth0 inet dhcp
+ iface eth1 inet dhcp
+\end{commandline}
+
+なんのひねりもなくてすみません。
+
+
+\subsubsection{高杉さん}
+
+
+debian のネットワーク設定に関しては、マシンの用途、接続方法などでいくつ
+か設定方法があると思います。私の知る限りでは以下の設定があります。
+
+
+\begin{enumerate}
+ \item /etc/network 以下
+	interfacesとインターフェース起動時の処理のスクリプト群
+ \item /etc/ppp 以下
+	ppp 接続時の処理のスクリプト群
+ \item dhcp 接続時
+ \item network-manager を使った設定
+\end{enumerate}
+
+これらの設定の解説や設定例があるとよいとおもいます。
+
+\begin{commandline}
+ ******* DMZ 家庭内LAN間FW *******
+ # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+
+ # The loopback interface
+ # automatically added when upgrading
+ auto lo
+ iface lo inet loopback
+
+ # The first network card - this entry was created during the Debian
+ installation
+ # (network, broadcast and gateway are optional)
+ # automatically added when upgrading
+ auto eth0 eth1
+ iface eth1 inet static
+	address 210.150.XXX.XXX
+	netmask 255.255.255.XXX
+	network 210.150.XXX.XXX
+	broadcast 210.150.XXX.XXX
+	gateway 210.150.XXX.XXX
+
+ #IP Masquarade
+	up iptables -t nat -A POSTROUTING -s 192.168.X.0/24 -o eth1 -j MASQUERADE
+ #For Diablo
+ #	up iptables -t nat -A PREROUTING -p tcp --dport 4000 -i eth0 -j DNAT
+ --to 192.168.X.37:4000
+ #	up iptables -t nat -A PREROUTING -p udp --dport 4000 -i eth0 -j DNAT
+ --to 192.168.X.37:4000
+ #	up iptables -t nat -A PREROUTING -p tcp --dport 6112:6119 -i eth0 -j
+ DNAT --to 192.168.X.37:6112-6119
+ #	up iptables -t nat -A PREROUTING -p udp --dport 6112:6119 -i eth0 -j
+ DNAT --to 192.168.X.37:6112-6119
+
+ #Filtering
+	up iptables -N block
+	up iptables -A block -i eth1 -j DROP -p tcp --dport 137:139
+	up iptables -A block -i eth1 -j DROP -p udp --dport 137:139
+	up iptables -A block -o eth1 -j DROP -p tcp --dport 137:139
+	up iptables -A block -o eth1 -j DROP -p udp --dport 137:139
+	up iptables -A INPUT -j block
+	up iptables -A FORWARD -j block
+ #routing
+	up route add -net 192.168.X.0 netmask 255.255.255.0 eth0
+
+ iface eth0 inet static
+	address 192.168.X.1
+	netmask 255.255.255.0
+	network 192.168.X.0
+	broadcast 192.168.X.255
+\end{commandline}
+
+\begin{commandline}
+ ********** 家庭内ファイルサーバ ********
+ 注）DHCPでIPを取得してますが、DHCPでIP取得時にBINDに名前を登録しているの
+ で、書いていないでの運用上大きな問題はない。
+ # This file describes the network interfaces available on your system
+ # and how to activate them. For more information, see interfaces(5).
+
+ # The loopback network interface
+ auto lo
+ iface lo inet loopback
+
+ # This is a list of hotpluggable network interfaces.
+ # They will be activated automatically by the hotplug subsystem.
+ mapping eth0
+	script grep
+	map eth0
+
+ # The primary network interface
+ allow-hotplug eth0
+ iface eth0 inet dhcp
+\end{commandline}
+
+\subsubsection{小林儀匡さん}
+
+「あなたの/etc/networking/interfacesをさらしてください」。
+これに対する正しい回答は「そんなファイルありません」ですよね?
+間違ってわざわざ恥ずかしい/etc/network/interfacesをさらしてしまった人はお疲れ様、
+という罠……。
+でも折角なので (?)、その罠に健気にまんまとはめられてみます。
+
+以下、某所のもの (一部編集済み) です。……まったく面白くありませんが。
+
+\begin{commandline}
+# The loopback interface
+auto lo
+iface lo inet loopback
+
+# eth1 = Realtek (outer side)
+auto eth1
+iface eth1 inet static
+  address xxx.xxx.xxx.xxx
+  netmask 255.255.254.0
+  gateway xxx.xxx.xxx.xxx
+
+# eth0 = Intel PRO/100 VE (inner side)
+auto eth0
+iface eth0 inet static
+  address 192.168.1.xxx
+  netmask 255.255.255.0
+\end{commandline}
+
+これだけでは面白くないし折角なので、
+「Debianのネットワーク設定について思うこと」についても簡潔に回答してみます。
+
+「\textbf{ダサい}」。以上。
+
+DebianというかLinux全般の問題だと思いますが、
+新しいデバイスが次々とカーネルでサポートされ、
+新しいソフトウェアがどんどん開発され、
+デスクトップも (まだまだという評価も否めませんが) 見違えるようにカッコよく使いやすくなっている一方で、
+なんだかダサいところは誰も (興味がないのか) 手をつけずダサいままになっているような気がします。
+別に設定ファイル全般が悪だとは思いませんが、
+設定まわりのインタフェースはもう少し改良できるのではないでしょうか。
+まぁ、だったらお前やれと言われても今の自分にはできないので、
+いつかその辺りが改善されるといいですね、と無難にまとめて回答とします。
+
+\subsubsection{やまねさん}
+
+vi で \texttt{/etc/network/interfaces} をいじるのもいいのですが、対話的インターフェイスが欲しい今日この頃です。base-config には設定がなかったっぽい。どこでやるんだっけ？やっぱりない？
+あとは
+\begin{itemize}
+ \item  無線の設定がもっと簡単にならないかなーとか
+ \item  一旦スリープ後、復帰したときにさくっとDHCPでIP取ってくれないかなーとか思います。
+\end{itemize}
+
+あとは VPN なども統一して管理などできればいいんですが。色々と弄れるのはいいんだけど、簡単にある程度まで設定というのは難しいもんだなぁ、と。Windows だと AccessConnections\footnote{\url{http://www-06.ibm.com/jp/pc/think/thinkvantagetech/accessconnections.shtml}} などを使ってるんですが、同様に扱えればいいですよね。
+
+\subsubsection{中野さん}
+
+　/etc/network/interfaces は下記の通りです。　普通の
+ゲートウェイですね。
+
+　ネットワーク周りで昔嵌まったことですが、普段は dhcp で
+アドレスを取っているノート PC を、スイッチ周りのデバッグ
+に用いたときのこと。
+
+　NIC のアドレスを sudo ifconfig で直接書換えたりしたかった
+のですが、どうも ifup/down と変は風に絡んで動いたり動かなく
+なったりで悩んだ結果、結局 interfaces を書換えて ifup / ifdown
+という面倒な手順を踏むことになった記憶があります。
+
+　ifup が単に ifconfig (とか route とか) のラッパではなく、
+なんか妙なことをしているのかなあ、と思いつつ深追いせずに
+放置して現在に至るのですが、このへんちゃんと理解したい、
+という気がしないでもありません。
+
+
+\begin{commandline}
+ # The loopback interface
+ auto lo
+ iface lo inet loopback
+
+ # The first network card - this entry was created during the Debian installation
+ # (network, broadcast and gateway are optional)
+ auto eth1
+ iface eth1 inet static
+        address 133.220.xxx.yyy
+        netmask 255.255.255.0
+        network 133.220.125.0
+        broadcast 133.220.xxx.255
+        gateway 133.220.xxx.zzz
+
+ auto eth0
+ iface eth0 inet static
+        address 192.168.0.1
+        netmask 255.255.255.0
+        network 192.168.0.0
+        broadcast 192.168.0.255
+\end{commandline}
+
+\subsubsection{ysjjさん}
+
+
+\begin{commandline}
+ $ cat /etc/network/interfaces
+ # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+ auto lo eth0 eth0:1
+
+ # The loopback interface
+ iface lo inet loopback
+
+ iface eth0 inet dhcp
+ iface eth0:1 inet static
+    address 192.168.1.2
+    netmask 255.255.255.0
+ iface eth0:2 inet static
+    address 192.168.2.2
+    netmask 255.255.255.0
+\end{commandline}
+
+
+\subsubsection{えとーさん}
+
+IP等は変更しました。
+madwifiのバグでレジュームからの復帰やインターフェースを落すと
+反応しなくなるのでどうにもちゃんと設定詰められていない。
+
+wpasupplicantは wpa2 で AES にして AP の制限の最大値の値をキーにしています。
+BSSIDも使ってるかな、、
+
+\begin{commandline}
+ # This file describes the network interfaces available on your system
+ # and how to activate them. For more information, see interfaces(5).
+
+ # This entry denotes the loopback (127.0.0.1) interface.
+ auto lo
+ iface lo inet loopback
+
+ # This entry was created during the Debian installation
+ # (network, broadcast and gateway are optional)
+ #auto eth0
+ #iface eth0 inet dhcp
+ iface eth0 inet static
+        address 192.168.XXX.XXX
+        netmask 255.255.255.0
+        network 192.168.XXX.XXX
+        broadcast 192.168.XXX.255
+        gateway 192.168.XXX.XXX
+
+ allow-hotplug ath0
+ iface ath0 inet manual
+        wpa-driver madwifi
+        wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+ # no id_str, 'default' is used as the fallback mapping target
+ iface default inet dhcp
+
+ iface room inet static
+   address 192.168.XXX.XXX
+        netmask 255.255.255.0
+        network 192.168.XXX.0
+        broadcast 192.168.XXX.255
+        gateway 192.168.XXX.XXX
+
+ iface dsl-provider inet ppp
+     provider dsl-provider
+ # please do not modify the following line
+     pre-up /sbin/ifconfig eth0 up # line maintained by pppoeconf
+
+\end{commandline}
+
+\subsubsection{上川}
+
+
+/etc/network/interfacesであり、/etc/networking/interfacesではありません
+でしたね。無駄にハードルあげちゃいました。
+
+%%% trivia quiz
+\dancersection{Debian Weekly News trivia quiz}{上川 純一}
+
+ところで、Debian Weekly News (DWN)は読んでいますか？
+Debian 界隈でおきていることについて書いているDebian Weekly News.
+毎回読んでいるといろいろと分かって来ますが、一人で読んでいても、解説が少
+ないので、
+意味がわからないところもあるかも知れません。みんなでDWNを読んでみましょ
+う。
+
+
+\subsection{2006年38号}
+\url{http://www.debian.org/News/weekly/2006/38/}
+にある9月19日版です。
+
+\santaku
+{Josselin Mouette が GNOME 2.16 について説明したのは}
+{stable へのバックポート}
+{experimental への投入}
+{unstable への投入}
+{B}
+
+\santaku
+{Russel Coker が議論する際の道具として提案したのは？}
+{意味の無い議論をベイジアンフィルタではじく}
+{killfile の積極的な活用}
+{議論のサマリをまとめるためのwikiの利用}
+{C}
+
+\santaku
+{最近 Debian にはいったパッケージである「ttf-vlgothic」のvlはどういう意味か？}
+{ディストリビューションの名前}
+{私の名前はやまねです。}
+{very local }
+{A}
+
+
+\subsection{2006年39号}
+\url{http://www.debian.org/News/weekly/2006/39/}
+にある9月26日版です。
+
+\santaku
+{プロジェクトリーダーを罷免する決議が出たのはなぜか？}
+{Dunk-Tank プロジェクトを発足したから}
+{やるきがまったくみられないから}
+{タイの政変の影響}
+{A}
+
+\santaku
+{一般決議に関しての規則がかわったのはなぜか}
+{現在多数提起されているから}
+{くだらないものが提起されすぎだから}
+{Dunk-Tank が気に入らないから}
+{A}
+
+\dancersection{最近のDebian関連のミーティング報告}{上川 純一}
+
+\subsection{東京エリアDebian勉強会20回目報告}
+% (query-replace-regexp "<.*>" "")
+
+   	  東京エリアDebian勉強会報告。
+	  9月の第20回Debian勉強会を実施しました。
+	    Debian specific の話題、翻訳のすすめ、oprofileの使いかた、についての話がありました。
+	  
+	  今回の参加人数は12人でした。
+	  
+	  参加者は小林さん、あけどさん、さわださん、小室さん、キタハラさん、えとーさん、野首さん、高杉さん、
+	  前田さん、みつかさん、iwamatsuさん、上川でした。
+        
+	
+	  
+	    まず、事前課題について紹介しました。 ruby の Debian パッケー
+	    ジに関してどうするべきか、という議論が起こりました。perl 
+	    などの例をみると、 cpan はそれなりな品質を提供しているので
+	    すが、それでもひとつひとつのモジュールをパッケージにするの
+	    には手間をかけて作業しています。必要に応じてライブラリをパッ
+	    ケージ化するのがよいのではないか、という話でした。
+	    gems をパッケージに自動でするという仕組もよいですが、
+	    むしろ Debian パッケージをがりがり作成していって最新版を利用するのが
+	    Debian のほうが楽、と思われるくらいがよいねぇ、という話をしました。
+	  
+	  
+	    恒例のクイズでは、いろいろと景品がたくさんあって、余りました。
+	  
+	  
+	    澤田さんが「あなたが知らないうちに使っている Debian
+	    Specific」という題材で発表しました。adduser, ifup あたりは
+	    みんな実感として困っている経験があるということでした。
+	    Xsession の扱いについては、gdmのメンテナの Ryan Murray が 
+	    Debian としての歩調をあわせてくれないので困っている、とい
+	    う話題がでました。
+	    ユーザのアカウント管理については、IDの重複などの問題があり、
+	    UNIXの世界にも ActiveDirectory を導入できないものか、ということで盛り上がりました。
+	    既存システムはそれぞれ作りこまれたシステムがあるので、移行が難しそうです。
+	  
+	  
+	    小林さんが「翻訳のすすめ」について話をしました。
+	    DDTPが復活しているということで、みんな驚きを隠せないようでした。
+	    気軽に翻訳できるということで、OSCにて体験翻訳コーナーというのを作ってみるのもよいかも知れませんね。
+	  
+	  
+	    上川がoprofileの使いかたの基本について説明しました。
+	    apt/dpkgを例にして、oprofile でプロファイルをした場合の例を紹介しました。
+	    来月は最適化した例を出せるとよいな、と思っています。
+	  
+	  
+	    上川がLLGONGの報告として、realksh について説明をしました。
+	    興味をもってもらえたら幸いです。
+	  
+	  
+	    最後に宴会を土間土間で開催しました。
+	    たべものを調子にのってたくさん頼みすぎました。おなかいっぱい。
+	    ロシアンルーレットにあたったのは小林さんと小室さんでした。
+	    辛そう・・・。
+	  
+	  
+	    二次会はデニーズでデビルズチョコレートサンデー。
+	    誰も電車にのれない状況になって、解散。
+
+
+\dancersection{Jamon, tinto vino, por favor. 〜スペインExtremadura州Debian i18n会議報告}{武藤 健志 \texttt{<kmuto@debian.org>}}
+\label{sec:extremadura}
+
+去る2006年9月7日〜9月9日の期間、スペインExtremadura州Casar de C\'{a}ceres(図\ref{fig:casar})において開催された「第1回Debian国際化会議 (\emph{The first Debian internationalisation meeting})」の模様を、技術トピックを中心に紹介する。
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[width=6cm]{image200610/cesar.eps}
+    \includegraphics[width=6cm]{image200610/creofonte.eps}
+  \end{center}
+  \caption{Extremadura州C\'{a}ceres(39$^{\circ}$.28'15.72"N/6$^{\circ}$22'18.87"W) CREOFONTE}
+  \label{fig:casar}
+\end{figure}
+
+\subsection{概要}
+\label{sec:extremadura-abstract}
+
+スペインExtremadura州は、支出の圧縮のために官公庁や教育機関にDebian GNU/Linuxベースのディストリビューション\textbf{LinEx}(\url{http://www.linex.org/})の導入を進めているが、その過程で、Debian Projectへの謝意および、今後の開発と改良を継続への期待を込めて、Debian Projectが必要とする各種会議を支援している。今回の会議も、この一環として行われ、各国から集まった参加者たちの航空券、食事、宿泊兼会議場「CREOFONTE」の提供といったすべてが同州の支援によって賄われた。
+
+本会議は、Debian公式開発者でありDebianインストーラなどの翻訳のとりまとめやドキュメント整備でリーダーシップを発揮している、フランスのChristian Perrier氏の呼びかけで開催に至ったもので、世界各国から国際化に関して積極的な活動を行っている23名\footnote{\url{http://wiki.debian.org/I18n/Extremadura2006}を参照。出身国はスペイン、ルーマニア、リトアニア、フランス、オーストリア、ベルギー、ドイツ、イタリア、イギリス、イスラエル、南アフリカ、ブラジル、米国、インド、カンボジア、バングラデシュ、日本と幅広い。}が集まり、3日間にわたって充実した議論を行った。
+
+主な議題については次のとおりである。
+
+\begin{itemize}
+\item Pootle翻訳支援システムの採用推進
+\item DDTP/DDTSSの本格的な活用
+\item i18nタスクフォースの結成と活動の開始
+\item Debianインストーラおよび安定版における国際化の諸問題とその対策
+\item 非ラテン文字圏における、フォントおよび入力メソッドの概要紹介とドキュメント化の必要性
+\item その他国際化作業に向けたインフラストラクチャ整備
+\end{itemize}
+
+以降で、それぞれの技術詳細を述べていこう。
+
+\begin{screen}
+  \paragraph*{キーワード}
+  \begin{wrapfigure}{r}{3cm}\includegraphics[width=3cm]{image200610/jamon.eps}\end{wrapfigure}
+  \begin{description}
+  \item[i18n] 「Internationalization\footnote{-sationとzの代わりにsで表記されることもある。}」(国際化)の略称。一般に、アプリケーションを、技術的に大きな変更を要することなく、特定の言語・地域・文化に依存する部分(メッセージ、アイコンなど)を分離してほかの言語・地域・文化に対応できるようにした設計およびその作業を指す。
+  \item[l10n] 「Localization」(地域化)の略称。特定の言語・地域・文化に合わせた作業およびその成果を指す。たとえば翻訳は、l10n活動の1つである。
+%  \item[m17n] 「Multilingualization」(多国語化)の略称。1つのアプリケーションインスタンス上で複数の言語を同時に利用する設計およびその作業を指す。Emacs/Muleは多国語表現実装の代表例。
+  \item[po] 「Portable Object」の略称。GNU gettextで実装されたi18nフレームワークにおける、メッセージカタログファイル。原文メッセージと対訳が1対1で構成され、短い翻訳については作業や再利用が容易である。詳しくは後述。
+  \end{description}
+\end{screen}
+
+\subsection{gettextで実現されるi18nとpoファイルの概要}
+\label{sec:extremadura-po}
+
+本題に入る前に、Debianのアプリケーションのi18nおよびl10nで欠かすことのできない、GNU gettextのi18nフレームワークと、その中で重要な役割を担うpoファイルについて簡単に説明しておく。
+
+\textbf{GNU gettext}は、GNUアプリケーション向けに開発された、メッセージカタログ向けi18nフレームワークで、GNU libcで全面的にサポートされている(図\ref{fig:extremadura-gettext})。元々の概念は、UniforumによってNLS標準として発案され、SunのSolarisで実装されたものだ。
+
+% * GNU gettext
+%  GNU Internationalization utilities
+%  Interesting for authors or maintainers of other packages or programs
+%  which they want to see internationalized.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=8cm]{image200610/gettext.eps}
+  \end{center}
+  \caption{GNU gettextの仕組みの概略}
+  \label{fig:extremadura-gettext}
+\end{figure}
+
+GNU gettextの動作の流れは大まかに次のようになる。まず、i18n化対象のアプリケーションのコードから\texttt{xgettext}などのツールを利用してメッセージ部分をテキスト形式の\textbf{potファイル}(\emph{Portable Object Template})として抜き出し、コードをgettextフレームワークを利用するよう改変する\footnote{基本的には\texttt{\_("メッセージ")}のようにアンダースコア1文字の関数で囲む。その他設定の詳細についてはGNU gettextのInfoファイルを参照。}。
+
+生成されたpotファイルは原文メッセージのマスターファイルとなる。このファイルを\textbf{$<$言語コード$>$.po}の名前を持つ\textbf{po}ファイル(\emph{Portable Object})としてコピーし、実際の翻訳を進めることになる。たとえば日本語であれば、\texttt{ja.po}がpoファイル名となる。poファイルには翻訳ファイル自体のエンコーディングや、訳者名、日付などを記したいくつかのヘッダの後に、原文となる\texttt{msgid}とその対訳指定箇所となる\texttt{msgstr}のペアが羅列される。次にいくつかの例を示す。
+
+\begin{screen}
+\begin{verbatim}
+# msgidに原文文字列、msgstrに訳を記述する
+msgid "Japanese"
+msgstr "日本語"
+
+# plural指示で単数型と複数型を分けることができる
+msgid "an apple"
+msgid_plural "apples"
+msgstr[0] "1個のリンゴ"
+msgstr[1] "複数のリンゴ"
+
+# 複数型を無視する場合はmsgstr[1]に同じ文字列を並べるのでは
+# なく、[0]だけにする
+msgid "an apple"
+msgid_plural "apples"
+msgstr[0] "リンゴ"
+
+# printf書式の変換指定子を使う(実装依存)
+msgid "user %s has %d files"
+msgstr "ユーザ %s は %d 個のファイルを持っている"
+
+# printf書式文字列を使い、順序を入れ替える(実装依存)
+# 順序を指定する場合、すべての変換指定子に番号付けする必要がある
+msgid "%d files in %s directory"
+msgstr "%2$s ディレクトリに %1$d 個のファイル"
+\end{verbatim}
+\end{screen}
+
+GNU gettextの場合、poファイルのままでは\texttt{msgid}からのメッセージ取り出しが複雑(時間がかかる)になるので、\texttt{msgfmt}コマンドを利用してバイナリ形式の\textbf{moファイル}(\emph{Machine Object})に変換する。さらに、libcのgettextサポートを使ってこのmoファイルを読ませるために、\texttt{/usr/share/locale/$<$言語$>$/LC\_MESSAGES/}配下に「$<$アプリケーション名$>$.mo」(正確には「ドメイン名」)で配置しておく。
+
+これで準備は完了である。アプリケーション側でアプリケーション名(ドメイン名)を宣言してバインディングした後、翻訳対象の\texttt{msgid}文字列と、現在のメッセージロケール(\texttt{LC\_MESSAGES}環境変数。定義されていない場合は\texttt{LANG}環境変数)で問い合わせると、ロケールに基いた上述のディレクトリから検索され、対応する\texttt{msgstr}文字列が返される。このとき、メッセージロケールのエンコーディング情報に基いてエンコーディング変換も行われる。
+
+GNU gettextはこのようにmoファイルとlibcのサポートを利用しているが、poファイルの構成自体は比較的単純であり、Debianにおける各i18nフレームワークでも流用されている。たとえば、パッケージの構成についての質問やインストーラの質問を司るdebconfインターフェイステンプレートの翻訳にはpoを流用したpo-debconf機構が使われており、これから説明するPootleやpo4aは、poをベースにしたより汎用的なi18n翻訳手法である。
+
+poファイルはテキストファイルなので、どのようなテキストエディタでも操作可能であるが、未翻訳あるいは\texttt{msgid}が更新されたために曖昧(fuzzy)になった翻訳などを順に追っていったり、訳語候補を提供したりできる支援ツールを使うことで、生産性を向上できる。このようなオフラインのpo翻訳支援ツールとしては、Emacsのpo-mode、KDEのKBabel、GNOMEのGtranslatorなどがある(図\ref{fig:extremadura-assist})。
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=3cm]{image200610/emacs-po.eps}
+    \includegraphics[height=3cm]{image200610/kbabel.eps}
+    \includegraphics[height=3cm]{image200610/gtranslator.eps}
+  \end{center}
+  \caption{Emacs po-mode、KBabel、Gtranslator}
+  \label{fig:extremadura-assist}
+\end{figure}
+
+\subsection{Pootle翻訳支援システム}
+\label{sec:extremadura-pootle}
+
+さて、今回の会議での主要な議論の1つが、Pootle翻訳支援システムである。\textbf{Pootle}(\url{http://pootle.wordforge.org/})は、WordForge Project(\url{http://www.wordforge.org/})で開発が進められているWebベースのオンライン翻訳管理サーバーだ。GNU GPLv2でライセンスされており、Debianでもpootleパッケージをインストールすることで自身のサーバーを構築できる。なお、メインプログラムはPythonで記述されている。
+
+% Pootle is:
+% Web-based translation and translation management tool
+%  Pootle provides a rich set of features for managing a translation
+%  project.  It integrates components of the Translate Toolkit to provide
+%  error checkers for translation messages and the ability to download files
+%  in a number of formats: PO, XLIFF, CSV.  Pootle can also provide compiled
+%  PO files for download. You can use it to assign work to translators in
+%  your team, and you can define goals to help focus the efforts of your
+%  translation.  Pootle can run without a Web server or be proxied through
+%  your existing Apache server.  The Translate Toolkit is a set of software
+%  and documentation designed to help make the lives of localizers both more
+%  productive and less frustrating.
+
+類似のものとしては、Canonical社(Ubuntu GNU/Linuxの開発元)のコラボレーションサイトLaunchpad.net(\url{https://launchpad.net/})で使われている\textbf{Rosetta}システム(\url{https://launchpad.net/rosetta})があるが、RosettaはまだDebianフリーソフトウェアガイドラインに沿ったソースコード公開はなされていない\footnote{「\emph{Rosetta is not Open or Free Software at the moment. Rosetta will become open source sometime in the future but we don't have a date, although some parts of the Launchpad have already been released under the GPL by Canonical Ltd.}」}という問題があり、Debianでの積極的な採用には反対の声が大きい。
+
+% * launchpad (https://launchpad.net/)
+% Launchpad is a collection of services for products in the open source universe.
+% You can register your product, then collaborate with the open source community
+% on translations, bug tracking and code. For more information, see our
+% Frequently Asked Questions.
+% * Rosetta (https://launchpad.net/rosetta)
+% Rosetta is a Web-based translation system. You can easily collaborate
+% with translators for your software through Rosetta.
+% Rosetta is a Web-based system for translating open source software into any
+% language. All you need to start translating is a Web browser, a good knowledge
+% of the application you are translating, and a knowledge of English.
+
+\begin{wrapfigure}{l}{3.5cm}\includegraphics[width=3.5cm]{image200610/pootle.eps}\end{wrapfigure}
+
+会議では、Wordforge Project創設者のJavier Sol\'{a}氏、Pootle開発者のFriedel Wolff氏、Google Summer of Code(GSoC)でPootleの改善を進めるGintautas Milauskas氏、それにDebianでのパッケージメンテナNicolas Francois氏を中心に、Pootleの実装と今後の改良方針について議論が行われた。
+
+Pootleは、その名のとおりpo形式を中核として翻訳を管理しており(内部表現はUTF-8エンコーディング)、poの特性を生かしてデータベース内に存在する同一メッセージの再利用が可能となっている。po形式のほかに、XLIFF形式(\emph{XML Localization Interchange File Format})、Qt.ts形式(XMLカタログ)、CSV形式での入出力をサポートしている。
+
+実際にPootleのサイトに行き、使ってみればわかるように、Pootleはまだ開発中であり、実用に耐え得るほどの出来ではない。特にWebインターフェイスの能力が不十分であり、これをクライアントとして利用するにはかなりの苦難が予想される。Webインターフェイスの向上は今後の大きな課題ではあるが、GSoCの支援でMilauskas氏がデータベースバックエンドとWebフロントエンドの分離(抽象化)に成功したと会議において表明したこともあり、今後は既存のオフラインフロントエンドとの連携や、新たなオンラインフロントエンドの開発が進められるかもしれない\footnote{なお、Pootleの実験台および後述のi18nタスクフォースのためのインフラストラクチャとして、i18n.debian.netがセットアップされ、Extremaduraのデータセンターでホスティングされている。}。Pootleについてのドキュメントの整備はまだ追いついていないが、Pootleの開発メーリングリストでは日々活発な議論が行われており、我と思わん方はぜひ参加して頂きたい。
+
+また、会議において提案され現在継続議論中の話題として、Pootleに「翻訳の翻訳」を実装してほしいという希望(wishlist)がある。忘れがちなことであるが、世界各地の翻訳従事者の誰もが英語を理解できるわけではない。たとえば母国語以外の第二言語としてスペイン語・フランス語・ロシア語といった言語を使っている国は存在し、こういった国々で英語を解釈し無償で作業に従事する翻訳者を見つけるのは容易でない。たとえばPootle側で英語のほかに指定の第二言語が訳出済みであれば、次のようにそれを提示すれば、訳者は第二言語に従って翻訳できる。
+
+\begin{screen}
+\begin{verbatim}
+  msgid "English"
+  msgid[es] "Spanish"
+  msgstr "スペイン語を読んだ上での翻訳"
+\end{verbatim}
+\end{screen}
+
+将来的にはDebianにおける全翻訳をPootleで賄うという壮大な構想が予定されているが、その上で必要となるのが既存の各種フォーマットと、Pootleで使うpo形式との相互変換である。
+
+Debianパッケージの質問インターフェイスであるdebconfの翻訳テンプレートに対しては、Denis Barbier氏の開発した\textbf{po-debconf}というテンプレート$\leftrightarrow$po間の相互変換の仕組みがある(テンプレート利用の際にはpo-debconfの利用を強制するようなポリシー改訂も本会議で提案された)。
+
+その他のフォーマットへの対応としては、\textbf{poxml}と\textbf{po4a}(\emph{po for anything})がある。poxmlはXML$\leftrightarrow$po間の相互変換ツールであり、po4aは、XML、SGML、LaTeX、Diaダイアグラム、POD(Perlの\emph{Plain Old Document})、manページ、カーネルヘルプメッセージと多種に対応した相互変換ツールである。たとえば、Debianインストーラのドキュメントにはpoxmlが採用されており、現在XMLファイルを直接扱っている日本語についてもいずれは採用が求められることになるだろう。po4aは各種マニュアルやaptitudeのドキュメントなどに使われており、実際の使い方については、小林儀匡氏の日記に詳しい(\texttt{http://dolphin.c.u-tokyo.ac.jp/\textasciitilde nori1/w/?cmd=view;name=Log200610})。
+
+% * po4a
+%  tools for helping translation of documentation
+%  The po4a (po for anything) project goal is to ease translations (and
+%  more interestingly, the maintenance of translations) using gettext
+%  tools on areas where they were not expected like documentation.
+%  .
+%  This package contains the main libraries of po4a, and the following
+%  sub-modules:
+%  .
+%    - KernelHelp: Help messages of each kernel compilation option.
+%    - Man: either roff or mdoc format.
+%    - Pod: Perl documentation format.
+%    - Sgml: either debiandoc or docbook DTD.
+%    - Dia: uncompressed Dia diagrams.
+%    - LaTeX: generic TeX or LaTeX format.
+%    - XML: very configurable, docbook DTD preconfigured.
+
+% po-debconf
+% manage translated Debconf templates files with gettext
+%  This package is an alternative to debconf-utils and provide tools
+%  to manage translated Debconf templates files with common gettext
+%  utilities.
+
+なお、多数のpoファイルを格納して翻訳の再利用や用語集(glossary)作成が可能であることがPootleその他の管理ツールにおける最大のメリットであるが、debian-www@debian.or.jpメーリングリストにおいてSeiji Kaneko氏が疑念を呈したとおり、特に日本語においては英文の単語とユニークに1対1対応できることが少なく、訳者の著作権を認められ得る文が構成されるため、翻訳のライセンスの衝突に注意を払う必要がある。たとえばある用語集や翻訳がGNU GPLと衝突するライセンスのソフトウェアに由来する場合、GNU GPLのソフトウェアの翻訳においてそれを利用することは、ライセンス上の問題を抱えかねない。これについては、候補提供時にライセンス衝突の可能性を警告したり、今後翻訳者に何らかの(翻訳についての扱いをできるだけ自由にするための)「翻訳ライセンス同意書」を求めていくといった必要が出てくるだろう。
+
+% たとえばSunグロッサリなど。
+% Fedora USのWarren Togami氏と相談した結果。→翻訳者にライセンス同意書(Licence Agreement)を求める必要があるだろう
+% Pootleではほかのpoで同一のものがあった場合は埋めるのではなく候補を出す
+
+
+\subsection{DDTP/DDTSSの展望}
+\label{sec:extremadura-ddtp}
+
+\textbf{DDTP}(\emph{Debian Description Translation Project})は、Michael Bramer氏らによって長らく開発と作業が進められてきた、Debianの各パッケージの1行説明および長文説明(Description)の翻訳インフラストラクチャである。再設計を行ったりサーバーがクラッシュしたりと長期にわたる活動停止をたびたび起こしていたが、ようやく簡易かつ堅固なサーバーシステムが実装され、活動が再開した。日本では現在角田慎一氏と田村一平氏が``\textbf{ものすごい勢いで}''(\copyright tsuno氏)翻訳を進めており、1位のドイツに次ぐ翻訳数を叩き出している(\url{http://svana.org/kleptog/temp/ddts-stats.html})。
+
+\begin{wrapfigure}{r}{5cm}\includegraphics[width=5cm]{image200610/grisu.eps}\end{wrapfigure}
+
+現在のDDTPは、メールインターフェイスを使って翻訳対象の要求および提出を行うようになっており、内部表現はUTF-8エンコーディングで統一されている。詳しくはWebのDDTPの説明(\url{http://www.debian.org/international/l10n/ddtp})を参照されたい。
+
+\textbf{DDTSS}(\emph{Debian Distributed Translation Server Satelite}。\url{http://kleptog.org/cgi-bin/ddtss2-cgi/xx})は、DDTPのWebフロントエンドで、メールインターフェイス同様に翻訳対象の要求と提出、ほかの訳者によって提出された翻訳のレビューおよびコメント添付をWebブラウザ上で容易に行うことができる。
+% DDTSS It provides facilities to request translations, enter a translation and review other peoples translations. Afterwards the updated translation can be sent via email to the DDTS server.
+
+このように、DDTP/DDTSSは強力で、かつ協力者の参入障壁の低いシステムだが、唯一の難点は翻訳データを実際に利用できる場面が極めて限られていることである。翻訳データは各Debianミラーにはかつて伝播されていたものの、現在はddtp.debian.netホストのみでの提供となっている上(ミラーにあるものは古くて更新されていない)、現時点でユーザー環境で利用するには、次のようにexperimental版からAPTパッケージを取得しなければならない。
+
+\begin{enumerate}
+\item unstableまたはtesting環境において、experimental版のAPTリポジトリを加える。
+
+  \begin{screen}
+\begin{verbatim}
+deb http://ftp.jp.debian.org/debian experimental main
+\end{verbatim}
+  \end{screen}
+\item \texttt{apt-get update; apt-get install apt/experimental\return}を実行し、experimental版のAPTをインストールする。このとき、ライブラリバージョンがunstableのものと異なるため、aptitudeなどのAPTライブラリを利用しているパッケージは一旦removeされることになる。
+\item ddtp.debian.netのAPTリポジトリを加える(\texttt{etch}も存在)。
+
+  \begin{screen}
+\begin{verbatim}
+deb http://ddtp.debian.net/debian sid main
+\end{verbatim}
+  \end{screen}
+\item 環境変数\texttt{LANG}に\texttt{ja\_JP.UTF-8}(あるいは\texttt{ja\_JP.EUC-JP})を設定した状態で、\texttt{apt-get update\return}を実行する\footnote{デフォルトとなっているAPT設定\texttt{APT::Acquire::Translation "environment";}を\texttt{environment}の代わりに\texttt{ja}などとすれば環境変数に寄らずとも設定できるはずなのだが、現時点では\texttt{environment}が優先されることを避けられないようだ。}。これにより、DDTP日本語翻訳データである\texttt{$<$公式ミラー$>$/dists/sid/main/i18n/Translation-ja.\\gz}(古い。5月16日以来更新されておらず、エンコーディングはEUC-JP)、および\texttt{http://ddtp.debian.net/\\dists/sid/main/i18n/Translation-ja.gz}(最新。エンコーディングはUTF-8)がダウンロードされる。% FIXME:この行、強制改行を入れている
+\item 環境変数\texttt{LANG}に\texttt{ja\_JP.UTF-8}(あるいは\texttt{ja\_JP.EUC-JP})を設定した状態で、たとえば\texttt{apt-cache show apt\return}を実行することで、日本語翻訳文が表示される(図\ref{fig:apti18n})。
+
+  \begin{figure}[htbp]
+    \begin{center}
+      \includegraphics[width=5cm]{image200610/apti18n.eps}
+    \end{center}
+    \caption{DDTPから取得した日本語メッセージ}
+    \label{fig:apti18n}
+  \end{figure}
+
+  ただし、ddtp.debian.netにPackagesファイルが存在しないために、毎回警告メッセージが出てしまうという問題がある。aptitudeやsynapticなどのAPTフロントエンドは、experimental版のAPTライブラリでビルドし直すことで、同様にDDTP翻訳を扱える。
+\end{enumerate}
+
+今回の会議においては、Bramer氏自ら現状のDDTP/DDTSSの説明の後、PootleとDDTPの連携について可能かどうかの検討が行われた。現在のDDTPはシンプルながらそれなりに機能しており、あえてPootleのように比較的複雑なシステムと連携する必要がどこまであるかという懸念をBramer氏は示していたが、用語の統一や訳の再利用という面でメリットがあることも同時に認めていた。なお、DDTPの試験的なPootleへの投入はすでに行われており、Pootleにおいて改善すべきパフォーマンス上の問題があることがわかっている。
+
+既存のexperimental版APTのDDTP対応実装が安定しており、各種派生パッケージでもうまく動作していることからEtchにマージを試みることが会議において提案されたが、残念ながら、このDDTP対応のAPTは、ABI変更を伴うために現在リリースフリーズ中のEtchへの収録は見送られることが決定した。今後、より検証を重ねた上で、Debian unstableへのマージが行われる予定だ。現時点で見る限り、experimental APTの動作はunstableのものと同程度に安定しており、ABI変更を受けるパッケージを再ビルドしなければならないことを除けば、試用して問題になることも少ないだろう。また、せめてWeb版のパッケージ説明である\texttt{http://packages.debian.org/}においてDDTPの成果を使えないかという提案が出されており、こちらも作業が進められることを期待したい。
+
+\subsection{i18nタスクフォース}
+\label{sec:extremadura-taskforce}
+
+\begin{wrapfigure}{l}{4cm}\includegraphics[width=4cm]{image200610/taskforcemeet.eps}\end{wrapfigure}
+
+翻訳などのl10nや、関連するi18n改善を行う上で重要となるのがパッケージメンテナとの協調である。しかし不幸なことに、必ずしもメンテナがこのような改善に積極的であるとは限らず、翻訳が放置されたりあるいは理解の浅さからパッチが拒絶されたりすることが多々発生している。
+
+リリース作業の一環として、リリースアシスタントLuk Claes氏の合意の下、本会議ではDebian \textbf{i18nタスクフォース}の結成と、\textbf{NMUキャンペーン}の実施が決定された。
+
+i18nタスクフォースは、i18n/l10nにおける各種の問題についてのスペシャリスト集団として、窓口となるグループである。具体的な活動予定としては、ユーザーからのi18n/l10nにおけるバグ報告の追跡と返答、メンテナや上流開発者への働きかけ、翻訳者/チームへの連絡を行う(図\ref{fig:i18ntaskforce})。
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=5cm]{image200610/i18ntaskforce.eps}
+  \end{center}
+  \caption{i18nタスクフォース}
+  \label{fig:i18ntaskforce}
+\end{figure}
+
+メーリングリスト\texttt{debian-i18n@lists.debian.org}、Wikiサイト\url{http://i18n.debian.net/}、IRCチャネル\texttt{\#debian-i18n@irc.oftc.net}で活動する。図からも予想されるように、タスクフォースのメンバーの負荷は著しく高くなる恐れがある。各部分での自動化やテンプレート化、メンバーの勧誘といったことが今後の課題となるだろう。
+
+NMUキャンペーンは、i18nタスクフォースの作業の1つである。i18n/l10nの翻訳・パッチ(特にpo-debconf関連とgettext 0.15への移行)を受けていながら動きの見られないメンテナのパッケージに対し、一定の過程\footnote{NMU campaign for pending l10n bugs (\url{http://people.debian.org/\textasciitilde lwall/i18n/})}を踏んだ後にi18nタスクフォースに属するDebian公式開発者が、NMU(\emph{Non-Maintainer-Upload})と呼ばれるパッケージの修正アップロードを行う。すでにこのミッションは開始しており、メーリングリストdebian-i18nにおいてNMUに際して未翻訳言語の取り込みも行う旨の声明がPerrier氏などからたびたび出されている。po-debconf翻訳者・翻訳希望者の方はメーリングリストでの連絡に注意を払っておくとよいだろう。
+
+\subsection{インストーラおよび安定版の問題と解決}
+\label{sec:extremadura-installer}
+
+\begin{wrapfigure}{r}{4cm}\includegraphics[width=4cm]{image200610/d-i.eps}\end{wrapfigure}
+
+現在、Debianインストーラには世界人口の67\%に対応する74種の言語が登録されており、今後もDebianの普及のために全世界の言語をカバーすべくさらなる増加が予想される\footnote{Sargeでは42言語(50\%)、Etchでは現時点で62言語(61\%)。\url{http://d-i.alioth.debian.org/i18n-doc/languages.html}を参照。}。しかし、この言語データの増加は、当然ながらその翻訳を収録するパッケージのサイズ増大を引き起こし、実メモリにRAMディスクを展開して作業を行うDebianインストーラにとっては、抜本的解決策がない限りこれ以上の言語収容は厳しいというインストーラマネージャFrans Pop氏からの非公式見解が示されている。また、インストーラに限らず、各パッケージの翻訳データの種類やサイズが増大することは、インストール環境でのディスクの圧迫(特に組み込み環境)や、各言語の更新がパッケージメンテナにとって大きな負荷となり得る。さらに、翻訳は最終パッケージ形態になってからようやく追従されることも多く、安定版での翻訳更新のニーズもある。
+
+
+本会議のブレーンストーミングセッションでこれらの問題が取り上げられ、いくつかの提案が寄せられた。
+
+\subsubsection{翻訳データの分割}
+\label{sec:extremadura-shrink}
+
+DebianのインストーラはDebianパッケージとそのdebconf翻訳の仕組みを生かして設計されている。インストーラはudebパッケージというコンポーネントに分けられており、依存関係を使って動的にロードされる。翻訳は各udebごとに収録されている。
+
+前述したように、実メモリを利用するインストーラのサイズには、実用上、限りがある。これに対処する上で次の2つの提案がなされた。
+
+1つは、Christian Perrier氏らによる「言語ごとにインストーラを分ける」というものである。つまり、ラテン語圏、アラビア圏、アジア圏、…といった具合だ。付随して、インストーラの第1段階で起動して言語を選んだ後に本当の(各言語の)インストーラを起動するという案も出された。ただ、いずれにしてもこの方法ではパッケージの分割が煩雑になる上、たとえば「アジア圏」と一緒くたにできるほどこれらの言語は等質ではない。日本語・中国語・韓国語を一緒にすることは結局アジア圏のサイズがほかの言語圏に比して圧倒的膨大になる上、特にGUIインストーラの場合には日本語と中国語のフォントは形状の違いから共有できない上に同じ文字コード番号で衝突する箇所があるなど、問題が大きい(むしろ日本語、中国語、韓国語は互いに独立した関係にしたほうがましであろう)。
+
+もう1つは、武藤の提案した「選択した言語以外の言語については、インストーラコンポーネントの動的ロード時に取り除く」というものである。インストーラにはすでに「lowmem」という、メモリが少ないときに英語以外の言語データを切り詰める機構が用意されており、これを流用すれば比較的実装は容易だろう。Frans Pop氏からもdebian-bootメーリングリストにおいて同様の提案と賛同が寄せられており、おそらくこの方向で実装が進めることになる見込みだ。
+
+
+\subsubsection{ランゲージパックとtdeb}
+\label{sec:extremadura-langpack}
+
+インストール後環境での翻訳の増大と安定版における更新を行う上で提案されたのが、ランゲージパックとtdebである。
+
+\textbf{ランゲージパック}は、Ubuntuでも採用されている方式で、大きくなりがちなパッケージのmoファイルをひとまとめにし、言語ごとに別のdebパッケージとして一括化するものだ。現行のDebianにおけるFirefoxやOpenOffice.Org、KDEなどで採用されている言語パッケージ(firefox-locale-jaなど)を、もっとグローバルにして、各バイナリパッケージの翻訳を1つのパッケージにしたものと考えればよいだろう。Ubuntuではgccやaptitude、console-toolsなどの比較的大きなmoファイルを持つものがランゲージパックに分割されており、またGNU libcにパッチを当ててランゲージパックがインストールする\texttt{/usr/share/locale-langpack/$<$言語$>$/LC\_MESSAGES}の中からもメッセージカタログを参照するように手が加えられている。
+
+% 利点: リリース後も変更できる、異なるメンテナによってハンドリングできる、カスタムディストリビューションで新しい翻訳を入れられる
+% 欠点: 依存関係の問題。mainバイナリはdependsはできずrecommends。自動的に削除できない。バージョン依存。firefoxのように自己アップデートできる場合は衝突の可能性。バギーな翻訳パッケージでのクラッシュ。バイナリパッケージをあげずに翻訳だけ上げるとクラッシュするかも。
+
+\textbf{tdeb}(\emph{translation deb})も同様に、オリジナルのバイナリパッケージから翻訳部分を抜き出し、別配布とするアイデアである。ただし、既存のdebではなく各バイナリパッケージに対応する「tdeb」という新たなフォーマットを提唱している。Aigars Mahinovs氏の提案している手順は次のとおりだ。
+
+\begin{enumerate}
+\item パッケージメンテナのビルド時(debhelperでのフック)、またはアップロードしてアーカイブに入るまでの間に、バイナリパッケージから翻訳部分をtdebとして抽出する。たとえば日本語データの場合にはhello-1.0-4.ja.tdebのようにして、このパッケージには翻訳データのみを含める。
+\item 各FTPミラーは、tdebファイルと、\texttt{Translations.gz}のようなインデックスファイルを提供する。インデックスファイルは、「\emph{$<$packagename$>$-$<$version$>$: $<$separated-lang-list$>$}」の書式で、たとえば「\texttt{hello-1.0-4: es,fr,ja}」のようになる。
+\item APT側には、\texttt{/etc/apt/languages.list}のようなファイルでどの言語が必要かを指定しておく。パッケージのインストールやアップグレード時にバイナリdebと合わせてtdebをダウンロードする。
+\item パッケージの実際のインストールを担当するdpkgでは、バイナリパッケージがインストール済みであることを確認した後、tdebパッケージを展開・インストールし、そのファイル一覧情報をバイナリdeb同様\texttt{/var/lib/dpkg/info/tdebs/hello.ja.list}のような形で配置する。そして、システムのパッケージ状態を示す\texttt{/var/lib/dpkg/status}ファイルの該当パッケージに\texttt{Installed-Translations}フィールドを追加し、ここにインストール済み言語を記述する。
+\end{enumerate}
+
+% 利点: (リリース後も変更できる、異なるメンテナによってハンドリングできる、カスタムディストリビューションで新しい翻訳を入れられる。) +  選択した言語・パッケージのみについてインストールされる
+% 欠点: APT,DPKGの改変が必要。バージョンに強い束縛をつけすぎると、翻訳の更新が厳しくなる(mozillaの例)。+(firefoxのように自己アップデートできる場合は衝突の可能性。バギーな翻訳パッケージでのクラッシュ。バイナリパッケージをあげずに翻訳だけ上げるとクラッシュするかも。)
+
+% dpkg --install hello-1.0-4.ja.tdeb
+% dpkgはベースパッケージ名を見て、該当パッケージがインストールされていることを確認し、tdebを展開する
+% /var/lib/dpkg/info/tdebs/hello.ja.listに追加する
+% StatusのInstalled-Translationsフィールドに言語を追加
+
+% APT
+% /etc/apt/languages.list
+% パッケージのインストールまたはupgrade時にtdebを取り込み
+
+% ミラー
+% Sourcesと同じところにTranslationインデックスファイルを設置
+% パッケージ名-version: 利用可能な言語一覧(カンマ区切り)
+% 404は翻訳がないということ
+% debian/pool/main/s/sb/sbackup/tdebs/?
+
+% 開発者
+% 既存のパッケージから翻訳箇所を分離？
+% 大きなi18nシステムを構成し、そこから配布すべきか
+% build時かアップロード時か
+
+上記に示したとおり、ランゲージパックにせよtdebにせよ、実際の対応に当たっては、Cライブラリ、ソースパッケージ、dpkg、APT、ミラー等々と各所での大きな変更が必要となるため、紆余屈折が予想される。tdebの実装については、debian-i18nメーリングリストおよびWiki(\url{http://wiki.debian.org/TranslationDebs})で目下議論が行われているので、積極的にご参加頂きたい。
+
+% language-config
+% GDM
+
+\subsection{フォントと入力メソッド}
+\label{sec:extremadura-font-im}
+
+\begin{wrapfigure}{l}{4cm}\includegraphics[width=4cm]{image200610/javier.eps}\end{wrapfigure}
+
+非ラテン語圏の参加者も多かったため、この機会を使ってフォントと入力メソッドの説明も行われた。
+
+カンボジアのJavier Sol\'{a}氏は、クメール文字の入力のデモンストレーションを行った。この南インド文字に似た表音文字は、母音と子音の組み合わせで文字がどんどん変形し、また縦横に伸縮していくものであり、入力側のほか、表現する上でツールキット側の対応も必要となる\footnote{クメール文字の一部はUnicode 3.0以降に収録されている。}。デモはWindowsで行われたが、(未確認ではあるものの)SCIMとOpenOffice.orgの組み合わせで入力および表現できるようだ。
+
+
+インドのGuntupalli Karunakar氏は、ヒンディ語入力におけるコンソールとXのキーボードマップの差異の問題について語った。現在、コンソールのキーマップはconsole-toolsによって提供され、Xのキーマップはxkbによって提供されているが、両者のデータの持ち方に互換性がないため、管理が煩雑になっている。これについては、xkb側をマスターとして、動的にconsole-tools用のデータを生成できないかという提案がなされている。
+
+このほか、インド系アメリカ人のJaldhar Vyas氏はSCIMを、武藤は類似の仕組みとしてUIMを紹介した。
+
+これらのトピックについては、開発元などによってある程度のドキュメントは揃えられているものの、全体を俯瞰して体系だった開発者向け・ユーザ向けの文書というのはまだ不足している。久保田智広氏の筆によるi18nを俯瞰したドキュメント『Introduction to i18n』(\url{http://www.debian.org/doc/manuals/intro-i18n/})は本会議においても大きな賞賛を受けていたが、フォントや入力メソッドについてのガイドのさらなる拡充が必要であろうという見解で一致した。日本人にとってもこれらのトピックは関心の高い分野であり、積極的協力を期待する。
+
+\subsection{まとめ}
+\label{sec:extremadura-conclusion}
+
+少人数で形成された本会議の会期中は、ほぼすべての時間が議論に費やされ、食事の場でも激論が大いに繰り広げられることもあった。その甲斐あって、人数の多さのために個々の「いつものグループ」に分かれがちなDebconfカンファレンスとは一味違った、中身の濃い、相互の情報交換と各種の有益な提案が生み出されることとなった。現地のロジスティックスをすべて担当したC\'{e}sar G\'{o}mez Martin氏の奮闘と、 コーディネータ役のChristian Perrier氏の巧みな議事進行により、議論に集中できる環境が整っていたことも大きいだろう。
+
+\begin{center}
+  \includegraphics[width=12cm]{image200610/full.eps}
+\end{center}
+
+i18n/l10n活動は1人だけで行うものではないし、またこなし切れるものでもない。同時に、この活動はプログラミングやハッカー倫理に熟知しなくとも参入しやすく効果の見えやすい分野のひとつである。できるだけ多くの人々を活動に招き入れ、Debianにおける日本語を含めたi18n/l10nの質と量の向上を図っていこうではないか。
+
+なお、本会議の成功に伴い、来年も「Debian国際化会議」は開催される予定である。この第2回には、やはりDebianでのi18n/l10n活動を進めておられる鍋太郎(KURASAWA Nozomu)氏にバトンを渡し、人脈の形成や議論への積極的な参加をお願いする予定だ。
+
+\begin{flushright}
+  了\\
+  ---\emph{October 16th, 2006 Kenshi Muto}
+\end{flushright}
+
+
+
+\dancersection{DebianでFlashしたい}{松山}
+
+\subsection{DebianのFlash事情}
+DebianのFlash事情は、再生、作成ともに少し寂しい状況のようです。
+再生に関しては、Debianではバージョンが古いものの(バージョン7.Windows版はバージョン9)、Flash Playerがされているので、これをインストールすれば、Flashが再生可能です。
+Debian unstableにはgnashというプレーヤのパッケージがあり、フリーのものではこれが少し有名なようです。
+また、swf-playerというパッケージもあり、いくらか制限があるものの、これでもFlashが再生可能です。
+このように、Debianでは、Flashを何とか再生する環境はあるものの、Flashを作成する環境についてはかなり寂しい状況になっているようです。
+
+\subsection{DebianでFlashを作成したい}
+人がFlashを作成したい理由にはいろいろあると思いますが、とにかくDebianにはFlashを作成するためのツールというものがほとんどないようです。
+DebianでなんとかFlashを作成できないかと探していると、mingというライブラリに出会いました。
+これは、Flashファイルを作成するプログラムのためのライブラリです。
+つまり、mingというライブラリを使用してプログラムを作成し、その作成したプログラムを実行するとFlashファイルが出力されます。
+このあたりが少しややこしいのですが、今のところ単なるライブラリとして提供されているだけなので、Flashを作成するのが困難であるという問題があるものの、私達が直接作成するのは「Flashを作成するプログラム」なので、作成Flashを動的に変更するというメリットもあります。
+mingはコア部分はCでできていて、C++、Perl、PHP、Python、Javaなどに拡張されているようです。
+ming関連のパッケージはoldstableやunstable、testingにはあるようですが、stableにはないようです。
+これは当時のメンテナ Erich Schubertが orphan した結果 2002 年に削除され
+た影響です。\debianbug{166973}
+このように、mingはちょっと怪しい雰囲気がありますが、今回はこれを検証してみました。
+
+\subsection{mingの検証}
+mingは単なるライブラリです。
+別途GUIなラッパーアプリを作成すれば、きっとDebianのキラーアプリになると思います。
+ただ、私の気力や力量もあり、また、とにかく土台となるming自体、どんなFlashでも作成できるのかどうかを確認しておく必要があると思い、今回はmingの検証をしてみました。
+検証作業は、「mingを使ってこんなFlashは作れるのかな?」といういくつかの観点に立って実際にmingを使用したFlashを作成するプログラムを作成し、できた/できないという結論をつけていきました。
+\footnote{できた場合にはそれでよいのですが、できない場合は私がFlashについてよくわかっていなくてできないのか、mingの問題でできないのかの切り分けができていません。}
+
+\begin{table}[h]
+\begin{center}
+\caption{mingの検証結果}
+\begin{tabular}{|l|p{7em}|p{3em}|c|p{10em}|}
+\hline
+分類 & 観点 && 結果 & 備考 \\
+\hline
+\hline
+描画 & テキスト && 可 & フォントの埋め込みが必要? \\
+\cline{2-5}
+     & 線 && 可 & \\
+\cline{2-5}
+     & 画像 && 可 & PNG画像、JPEG画像の取り込みが可能。 \\
+\hline
+動画 & 音楽再生 && 一部可 & WAVファイルの読み込みは可。
+                  MP3読み込みのAPIはあるが、音が潰れる。 \\
+\cline{2-5}
+     & 動画埋込 && 不可 & mpeg等の動画を埋め込むAPIがない。 \\
+\cline{2-5}
+     & 動画再生 && 可 & フレームの概念はある。
+                       線やテキスト等をプログラムによって移動させることが可能。 \\
+\hline
+インタラクティブ & ボタン操作 && 一部可 & テキストをボタンとすることが可能。
+                                       画像、動画はボタンにできない。 \\
+\cline{2-5}
+     & テキストフィールド (ボックス) && 可 & 入力値をActionScriptで取り込む方法がよくわからない。 \\
+\cline{2-5}
+     & マウス操作 && & \\
+\hline
+データ & XML && & \\
+\cline{2-5}
+      & HTTP && & \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\clearpage
+
+\dancersection{rpmstrapを活用する}{岩松 信洋}
+\label{sec:iwamatsurpmstrap}
+
+\subsection{始めに}
+みなさん、rpmstrap を御存じでしょうか。「これは Debian 勉強会なんじゃないの？RPM の話なんて
+関係ねーじゃねーか！」と思った人もおられると思いますが、今回は Debian 環境上で RPMなchroot環境を
+構築することができるrpmstrap について説明しようと思います。
+
+\subsection{rpmstrap とは？}
+Debian では chroot 環境等を構築するツールとして、debootstrap\footnote{http://packages.debian.org/unstable/admin/debootstrap}
+がありますが、RPMを使って、chroot環境を構築するツールとしてrpmstrap というものがあります。
+debootstrap と同様、wget\footnote{http://packages.debian.org/unstable/web/wget}を使って、
+http/ftp 経由でパッケージを取得します。なので、基本的にインターネットにつながった環境が必要になります。
+
+Debian では testing と sid にあり、sarge にはありません。次期リリースの コードネーム  Etch には収録される予定です。
+
+\subsection{インストール}
+
+\begin{commandline}
+# apt-get install rpmstrap
+\end{commandline}
+
+でインストールできます。
+\subsection{使い方}
+
+rpmstrap は root 権限が必要です。root権限を持ったユーザー等で実行する必要があります。
+
+\subsubsection{とりあえず、chroot環境を構築してみる}
+
+rpomstrap を使って、CentOS 4.0 の環境を構築してみます。
+chroot を構築するには以下のコマンドで行います。
+
+\begin{commandline}
+# rpmstrap centos4 install_path
+\end{commandline}
+
+
+第1引数に対象ディストリビューション、第2引数にはインストール先を指定します。
+
+実行すると、ネットワーク経由で RPM パッケージをダウンロードしてきます。
+
+\begin{commandline}
+iwamatsu@rahute:~/rpm # rpmstrap --verbose centos4 ./centos/
+rpmstrap: debug: Preparing variables
+rpmstrap: debug: Loading /usr/lib/rpmstrap/scripts/centos4 suite
+rpmstrap: debug: Working out mirror
+rpmstrap: debug: Work out RPMS
+rpmstrap: debug: setup_env()
+rpmstrap: debug: Install RPMS
+rpmstrap: debug: setup_env()
+rpmstrap: debug: get_rpms(): Getting RPM from http://mirror.centos.org/centos/4/os/i386/CentOS/RPMS/
+rpmstrap: debug: wget  http://mirror.centos.org/centos/4/os/i386/CentOS/RPMS/setup-2.5.37-1.3.noarch.rpm
+--21:56:09--  http://mirror.centos.org/centos/4/os/i386/CentOS/RPMS/setup-2.5.37-1.3.noarch.rpm
+           => `setup-2.5.37-1.3.noarch.rpm'
+mirror.centos.org をDNSに問いあわせています... 72.21.40.10
+mirror.centos.org|72.21.40.10|:80 に接続しています... 接続しました。
+HTTP による接続要求を送信しました、応答を待っています... 200 OK
+長さ: 31,051 (30K) [application/x-rpm]
+
+100%[===================================================================>] 31,051        64.83K/s
+
+21:56:10 (64.69 KB/s) - `setup-2.5.37-1.3.noarch.rpm' を保存しました [31051/31051]
+
+rpmstrap: debug: get_rpms(): Getting RPM from http://mirror.centos.org/centos/4/os/i386/CentOS/RPMS/
+rpmstrap: debug: wget  http://mirror.centos.org/centos/4/os/i386/CentOS/RPMS/filesystem-2.3.0-1.i386.rpm
+--21:56:10--  http://mirror.centos.org/centos/4/os/i386/CentOS/RPMS/filesystem-2.3.0-1.i386.rpm
+           => `filesystem-2.3.0-1.i386.rpm'
+mirror.centos.org をDNSに問いあわせています... 72.21.40.10
+mirror.centos.org|72.21.40.10|:80 に接続しています... 接続しました。
+HTTP による接続要求を送信しました、応答を待っています... 200 OK
+長さ: 15,608 (15K) [application/x-rpm]
+
+100%[===================================================================>] 15,608        48.90K/s
+
+21:56:11 (48.77 KB/s) - `filesystem-2.3.0-1.i386.rpm' を保存しました [15608/15608]
+
+.............（中略）
+
+rpmstrap: debug: Installing pass number 53...
+rpmstrap: debug: Installing nano-1.2.4-1.i386.rpm to /home/iwamatsu/rpm/./centos...
+警告: nano-1.2.4-1.i386.rpm: Header V3 DSA signature: NOKEY, key ID 443e1821
+rpmstrap: debug: Installing pass number 54...
+rpmstrap: debug: Installing openldap-2.2.13-4.i386.rpm cyrus-sasl-2.1.19-5.EL4.i386.rpm 
+ cyrus-sasl-md5-2.1.19-5.EL4.i386.rpm to /home/iwamatsu/rpm/./centos...
+警告: openldap-2.2.13-4.i386.rpm: Header V3 DSA signature: NOKEY, key ID 443e1821
+rpmstrap: debug: Installing pass number 55...
+rpmstrap: debug: Installing libuser-0.52.5-1.el4.1.i386.rpm to /home/iwamatsu/rpm/./centos...
+警告: libuser-0.52.5-1.el4.1.i386.rpm: Header V3 DSA signature: NOKEY, key ID 443e1821
+rpmstrap: debug: Installing pass number 56...
+rpmstrap: debug: Installing passwd-0.68-10.1.i386.rpm to /home/iwamatsu/rpm/./centos...
+警告: passwd-0.68-10.1.i386.rpm: Header V3 DSA signature: NOKEY, key ID 443e1821
+rpmstrap: debug: Installing pass number 57...
+rpmstrap: debug: ...nothing left to do.
+rpmstrap: debug: Done
+
+\end{commandline}
+
+これで構築の完了です。
+
+\subsection{chroot 環境にログインする}
+chroot 環境にログインするためには root 権限で chrootを実行します。
+
+\begin{commandline}
+# chroot ./centos
+\end{commandline}
+
+\subsubsection{RPM データベースを作成}
+
+chroot 後に最初しないといけなことです。
+/var/lib/rpm に RPM のデータベースが構築されていないので、構築する必要があります。
+
+\begin{commandline}
+# rpm --rebuilddb
+\end{commandline}
+
+\subsection{rpmstrap の仕組み}
+
+rpmstrap の仕組は以下の通りです。
+\begin{itemize}
+\item /usr/lib/rpmstrap/scripts 以下の設定ファイルをパーサする。
+\item wget でパーサしたファイルを取得する。
+\item rpm コマンドで 取得した RPM ファイルをインストールする。
+
+	\begin{commandline}
+		rpm--install --root インストール先 --dbpath インストールする RPM パッケージ 
+	\end{commandline}
+\end{itemize}
+ という感じで行われます。
+
+\subsection{設定ファイル}
+RPM を取得するパッケージのレポジトリ等の設定を行っているファイルが
+
+\begin{commandline}
+/usr/lib/rpmstrap/scripts/
+\end{commandline}
+
+にあります。
+rpmstrapで取得可能なレポジトリはこのディレクトリ下のファイルのみになります。
+新しいディストリビューションを追加する場合は設定ファイルを追加する必要があります。
+現在は
+
+\begin{itemize}
+\item centos3 ( Cent OS 3 )
+\item heidelberg( Fedora Core 3 )  
+\item sl402 ( Scientfic Linux 4.02 )       
+\item suse10.0  ( Suse 10.0 )
+\item tettnang ( Fedora Core 2 )
+\item centos4  (Cent OS 4 )   
+\item mandriva10 ( Mandriva 10 )
+\item sl304  ( Scientfic Linux 3.04 )    
+\item stentz ( Fedora Core 4 )  
+\item suse9.3  ( Suze 9.3 )   
+\item yellowdog4 ( YelloDog Linux 4.0)
+\end{itemize}
+
+をサポートしています。
+pdk というファイルで設定ファイルの雛型があるので、それを見て設定ファイルを作成するとよいでしょう。
+今回は日本で人気のあるRPMを使ったディストリビューションのひとつである、 VineLinux \footnote{http://www.vinelinux.org} 
+がサポートされていないようなので、追加してパッチ\footnote{http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=392942}を送りました。
+
+\subsection{rpmstrap の気になるところ}
+
+rpmstrap を使ってみて、気になるところがありました。
+\begin{itemize}
+\item 構築までに時間がかかる。
+
+	無駄なファイルが多く、構築までに30分ほど時間がかかります。
+	設定ファイルに記述する RPM を吟味するといいかもしれません。
+
+\item 設定ファイルが書きづらい。
+
+	RPM を使ったディストリビューションは多いのですが、相互でバージョンが一致していなく、設定ファイルにバージョン
+	も記述しないといけません。よって、RPM がひとつでもアップデートされると書き直す必要があります。
+	Debian の場合はファイル名だけなのでこのような問題は発生しません。
+	また、ディストリビューションが増える毎に設定ファイルが増えていくという問題もあります。
+
+\item ダウンロードできないファイルがある
+	ところどころダウンロードができないRPMパッケージがあります。
+	ダウンロードできないパッケージがあるため、環境を構築することができないディストリビューションもあります。
+	
+	テストしたところ、以下のような結果になりました。
+\begin{table}[h]
+\begin{center}
+\caption{rpmstrap テスト結果}
+\label{tbl:a1}
+\begin{tabular}{|c|c|}
+\hline
+ディストリ & 構築 可/不可 \\
+\cline{1-2}
+ centos3  ( Cent OS 3 ) & 不可 \\
+ \hline
+ heidelberg( Fedora Core 3 )  & 可 \\
+ \hline
+ sl402 ( Scientfic Linux 4.02 )   & 不可 \\
+ \hline
+ suse10.0  ( Suse 10.0 )& 可 \\
+\hline
+ tettnang ( Fedora Core 2 )& 可 \\
+\hline
+ centos4  (Cent OS 4 )   & 不可 \\
+\hline
+ mandriva10 ( Mandriva 10 )& 可 \\
+\hline
+ sl304  ( Scientfic Linux 3.04 )  & 可 \\ 
+\hline 
+ stentz ( Fedora Core 4 )  & 可 \\
+\hline 
+ suse9.3  ( Suze 9.3 )   & 可\\		
+\hline 
+ yellowdog4 ( YelloDog Linux 4.0)& 不明 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\end{itemize}
+
+
+\subsection{Debianユーザから見たrpmstrapの使いどころ}
+
+Debian ユーザとして rpmstrap をどのように使えばいいのか考えてみました。
+\begin{itemize}
+
+\item Debian が動作しているマシンで RPM のパッケージをコンパイルするためにchroot環境を構築したり...。
+\item RPM を使っている ディストリビューション上で別のRPMディストリビューションを構築したり...。
+
+\end{itemize}
+
+
+\dancersection{gentoo chroot}{上川}
+\label{sec:gentoo-chroot}
+
+Debian 上で、 gentoo を chroot にインストールする方法について説明します。
+変態度合が伝われば幸いです。
+この手順、つくってから気づきましたが、実はあまり Debian 関係ないです。
+
+
+\subsection{gentoo の最低限のインストール}
+
+まず、gentoo の stage1 の tarball を取得してきます。適当なミラーにおいて
+あります。ここでは
+\url{http://mirror.datapipe.net/gentoo/releases/amd64/2006.0/stages/}か
+ら取得してきました。
+適当な場所にインストール先のディレクトリを作成し、そこで stage1 の
+tarball を展開します。
+アプリケーションの動作に最低限必要な proc ファイルシステムをマウントし、
+ resolv.conf を chroot 内部にコピーし、chroot します。
+これで emerge ができる状況になったので、 emerge しまくるようです。
+
+\begin{commandline}
+Debian$ sudo tar xfjp stage1-amd64-2006.0.tar.bz2 
+Debian$ sudo mount -t proc proc/ proc/
+Debian$ sudo cp /etc/resolv.conf etc/resolv.conf
+Debian$ sudo chroot . 
+Gentoo# env-update 
+>>> Regenerating /etc/ld.so.cache...
+Gentoo# source /etc/profile
+Gentoo# emerge --sync 
+
+ここで大量の出力
+
+Gentoo# emerge portage
+\end{commandline}
+
+\subsection{gentoo 自身のブートストラップ}
+
+wikiの手順では下記のようにすると順番にブートストラップしてくれるようです。
+あらゆるプログラムをコンパイルしてインストールするので時間が非常にかかり
+ます。個人的にはすでに飽きてしまったのでもう検証していません、続きはまた
+誰かが後でやってくれることを期待しつつ。
+
+\begin{commandline}
+Gentoo# env-update && source /etc/profile && emerge --oneshot --nodeps
+ gcc-config && USE="-* build bootstrap" emerge linux-headers && \ 
+/usr/portage/scripts/bootstrap.sh && emerge -O libperl && emerge -O
+ python && emerge --deep system && \ 
+emerge syslog-ng xinetd grub hotplug coldplug vixie-cron reiserfsprogs
+ reiser4progs sysfsutils udev dhcpcd && \ 
+emerge --nodeps acpid ntp && rc-update add syslog-ng default &&
+ rc-update add net.eth0 default && rc-update add vixie-cron default && \ 
+rc-update add xinetd default && rc-update add sshd default && rc-update
+ add hotplug default && rc-update add coldplug default && \ 
+rc-update add acpid default
+\end{commandline}
+
+\subsection*{参考文献}
+
+\begin{itemize}
+ \item Gentoo wiki \url{http://gentoo-wiki.com/HOWTO_Install_Gentoo_-_The_Gentoo_Developers_Method_with_NPTL_and_2.6_from_Stage1}
+\end{itemize}
+
+\dancersection{aptを最適化してみる}{上川}
+
+前回までで、oprofile を利用して aptのプロファイリングをしてみました。そ
+れでは、実際にどういう考え方で高速化を検討するか、を考えてみましょう。
+
+\subsection*{最適化の必要な部分の解析}
+
+プロファイル結果を利用して、解析します。
+
+\texttt{apt-get update}の結果を確認したところ、下記のようになるということ
+がわかりました。どうも、SHA1Transform　と MD5Transform という関数の負荷
+が高いようです。
+
+\begin{commandline}
+sudo apt-get update
+[中略]
+CPU: Core Solo / Duo, speed 1833 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (Unhalted clock cycles) with a unit mask of 0x00 (Unhalted core cycles) count 180000
+samples  %        image name               app name                 symbol name
+23823    46.3519  libapt-pkg-libc6.3-6.so.3.11.0 apt-get                  
+SHA1Transform(unsigned int*, unsigned char const*)
+12732    24.7724  libapt-pkg-libc6.3-6.so.3.11.0 apt-get
+ MD5Transform(unsigned int*, unsigned int const*) 
+4282      8.3314  processor.ko             processor                acpi_processor_idle
+2584      5.0276  libc-2.3.6.so            apt-get                  (no symbols)
+2012      3.9147  vmlinux                  vmlinux                  __copy_to_user_ll
+503       0.9787  gpgv                     gpgv                     (no symbols)
+222       0.4319  vmlinux                  vmlinux                  timer_interrupt
+166       0.3230  libapt-pkg-libc6.3-6.so.3.11.0 apt-get
+ MD5Summation::Add(unsigned char const*, unsigned long) 
+\end{commandline}
+
+\subsection*{最適化方法の検討}
+
+プロファイル結果解析ををうけて適用できる最適化方法を検討します。
+
+\texttt{apt-pkg/contrib/sha1.cc}, \texttt{apt-pkg/contrib/md5.cc} を見る
+と md5 については、 dpkg の実装を、 sha1についてはどこからか拾ってきた実
+装を利用しており、 C++ で書かれた汎用のコードを利用しているということが
+わかります。仮説として、アッセンブリでばりばりにチューニングした実装を利
+用すれば高速になるのではないか、と考えてみます。
+
+GPL　互換の既存の sha1 と md5 の高速な実装を探してみます。
+
+代表的な GPL 互換の実装である GNUTLS に含まれている sha1 / md5　の実装は、 
+\texttt{gl/sha1.c}, \texttt{gl/md5.c} にあます。確認したところ、特に高速
+化されていないようです。
+
+そこで、 git のソースを見てみます。ppc と arm 用の最適化されている sha1 
+の実装が含まれていますが、 i386 用はないようです。
+
+予備試験をしてみます。600MB程度の iso ファイルの sha1 をとるのに、
+mozilla 実装と openssl 実装でどらくらい違うのかを比較してみました。
+mozilla 実装で　14 秒程度、 openssl 実装で　12　秒程度です。
+
+ここまでで、既存の実装を応用する限りにおいて、試験環境において劇
+的に高速化できる方策は無いということがわかりました。残念。
+
+\newpage
+
+\vspace*{15cm}
+\hrule
+\vspace{2mm}
+\includegraphics[width=2cm]{../base-image/openlogo-nd.eps}
+\noindent \Large \bf Debian 勉強会資料\\ \\
+\noindent \normalfont 2006年10月21日 \hspace{5mm}  初版第1刷発行\\
+\noindent \normalfont 東京エリア Debian 勉強会 （編集・印刷・発行）\\
+\hrule
+
+\end{document}

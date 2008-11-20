@@ -3,41 +3,36 @@ DVIFILES:=$(SOURCE:%.tex=%.dvi)
 PDFFILES:=$(SOURCE:%.tex=%.pdf)
 RELEASEFILES:=$(SOURCE:%.tex=%.release-stamp)
 
-all: $(PDFFILES)
+all: build_check
 
-publish: $(RELEASEFILES)
-	# this gives error when I am not the owner of the
-	# file, but fixes all files that I am the owner
-	-ssh alioth.debian.org chmod 664 /var/lib/gforge/chroot/home/groups/tokyodebian/htdocs/pdf/*.pdf
-
-%.release-stamp: %.pdf
-	touch $@
-	scp $< alioth.debian.org:/var/lib/gforge/chroot/home/groups/tokyodebian/htdocs/pdf/
-
-%.pdf: %.dvi
-	umask 002 ; dvipdfmx $< 
-
-%.dvi: %.tex
-	## start of linting stuff
-	# check kanji-code of the tex file.
-	iconv -f iso-2022-jp -t iso-2022-jp < $< > /dev/null
+build_check: 2005 2006 2007 2008
 	# check that pre-commit hook is installed.
 	# if this fails, please do:
 	# cp git-pre-commit.sh .git/hooks/pre-commit
 	diff -u .git/hooks/pre-commit git-pre-commit.sh
 	[ -x .git/hooks/pre-commit ]
 	## end of linting stuff
-	platex $< # create draft input
-	-mendex $(<:%.tex=%)
-	platex $< # create draft content with correct spacing for index and toc
-	-mendex $(<:%.tex=%) # recreate index with correct page number
-	platex $< # recreate toc with correct page number
+
+2005:
+	make -C 2005-resume
+2006:
+	make -C 2006-resume
+2007:
+	make -C 2007-resume
+2008:
+	make -C 2008-resume
+
+publish: $(RELEASEFILES)
+	# this gives error when I am not the owner of the
+	# file, but fixes all files that I am the owner
+	-ssh alioth.debian.org chmod 664 /var/lib/gforge/chroot/home/groups/tokyodebian/htdocs/pdf/*.pdf
 
 clean:
-	-rm *.dvi *.aux *.toc *~ *.log *.waux *.out _whizzy_* *.snm *.nav *.jqz *.ind *.ilg *.idx *.idv *.lg *.xref *.4ct *.4tc *.css
-
-
-	-touch $(RELEASEFILES)
+	make -C 2005-resume clean
+	make -C 2006-resume clean
+	make -C 2007-resume clean
+	make -C 2008-resume clean
+	
 
 deb:
 	-rm ../*.deb
@@ -47,7 +42,7 @@ deb:
 listtopic:
 	lgrep dancersection *-{natsu,fuyu}.tex | sed -n 's/\\dancersection{\([^}]*\)}.*/\1/p'
 
-.PHONY: deb clean all publish listtopic
+.PHONY: clean all publish listtopic
 
 check-syntax:
 	$(CC) -c -O2 -Wall $(CHK_SOURCES) -o/dev/null $(shell pkg-config --cflags gtk+-2.0)

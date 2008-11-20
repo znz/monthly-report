@@ -1,0 +1,899 @@
+%; whizzy chapter
+% -initex iniptex -latex platex -format platex -bibtex jbibtex -fmt fmt
+
+%     Tokyo Debian Meeting resources
+%     Copyright (C) 2006 Junichi Uekawa
+
+%     This program is free software; you can redistribute it and/or modify
+%     it under the terms of the GNU General Public License as published by
+%     the Free Software Foundation; either version 2 of the License, or
+%     (at your option) any later version.
+
+%     This program is distributed in the hope that it will be useful,
+%     but WITHOUT ANY WARRANTY; without even the implied warranty of
+%     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%     GNU General Public License for more details.
+
+%     You should have received a copy of the GNU General Public License
+%     along with this program; if not, write to the Free Software
+%     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+%   Pdf作成手順
+% dvipdfmx debianmeetingresume200508.dvi
+
+%この資料はA3用紙に両面印刷で印刷する予定
+
+\documentclass[mingoth]{jsarticle}
+\usepackage[dvipdfm]{graphicx}
+\usepackage{fancybox}
+\usepackage{longtable}
+
+%%gotom
+\usepackage{ascmac}	% 囲み (screen,itembox)
+\usepackage{fancyvrb}   % 囲み Verbatim のために必要
+%%
+
+\usepackage[dvipdfm]{hyperref}
+\usepackage{url}
+
+\AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+
+
+% とりあえずcommandline環境を定義．入出力についてはcommandline環境を活用
+%する
+\newenvironment{commandline}%
+{\VerbatimEnvironment
+  \begin{Sbox}\begin{minipage}{12cm}\begin{tiny} \begin{BVerbatim}}%
+{\end{BVerbatim}\end{tiny}\end{minipage}\end{Sbox}
+  \setlength{\fboxsep}{8pt}\fbox{\TheSbox}}
+
+
+
+% 三択問題用
+\newcounter{santakucounter}
+\newcommand{\santaku}[4]{%
+\addtocounter{santakucounter}{1}
+
+\nopagebreak 問題\arabic{santakucounter}. 
+#1\\
+\nopagebreak□ A #2\\
+\nopagebreak□ B #3\\
+\nopagebreak□ C #4
+\pagebreak[1]
+\hspace{1cm}
+\\
+
+}
+
+\newcommand{\emptyspace}{(\underline{\hspace{1cm}})}
+
+
+
+\newcommand{\subsubsubsection}[1]{%
+\vspace{1zw}{\bf #1}\\}
+
+
+% sectionをセンタリングする
+\makeatletter
+  \renewcommand{\section}{\@startsection{section}{1}{\z@}%
+    {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+    {.5\Cvs \@plus.3\Cdp}% 後アキ
+    {\normalfont\Large\headfont\raggedright\centering}} % style
+\makeatother
+
+% section の代わりの環境
+\newcommand{\dancersection}[2]{%
+\newpage
+東京エリアDebian勉強会 2005
+\hrule
+\vspace{0.5mm}
+\hrule
+\hfill{}\includegraphics[width=3cm]{../base-image/openlogo-nd.eps}\\
+\vspace{-4cm}
+\begin{center}
+  \section{#1}
+\end{center}
+\hfill{}#2\hspace{3cm}\space\\
+\hrule
+\hrule
+\vspace{1cm}
+}
+
+
+
+
+%% for gotom
+\newenvironment{gdescription}%  
+{%
+   \begin{list}{}% 見出し記号／直後の空白を調節
+   {%
+      \setlength{\itemindent}{0mm}
+      \setlength{\leftmargin}{45mm}%  左のインデント
+      \setlength{\rightmargin}{0zw}% 右のインデント
+      \setlength{\labelsep}{4mm}%    黒丸と説明文の間
+      \setlength{\labelwidth}{4cm}%  ラベルの幅
+      \setlength{\itemsep}{0em}%     項目ごとの改行幅
+      \setlength{\parsep}{0cm}%      段落での改行幅
+      \setlength{\listparindent}{0cm}% 段落での一字下り
+      \let\makelabel\gdescriptionlabel
+   }
+}{%
+   \end{list}%
+}
+\newcommand*\gdescriptionlabel[1]{\hspace\labelsep\normalfont\bfseries #1}
+%%
+
+\begin{document}
+
+\begin{titlepage}
+
+% 毎月変更する部分
+\title{
+ 第7回 東京エリア Debian 勉強会\\事前資料
+\footnote{機密レベル public: 一般開示可能}}
+\date{2005年8月6日}
+\author{Debian勉強会会場係 上川 純一\thanks{Debian Project Official Developer}} 
+\maketitle
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\dancersection{Introduction To Debian 勉強会}{上川 純一}
+
+今月のDebian勉強会へようこそ．
+これからDebianのあやしい世界に入るという方も，すでにどっぷりとつかってい
+るという方も，月に一回Debianについて語りませんか？
+
+目的として下記の二つを考えています．
+
+\begin{itemize}
+ \item メールではよみとれない，もしくはよみとってられないような情報を情
+       報共有する場をつくる
+ \item まとまっていないDebianを利用する際の情報をまとめて，ある程度の塊と
+       して出してみる
+\end{itemize}
+
+また，東京にはLinuxの勉強会はたくさんありますので，Debianに限定した勉強
+会にします．Linuxの基本的な利用方法などが知りたい方は，他でがんばってくださ
+い．
+Debianの勉強会ということで究極的には参加者全員がDebian Packageを
+がりがりと作りながらスーパーハッカーになれるような姿を妄想しています．
+
+Debianをこれからどうするという能動的な展開への土台としての空間を提供し，
+情報の共有をしたい，というのが目的です．
+次回は違うこと言ってるかもしれませんが，御容赦を．
+
+\subsection{講師紹介}
+
+\begin{itemize}
+ \item{岩松 信洋} SuperHをハックしています．
+ \item{gotomさん} Debianのglibcとかをやってます．
+ \item{上川 純一} 宴会の幹事です．
+      Debian Developerです．
+      元超並列計算機やっていて，
+      今は音楽関係とか，気づいたらcannaとか．
+      あと，pbuilderや，libpkg-guideなどを通して，Debianの品質向上を目指してます．
+\end{itemize}
+
+\subsection{事前課題紹介}
+
+今回の事前課題は
+「Debianのここが不満だ!」
+というタイトルで200-800文字程度の文章を書いてください．
+というものでした．
+その課題に対して下記の内容を提出いただきました．
+
+\subsubsection{吉田＠板橋さん}
+
+\begin{enumerate}
+ \item 
+安定版リリース後の対応デバイス追加が無い
+
+	新しいデバイスにインストールするのに
+	だれかがisoイメージなりを公開してくれるのを待つしかない？
+
+ \item インストール前後の手順がわかりづらい
+
+	Debian users MLを見ないと情報が無いのに、誘導がない
+
+	一番、日本語でわかりやすくまとまっているのは
+	「Debian GNU/Linux スレッドテンプレ(\url{http://debian.fam.cx/})」だと思うが当然
+	誘導がない
+
+	OpenBSDのafterbootとか商用ディストリビューションのようにブラウザを立ち上げると
+	初期誘導で上記のようなところに行く(OrLink)といいのでは？
+	(最近xは使ってないので実はある？)
+
+ \item 
+DFSGに合わないものはパッケージングされない
+
+	当然ですしかし、仕方ないので、野良パッケージを作ろうとすると...
+
+
+ \item 野良パッケージを作りにくい
+
+	rpmに比べて内部的なブラックボックス(dh〜とか)が多く作りにくい\\
+	普通に調べるとDebian 新メンテナガイドにたどり着くが、あまりにわかりづらく感じる\\
+	\url{http://www.jp.debian.org/doc/manuals/maint-guide/}\\
+	多くの項目が盛り込まれていて省略できる点がわかりにくい\\
+	かつ、書かれていないが、暗黙の了解事項が多いと思う\\
+\end{enumerate}
+
+
+\subsubsection{中島清貴さん}
+
+　まず筆頭にあげたいものは名前がよくない。デビというところがデビルマンとかデー
+モンみたいでかなりよくないと思う。これはDebianに限ったことではないけれど「なん
+とかかんとかLinux」という書き方もあまりかっこよくないと思う。
+　しかしこの名前もこないだ買った「DebianGNU/Linux徹底入門第3版Sarge対応」だと
+かなり良い。けっこう分厚い書籍で長ったらしい名前なので難解そうに感じるけれど徹
+底入門と書いてあるので、これ読んだだけでマスターしたような気になる。
+　不満というより自分が満足に使いこなしているわけでないので、そんなところだろう
+か。
+
+\subsubsection{松山さん}
+じっくり他のOSと比べたわけではないけれど,
+Debianは日常生活を送るにそれなりに使えるOSだと思います.
+それなのに,あまり人々に知られていないところが不満です.
+
+あまり知られていない.
+
+いいものなのに相応の評価がされるどころか,
+多くの人にとって評価の対象にすらなっていないのは,
+1ユーザとしてちょっと面白くない.
+
+大衆に向けてのアピールが弱いところをもっとなんとかすると,
+それによっていろんな人が使い出すのに伴って
+いろんな声が聞こえるようになってくると,
+今までとは一味違った「流れ」のようなものが
+まきおこるような気がしました.	
+
+\subsubsection{小林儀匡さん}
+
+Debianでは、綺麗なものは綺麗に配置され管理しやすくなっている一方で、
+余計なファイルが紙屑のようにあちこちに散らばってしまっているのが
+気になります。
+例えば/etc/apache2/ports.confは、Apache 2が監視するポート番号を指定するだけの
+ために存在する設定ファイルで、当然ながら中身は1行です。
+また、/etc/default/apache2も、
+実質的には、起動を制御する「NO\underline{ }START」の行1行だけです。
+/etc/defaultの下には他にも同様のファイルが多くあります。
+/etc/environmentも、環境に関する設定を意識した名前となっていますが、
+結局ほかのところでできない設定をやるために存在するだけで、
+場合によっては空ファイルとなってしまっています。
+/etc/networkの下にあるifstateなども、
+「lo=lo」や「eth0=eth0」といった情報しか書かれないファイルです。
+この/etc/network/ifstateの処置は、\url{http://www.debian.org/devel/todo/}の
+TODOリストに項目として挙げられていますが、特に作業は行われていないようです。
+
+こういった余計なファイルが散らばる背景には、
+Debian用パッケージ作成時に上流の設定ファイル以外の設定項目を作る必要が
+出てきた場合、その設定をどこですべきかというポリシーがないためだと思います。
+他方でDebianではどの設定ファイルもいずれかのパッケージに所属するように定める
+ポリシーがあるため、個々のパッケージはそれぞれ余計なファイルを作って
+放ってしまうのではないでしょうか。
+余計な設定用の処理システムを作り、個々のパッケージが余分な設定ファイルを
+作らずに済むようにするか、あるいはせめて、そういった余分な設定ファイルの
+置き場を定めるポリシーがあれば、と思います。
+
+Debianについてもう一つ気に要らないものがあるとすれば、ウェブ上の文書にも
+古くなったまま保守されていないものが多いところです。
+例えば、開発者向けのTODOリストである\url{http://www.debian.org/devel/todo/}も
+更新されていません。
+こういった古い文書は、おそらく片付けようという動きがないためにそのままに
+なっているのでしょうが、コンピュータは検索すれば何でも出てくる世界なので、
+わざわざ古いものを目につくところに置いておかなくても、と思います。
+文書などは時間が経てば膨大になっていく一方で、あまりその保守に時間を費やす
+人がいなく、身動きがとれなくなってしまったのが原因でしょうか。
+
+Debianは文句なしに好きなところは多いのですが、
+開発者がメンテナとしてパッケージの新しいバージョンの導入作業および
+それに伴うバグ退治に忙殺されてしまっており、
+古くからある変なところがそのまま放置されているように感じられます。
+その背景にはマンパワー不足があることは誰もが認める事実でしょうし、
+開発者でさえなく、たとえ開発に参加できてもまだまだ力量不足で作業できない
+自分が言うのはおこがましいのですが、
+ときには古いものを見直すのに時間を割くのも大切ではないかと思います。
+
+\subsubsection{えとーさん}
+
+書籍少ない！情報が少ない！
+人に勧めようとしても書籍ないからって逃げられる。
+更に言うとパッケージングとかよりメンドクサイところでの
+書籍や雑誌記事若しくはドキュメントなどがまったくない。
+更に幾つかやり方があることだと、口コミか全部で試す、
+などを行なわないとなかなかどれを使うものか判断がし難いなどの
+なにかやろうとすると初期費用が結構高い。
+
+政治面が不透明
+FTPマスターや要職の人の離反が起きた時にリカバーする仕組みが
+ないので混乱が長期化してしまう。
+
+DebianJP
+謎の組織になってる気がする。MLの運営などは.orgの資産でやっても
+いいのなぁと思っているので、あまり存在価値がわからない。
+l10な状況に即した文章の作成、翻訳、イベント、人の発掘、などが
+Debian-JPの仕事だと思っていたのだが、そういうことは重視されて
+いないようなので、いよいよ謎の組織になってる。
+高齢化しすぎ、というよりも新規の人が少ない気がするので、
+魅力的な部分をアピールできていないんでわないかと思う。
+
+パッケージ管理が辛い
+パッケージが多いのはよいのだけど、ハンドリングできる数を越えている
+ので、パッケージ検索や、タグ、分類の詳細化などをもっと簡単に出来るように
+していって欲しい。
+
+プロライエタリソフトウェアとの協調不足
+mainに入らないとかでDebianとしては配布する必要はないと思うが、使えたほうが
+嬉しいこともあるので、プロライエタリソフトウェアのベンダーがDebian対応を
+したいと思った場合の検証手順のドキュメント化、窓口及び、プロライエタリ
+ソフトウェアのベンダーへの協力部隊などが欲しい。
+Debianのフリーの基準に満ちるソフトウェアの品質がプロライエタリに負けることは
+ないと思うが、選択肢が狭くなるのが嫌なのでなんとかできたら嬉しい。
+
+
+\subsubsection{上川}
+
+ねぇねぇきいてよおくさん．
+最近Debianってさぁ，
+あいかわらずdpkgってconffileが変更されていたら
+コマンドラインで質問してくるのよ．
+debconfでほとんど処理できるこの御時勢に，
+なんてださいのかしら．
+
+ねぇねぇこれもちょっときいてよ．
+dpkgってさぁ，/var/lib/dpkg/info以下に大量にファイルを作成していて
+そこをアクセスするのが遅くってたまらないのよ．
+
+ねぇねぇさらにこれもちょっときいてよ．
+dpkgを実行する時の遅さ気にならない？
+もう遅すぎて遅すぎて我慢できないんだけど．
+
+なにこのPackagesファイル．
+なんでこんなにでかいわけ？
+
+もしかして毎回descriptionの文字列まで全部読み込もうとしているのかな？
+本当にやってられない．．．
+
+あとさぁ、聞いてよ。
+共有ライブラリのパッケージってさ、
+SONAMEが変わったら毎回手作業でインストールするファイルを選んでたりするから
+空っぽのパッケージがアップロードされてたりするのよ。
+君らテストしているの？
+起動テストを少しでもしたらアプリケーションがまったく起動しないのに気づい
+てよねぇ．
+
+ほんとに．こまっちゃう．
+
+%%% trivia quiz
+\dancersection{Debian Weekly News trivia quiz}{上川 純一}
+
+ところで，Debian Weekly News (DWN)は読んでいますか？
+Debian 界隈でおきていることについて書いているDebian Weekly News.
+毎回読んでいるといろいろと分かって来ますが，一人で読んでいても，解説が少
+ないので，
+意味がわからないところもあるかも知れません．みんなでDWNを読んでみましょう．
+
+漫然と読むだけではおもしろくないので，DWNの記事から出題した以下の質問にこたえてみてください．
+後で内容は解説します．
+
+\subsection{2005年27号}
+7月5日版です．
+
+\santaku{共有ライブラリを作成するために必要なgccのコンパイルオプションは}{
+-fPICだがi386などでは-fPICでなくても動作するという例外がある}
+{--shared-libraryというのがある}{-ansi}
+\santaku{sargeをリリース後のsidにて一番壊れているdebian-installerの部品
+は}{deboootstrap}{joeyh}{cdrom}
+\santaku{Lars WirzeniusはRFPが多すぎる，と懸念していた．
+現在有効なRFPはいくつあるか}{1000以上}{100くらい}{500くらい}
+\santaku{FirefoxとThunderbirdについての商標ポリシーは何が問題か}{名前は
+特許です}{
+変更を加えるとその名前を名乗る事ができない}{Debianが嫌い}
+\santaku{glade1をglade2に移行することで発生する問題はなにか}{アプリが重
+くなる}{glade2へ
+の移行はgnome2への移行が必要になるが，まだすべてのアプリケーションが
+gnome2に移行できる準備ができているわけではない}{カーネルのバージョンが
+2.6以上必須になる}
+\santaku{教育上不適切だと思われる画像を表示するスクリーンセーバの利用に
+ついての質問への回答としてLarzが勧めたのは}{眼鏡の度数を下げろ}{モニター
+のかわりにプロジェクターを使え}{スクリーンセーバは画面を
+暗転するものだけをデフォルトとしてはいれよう}
+\santaku{DAKでバージョン文字列の中に \~{ }が入ったパッケージを扱う際に問
+題となるのは}{内部で別の目的でセパレータ文字列として利用しているため，そ
+れと衝突する
+}{チルダは主義主張に反するので扱えない}{問題はない}
+
+% \santaku{}{}{}{}
+
+\subsection{2005年28号}
+7月12日版です．
+\santaku{Matt Taggartが提示したLSB 3.0に準拠するのに必要な点はなにか}{
+新しいglibcとxorgパッケージが必要になる}{根性}{気合い}
+\santaku{gcc 4.0 を新規にデフォルトコンパイラとして導入することで，何が
+推奨されたか}{C++関連のパッケージについてはアップロードを控える}{C++で書
+いてあるプログラムはCで書き直す}{C++で書いてあるプログラムをできるだけjavaのプログラムでおきかえる}
+\santaku{Ludovic Brentaさんはadaについて}{一年半関連したパッケージをごっ
+そりとメンテナンスし，管理用ポリシーを書き上げた}{上流の開発
+をしていた}{Debian Developerとしてメンテナンスした}
+\santaku{パッケージの循環依存についてなにが言えるか}{循環依存はできるだ
+け使うべき}{循環依存はおいしい}{循環依存はアッ
+プグレード処理に際してうまくあつかえないため，直すべき．
+Pre-Dependsを使えば問題を一部解消できる}
+\santaku{Frank Lichtenheldさんは何を計画したか}{Debianからnon-freeなドキュ
+メントを削除する計画}
+{Debianから一定の人種を排除する計画}{Debianから一部のライセンスを排除す
+る計画}
+%\santaku{}{}{}{}
+
+\subsection{2005年29号}
+7月19日版です．
+\santaku{debian-cdでこれから改善するという11の項目にはいっていたのは}{
+壊れた依存関係をうみださないようにチェックを追加したい}{CDの素材はリサイ
+クル可能なものに限定する}{CDの大きさの規格を変更する}
+\santaku{GNU Hurdの現状について}{
+builddが稼働していて，40\%程度のパッケー
+ジがビルドできている．
+}
+{誰も使っていないので動くのかよくわからない}{今後カーネルはLinuxカーネル
+を使うことになった}
+\santaku{g++4.0への移行にともなってc++で作成した共有ライブラリには何が必
+要となるか}{
+ABIが変更となるので，SONAMEがかわっていなくてもパッケージ名に'c2'を追加
+して変更する
+}{特になにもないのでそのままにしておく}{ユーザへのいやがらせのために意味もない依存
+を負荷すること}
+\santaku{バグ追跡システムへ追加された機能は何か}{過去のバグレポートの傾
+向をみて重みをつけてくれるシステムが追加された}{バグ報告の内容から類似の
+バグを検索して解決策候補を提示してくれるシステムが追加された}{
+どのバージョンでバグが存在しているのかを調べるバージョントラッキングが追加された}
+\santaku{印刷関連の問題を解決するべく発足したのは}{debian-printing メー
+リングリスト}{プリンタパージ}{印刷会議}
+
+\subsection{2005年30号}
+7月26日版です．
+\santaku{piupartsは何をするツールか}{Debianパッケージのアップグレードな
+どを実地検証するツール}{$\pi$ を計算するツール}{ゲーム}
+\santaku{cpufrequtilsを利用してデフォルトのCPU governerをシステム起動の
+はやい時期に変更することに対しての反論は}{起動シーケンスの初期にはCPUは
+どうせ十分働く必要があるし，最初の起動の一分に必要なCPUによる電力消費は
+たいした量ではない}{CPUの周波数なんて関係ないんです}{ノートパソコンなぞ
+使うな}
+\santaku{エディタ(jed)のデフォルトの外観を設定するdebconfの質問を追加す
+ることに関しての反応はどうだったか}{エディターがデフォルトでどういう外観
+であるのかということはシステム管理において重要な設定項目なのでシステム管
+理者に質問するべき}{
+jedにデフォルトの外観なんて無い
+}{そんな質問をシステムアドミニスト
+レータにする必要はないだろう．}
+\santaku{デーモン管理用のパスワードをどうやって管理者に通知するべきかと
+いう質問に対しての回答は}{デーモン管理にパスワードは使うな}{ユーザに設定
+させる}{/etc/以下に適切な権限で配置したファイルに記
+述しておく}
+\santaku{Debianロゴに使われている文字のフォントは}{Poppl Laudatio
+Condensedという商用フォント}{monafont}{kochi}
+\santaku{BTSへのバグのサブスクリプションが可能になった．どうやったらバグ
+レポートにサブスクライブできるか}{owner@bugsにメールを送る}{
+IRCでkamionをつつく}{XXXX-subscribe@bugs.debian.orgにメー
+ルを投げる}
+\santaku{texi2htmlの新しい挙動はなにか}{セクション毎にファイルを生成する
+ようにすると，サブディレクトリにファイルを生成するようになる．}{
+毎回エラーで終了する
+}{htmlではなくxhtmlを生成する}
+\santaku{debtagsはどうなったか}{Debianパッケージ全部にタグをつけるのが完
+了した}{Packagesファイルに統合された}{この世の
+中から排除された}
+%\santaku{}{}{}{}
+
+\subsection{2005年31号}
+8月2日版です．
+\santaku{パッケージのdescriptionについてレビューをしようというプロジェク
+トがはじまった．何に関して議論が収束していないか}{descriptionは本当に必
+要なのか}{どれくらいの技術的な
+内容をdescriptionに含めるべきか．}{どのパッケージを対象にするか}
+\santaku{Popularity Contestのレポートの送信で現在圧縮して送信してくれる
+のはどのプロトコルを利用した場合か}{SSTP}{HTTP}{メール}
+\santaku{hmhが主張しているnext generation initscriptsはいつごろから始まっ
+たプロジェクトか}
+{Debconf5}{Debconf0}{Debconf2}
+\santaku{メーリングリストアーカイブのウェブページに最近追加された機能は
+何か}{類似検索機能}{SPAM報告機能}{メールを読んだ気にさせる機能}
+
+\dancersection{最近のDebian関連のミーティング報告}{上川 純一}
+
+\subsection{東京エリアDebian勉強会6回目報告}
+
+
+前回開催した第6回目の勉強会の報告をします．
+
+
+今月もDebian勉強会を開催しました． DebianのGNU toolchainの話， dpatchの話でもりあがりました．
+\begin{itemize}
+ 
+ \item      DWNクイズを実施しました． DWNを日本語に翻訳している小林さんが全問正解していました．
+ \item      上川がdpatchの説明をしました． dpatch-edit-patch というツールがあって， それを利用することが可能です． ただ，いろいろとつめがあまい部分もあるので，利用のしやすさについては 今後かんがえていきたいな，と思っております．
+ \item      gotomさんがtoolchainについて語りました． glibcのlocale関連で
+	    はみんなしらなかったトリビアみたいなものがたくさんあり 会場
+	    がもりあがりました． 特に，
+	    {\tt /usr/share/i18n/locales/ja\underbar{ }JP} ファイルの中
+	    身についての説明，
+	    {\tt date +\%Ec}が 平成17年07月03日 11時32分15秒という形でかえすぞ，という 話しについてはもりあがりました．
+ \item      はなの舞で宴会，デニーズでデザート． debhelperのmakeshlibsは
+	    共有ライブラリのデバッグシンボルの扱いなどをあまり楽にしてく
+	    れないので，問題ですね，という話題とかでもりあがりました．
+	    次回は岩松さんのsuperhハック進捗について話しをしていただける
+	    そうです．
+\end{itemize}
+
+
+\dancersection{Debconf参加報告}{後藤 正徳, 上川 純一}
+\label{sec:gotom}
+%% gotomさんの記事はここから
+%% gotomさんの記事はここまで
+\subsection{上川の見たdebconf}
+\subsubsection{IM BOF}
+Input Method BOFがありました．
+興味は，手の入力などでした．
+
+SCIMが世界の主流になっているようで，canna/kinput2は世界の主流からとりの
+こされているようです．
+UIMもどこかに置きさられているようです．
+
+Debian全体としては，IMに関しては一つに統一してサポートしていくというのが
+一番よいのですが，現状日本語環境については
+これ一本でいこう，と言えるものがそろっていないというのが印象です．
+
+現在のglibcのlocaleの実装は，環境変数でlocaleを起動時に設定してしまうた
+め，実行中にアプリケーションのlocaleを切替えられないという制約があります．
+そこが今後どうなっていくか，utf-8で全部やっていくのではないか，という考
+えでした．
+
+IMの設定HOWTOが必要だね，ということでした．
+
+\subsubsection{Altivec}
+
+powerpcの機能である，altivecはあまり活用されていないが，
+プロセッサとキャッシュの間のバスがaltivecレジスタは128bitであるため， 
+l1/l2 cacheにのる操作の場合，4倍近いパフォーマンスの差が出る．
+libcを書き換えると良くなる関数がたくさんあるよ，という話しでした．
+
+聞いている側のコメントとしては，
+カーネル/ユーザ空間のコピーに利用したらパフォーマンスがでかくなるのでは
+ないか，ということと，
+gitのソースツリーにSHA-1ハッシュの関数を手で最適化したものがあるよ，という点
+です．
+
+\subsubsection{Debconfを主催する}
+
+主催することについてはげしく議論をしていました．
+大学などのスポンサーがつかないと場所の確保や食糧の確保が難しい．
+計画と企画参加者\footnote{volunteer}が重要で，企画参加者が何にむいている人なのかを把握するの
+が重要だという話しが出ていました．
+
+今後は５００人規模になることが予想されるので，
+物価の高い国でホスティングするのは難しいのではないか，ということでした．
+
+
+\subsubsection{BTS}
+
+googleがmaster.debian.orgをDoSしていたので，現在BTSは検索できるようになっ
+ていません．
+どうします？
+ということで，鵜飼さんがfabreを実装していました．
+
+\subsubsection{linda}
+
+lindaのi18nの実装がださいぞーということでもりあがりました．
+msgidはタグであるべきだ，とStevenKが主張するんですが，それはどうか．
+
+pythonのgettextは現在のlocaleを無視して，poファイルのエンコーディングで
+文字列を返して来るらしいので，lgettext を利用するパッチを書いて送りまし
+た．
+
+\subsubsection{securing testing distribution}
+
+testingのセキュリティーチームをjoeyhが構築したという話しでした．
+協力者がもっと必要そうでした．
+
+\subsubsection{ハック}
+
+debconfは講義を聞いたり観光をしたりもできましたが，時間を惜しんでハックする場所でした．
+いろいろな部分が変更になったため，その対応などに追われました．
+特に，g++4.0の移行については，debconfの最中に開始になったため，
+多くのパッケージが対応に追われていたはずです．
+
+\begin{itemize}
+ \item pbuilder: su の変更の対応など
+ \item dpatch: バグの修正とtestsuiteの追加
+ \item libpkg-guide
+ \item binfmtc
+ \item ecasound: g++4.0 transitionの対応
+\end{itemize}
+
+
+
+\dancersection{ITPの仕方からアップロードまでの流れ}{岩松 信洋}
+\label{sec:iwamatsu}
+\subsection{はじめに}
+
+    今回、「このソフトウェアをDebianパッケージにしてDebianの一部として提供したい」と
+    思ってるんだけどどうしたらよいのか、
+    Debian Developer ではない人の視点から、ITPをどのように行えばいいのかまとめてみました。
+	
+\subsection{ITPとは}
+
+    Intend To Package の略で 新しく Debian にパッケージを提供したいときに BTS に登録します。
+    これはDebian Developer でなくても 行うことができます。
+	
+\subsection{ITPをする前に}
+
+    ITPをする前に チェックしておかなければいけないことがあります。
+	
+  	\begin{enumerate}
+  	\item パッケージ化したいソフトウェアのライセンスをチェックします。
+	
+        Debian は Debian フリーソフトウェアガイドライン ( DFSG ) に準じているソフトウェアでない
+        といけません。"GPL"、"BSD"、および "Artistic" がそのライセンスの例になります。
+
+    \item もうすでにパッケージがある可能性があるのでチェックする。
+	
+        {\bf \url{http://www.debian.org/distrib/packages} } や {\bf apt-cache search }で確認することができます。
+		
+        パッケージ化されていても Orphaned ( みなしご化 ) されていることもあります。
+		
+        {\bf \url{http://www.debian.org/devel/wnpp/orphaned} }で確認することができます。
+
+        ITA (Intent To Adopt ) をして引き取ってメンテナンスをしましょう。
+
+    \item ITP されていないか確認する。
+	
+        もうすでに パッケージにしたいソフトウェアが ITP されている可能性があります。
+
+        {\bf \url{http://www.debian.org/devel/wnpp/being_packaged} }で確認することができます。
+
+    \item RFPされていることをチェックする。
+	
+        Request For Package の略でパッケージ化の要望がBTSされていることがあります。
+
+        {\bf \url{http://www.debian.org/devel/wnpp/requested} }で確認することができます。
+		
+        RFP されているときは バグの内容を RFP から ITP に変更する必要があります。
+
+    \item Debianパッケージにしてみる。
+	
+        提供したいソフトウェアをDebianパッケージにしましょう。
+        ITPしてからパッケージ化してもいいと思いますが、先におこなっておいて不具合がないか調べておきましょう。
+		
+	\end{enumerate}
+    これらをチェックして ITP をしましょう。
+
+\subsection{ITPのしかた}
+    実際にはどのようにITPをしたらよいのでしょうか。
+    方法を以下にまとめてみました。
+
+    \subsubsection{ ITP }
+		\begin{enumerate}
+        \item reportbug の起動
+		\begin{verbatim}
+% reportbug --email hoge@example.org wnpp
+として reportbugを起動します。
+--email でe-mail アドレスを指定します。
+wnpp というのは Work-Needing and Prospective Packages の略です。
+		\end{verbatim}
+        \item バグリクエストタイプを聞かれるので ITP を選択します。
+		\begin{verbatim}
+1 ITP  This is an `Intent To Package'. Please submit a package description
+       along with copyright and URL in such a report.
+2 O    The package has been `Orphaned'. It needs a new maintainer as soon as
+       possible.
+3 RFA  This is a `Request for Adoption'. Due to lack of time, resources,
+       interest or something similar, the current maintainer is asking for
+       someone else to maintain this package. He/she will maintain it in the
+       meantime, but perhaps not in the best possible way. In short: the
+       package needs a new maintainer.
+4 RFH  This is a `Request For Help'. The current maintainer wants to continue
+       to maintain this package, but he/she needs some help to do this, because
+       his/her time is limited or the package is quite big and needs several
+       maintainers.
+5 RFP  This is a `Request For Package'. You have found an interesting piece of
+       software and would like someone else to maintain it for Debian. Please
+       submit a package description along with copyright and URL in such a
+       report.
+
+Choose the request type: 1
+\end{verbatim}
+
+        \item パッケージ名を求められるので ITP したい パッケージ名を入力します。
+		\begin{verbatim}
+Please enter the proposed package name: hoge
+		\end{verbatim}
+
+        \item パッケージの簡単な説明を求められるので入力します。
+		\begin{verbatim}
+
+Checking status database...
+Please briefly describe this package; this should be an appropriate short
+description for the eventual package:
+> hogehoge program
+		\end{verbatim}
+
+        \item 以下のような画面になるので、ソフトウェアの内容 ( バージョン、提供元Webサイト、ライセンス、説明文 ) を入力します。
+		\begin{verbatim}
+Subject: ITP: hoge -- hogehoge program
+Package: wnpp
+Owner: hoge <hoge@example.org>
+Severity: wishlist
+
+
+*** Please type your report below this line ***
+
+* Package name    : hoge
+  Version         : x.y.z
+  Upstream Author : Name <somebody@example.org>
+* URL             : http://www.example.org/
+* License         : (GPL, LGPL, BSD, MIT/X, etc.)
+  Description     : hogehoge program
+
+  (Include the long description here.)
+
+  -- System Information:
+  Debian Release: testing/unstable
+  APT prefers unstable
+  APT policy: (500, 'unstable')
+  Architecture: i386 (i686)
+  Shell:  /bin/sh linked to /bin/bash
+  Kernel: Linux 2.6.12
+  Locale: LANG=ja_JP.eucJP, LC_CTYPE=ja_JP.eucJP (charmap=EUC-JP)
+		\end{verbatim}
+
+        \item 入力が終わると送信確認が行われます。
+		\begin{verbatim}
+Your report will be carbon-copied to debian-devel, per Debian policy.
+
+Spawning sensible-editor...
+No changes were made in the editor.
+Report will be sent to "Debian Bug Tracking System" <submit@bugs.debian.org>
+Submit this report on wnpp (e to edit) [y|n|a|c|E|i|l|m|p|q|?]?
+
+			\end{verbatim}
+            "y" を押すことによってサーバーに送信されます。
+            これでITPの作業は終わりです。
+		\end{enumerate}
+    \subsubsection{ RFP　→　ITP }
+        パッケージ化を希望されているパッケージをパッケージ化し、Debianに提供する方法です。
+        RFPのバグに対してBTSします。
+        実際にはタイトルをRFPからITPに変更します。
+
+		以下のようなメールをバグ番号に対して送信します。
+		バグコントロールメールサーバにコマンドを送信しています。
+		
+		\begin{verbatim}
+        owner 283119 !	//! address を #bugnumber の「所有者」に設定
+        retitle 283119 ITP: libflash -- GPL Flash (SWF) Library //! タイトルを変更する
+        thanks //! コントロールサーバーへのコマンド終了
+
+        Hi,
+
+        I am interested in this package.
+        I wish to adopt this package.
+
+        Thanks,
+         Iwamatsu
+		\end{verbatim}
+    \subsubsection{ O　　→  ITA }
+        みなしご化されているパッケージを引き取ってメンテナンスしたいときの方法です。
+        Orphaned のバグに対してメールをします。
+        実際にはタイトルをOからITAに変更します。
+		
+		以下のようなメールをバグ番号に対して送信します。
+		バグコントロールメールサーバにコマンドを送信しています。
+
+		\begin{verbatim}
+        owner 283119 !	//! address を #bugnumber の「所有者」に設定
+        retitle 283119 ITA: libflash -- GPL Flash (SWF) Library //! タイトルを変更する
+        thanks	//! コントロールサーバーへのコマンド終了
+
+        Hi,
+
+        I am interested in this package.
+        I wish to adopt this package.
+
+        Thanks,
+        Iwamatsu
+		\end{verbatim}
+
+		
+\subsection{ITPしたら}
+
+	\begin{enumerate}
+    \item スポンサーを探す
+        ITPをしたら スポンサーを探す必要があります。
+        スポンサーとは スポンサーは現存する Debian Developer で 自分の指導者をしてくれる方です。
+        Debian Developer でないとパッケージを Debian にアップロードすることができません。
+        スポンサーは作成したパッケージをチェックし、パッケージをアップロードしてくれます。
+        また、間違いがあるときは指摘をしてくれたり、アドバイスをしてくれます。
+		
+        スポンサーを探すには{\bf debian-mentors ML} で聞いてみるとよいでしょう。
+		
+        {\bf \url{http://lists.debian.org/debian-mentors/}}
+
+        また、GPGキーサインでサインして頂いたDebian Developerの方に相談するのも方法のひとつです。
+		
+		
+    \item スポンサーが見つかったら
+        スポンサーが見つかったらそのスポンサーとやり取りし、パッケージを改善します。
+		
+        スポンサーがアップロードしてもいいと判断された場合、スポンサーの手によってDebian にアッ
+        プロードされます。
+	\end{enumerate}
+
+
+%%
+%% 岩松さんの記事はここまで
+
+
+\dancersection{個人提案課題}{}
+\hfill{}{\large 名前} \underline{\hspace{6cm}}
+
+下記の空欄を埋めてください:
+
+{\LARGE 
+Debian の 不満な，(\hspace{5cm})\\
+に注目し，今後のDebianは(\hspace{6cm})\\
+します．
+}
+\\\\
+企画案の図：
+
+\newpage
+
+%\vfill{}
+%\hfill{}
+%\includegraphics[width=7cm]{../base-image/openlogo-nd.eps}
+%\hfill{}
+%\vfill{}
+%\newpage
+
+\dancersection{Keysigning Party}{上川 純一}
+
+
+事前に必要なもの
+\begin{itemize}
+ \item 自分の鍵のfingerprintを書いた紙({\tt gpg --fingerprint XXXX}の出力．)
+ \item 写真つきの公的機関の発行する身分証明書，fingerprintに書いてある名前が自分の
+ものであると証明するもの
+\end{itemize}
+
+キーサインで確認する内容
+\begin{itemize}
+ \item 相手が主張している名前の人物であることを信頼できる身分証明書で証明し
+       ているか\footnote{いままで見た事の無い種類の身分証明書を見せられ
+       てもその身分証明書の妥当性は判断しにくいため，学生証明書やなんと
+       か技術者の証明書の利用範囲は制限される．
+       運転免許証明書やパスポートが妥当と上川は判断している}．
+ \item 相手がfingerprintを自分のものだと主張しているか
+ \item 相手のfingerprintに書いてあるメールアドレスにメールをおくって，
+       その暗号鍵にて復号化することができるか
+\end{itemize}
+
+手順としては
+\begin{itemize}
+ \item 相手の証明書を見て，相手だと確認
+ \item fingerprintの書いてある紙をうけとり，これが自分のfingerprintだと
+       いうことを説明してもらう
+ \item (後日) gpg署名をしたあと，鍵のメールアドレスに対して暗号化して送付，相手
+       が復号化してキーサーバにアップロードする
+       ({\tt gpg --sign-key XXXXX, gpg --export --armor XXXX })
+\end{itemize}
+
+
+\dancersection{次回}{}
+
+次回は9月10日土曜日の夜を予定しています．
+内容は本日決定予定です．
+
+参加者募集はまた後程．
+
+\end{document}
