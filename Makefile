@@ -3,9 +3,9 @@ DVIFILES:=$(SOURCE:%.tex=%.dvi)
 PDFFILES:=$(SOURCE:%.tex=%.pdf)
 RELEASEFILES:=$(SOURCE:%.tex=%.release-stamp)
 
-all: build_check
+all: 2005 2006 2007 2008
 
-build_check: 2005 2006 2007 2008
+build_check:
 	# check that pre-commit hook is installed.
 	# if this fails, please do:
 	# cp git-pre-commit.sh .git/hooks/pre-commit
@@ -13,13 +13,13 @@ build_check: 2005 2006 2007 2008
 	[ -x .git/hooks/pre-commit ]
 	## end of linting stuff
 
-2005:
+2005: build_check
 	make -C 2005-resume
-2006:
+2006: build_check
 	make -C 2006-resume
-2007:
+2007: build_check
 	make -C 2007-resume
-2008:
+2008: build_check
 	make -C 2008-resume
 
 publish: $(RELEASEFILES)
@@ -33,7 +33,6 @@ clean:
 	make -C 2007-resume clean
 	make -C 2008-resume clean
 	
-
 deb:
 	-rm ../*.deb
 	debian/rules local-make-orig
