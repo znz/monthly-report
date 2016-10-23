@@ -351,7 +351,7 @@ fi
 % $
 でしょうか?
 \footnote{%
-  GPG の鍵生成に時間がかかる場合には \texttt{havedged} 等で entropy を増やすと良いでしょう
+  GPG の鍵生成に時間がかかる場合には \texttt{haveged} 等で entropy を増やすと良いでしょう
 }
 上記によって、
 \begin{itemize}
@@ -372,15 +372,15 @@ fi
 sbuildの簡単な使い方を簡単にまとめると以下の通りです。
 \begin{itemize}
 \item %
-  環境設定: \texttt{~/.sbuildrc} に以下を書いておきます\footnote{%
+  環境設定: \texttt{\~{}/.sbuildrc} に以下を書いておきます\footnote{%
     build 後に autopkgtest を走らせる設定もあるんですが、これは後程。
 }
   \begin{commandline}
-# -*- mode: cperl-mode
+# -*- mode: cperl-mode -*-
 ## basic
 # architecture: all も build する
 $build_arch_all = 1;
-# デフォルトで source packag も build する
+# デフォルトで source package も build する
 $build_source = 1;
 ## debsign
 # GPG key id
@@ -470,7 +470,7 @@ sudo debci setup
 \dancersection{今後の予定}{Debian JP}
 
 \subsection{関西Debian勉強会}
-次回、第116回関西Debian勉強会は11月12(土)のKOF 2016で出張開催予定です。
+次回、第116回関西Debian勉強会は11月12日(土)のKOF 2016で出張開催予定です。
 
 \subsection{東京エリアDebian勉強会}
 次回、第145回東京エリアDebian勉強会は10月19日(土)に開催予定です。
